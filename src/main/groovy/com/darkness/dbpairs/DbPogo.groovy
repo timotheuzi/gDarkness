@@ -1,4 +1,4 @@
-package com.darkness.dbpairs
+/*package com.darkness.dbpairs
 
 import javax.persistence.*;
 
@@ -21,4 +21,4 @@ public class DbPogo {
     private Integer location;
     private Integer hp;
 
-}
+}*/

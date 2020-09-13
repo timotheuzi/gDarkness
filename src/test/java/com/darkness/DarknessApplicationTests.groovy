@@ -1,4 +1,4 @@
-package com.darkness;
+/*package com.darkness;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,8 +30,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Matchers.*;
 
-@RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
+@Spock
 public class DarknessApplicationTests {
 	@Mock
 	Methods mockMethods;
@@ -61,4 +60,4 @@ public class DarknessApplicationTests {
 	 * count + " second count " + countMaps); }
 	 */
 
-}
+
