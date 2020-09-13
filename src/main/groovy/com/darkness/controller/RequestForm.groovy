@@ -9,22 +9,7 @@ public class requestForm implements Serializable {
 
     private String templateId;
     private Map<String, String> values;
-    //private String filename;
-    //private String folderId;
+    private String filename;
+    private String folderId;
 
-    public String getTemplateId() {
-        return templateId;
-    }
-
-    public void setTemplateId(String templateId) {
-        this.templateId = templateId;
-    }
-
-    public Map<String, String> getValues() {
-        return values;
-    }
-
-    public void setValues(Map<String, String> values) {
-        this.values = values;
-    }
 }
