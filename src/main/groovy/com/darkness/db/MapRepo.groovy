@@ -1,11 +1,12 @@
-package com.darkness.db;
+package com.darkness.db
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository
 
-//import com.darkness.db.mapDB;
+//import com.darkness.db.mapDB
 
-interface MapRepo extends CrudRepository<MapDB, Integer> {
-	// mapDB findByName(String name);
+interface MapRepo extends CrudRepository<MapDB, String> {
+	MapDB findByName(String name)
 
-	// Optional<mapDB> findById(Integer intValue);
+	MapDB findByID(String id)
+	// Optional<mapDB> findById(Integer intValue)
 }

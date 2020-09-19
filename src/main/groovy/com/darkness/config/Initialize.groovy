@@ -1,47 +1,52 @@
 package com.darkness.config
 
 
-import org.springframework.beans.factory.annotation.Autowired
+import  org.springframework.beans.factory.annotation.Autowired
 import  org.springframework.context.annotation.Bean
 import  org.springframework.context.annotation.Configuration
 import  org.springframework.stereotype.Component
 import  org.springframework.web.reactive.result.view.ViewResolver
 import  org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import  org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
-import  org.thymeleaf.spring5.SpringTemplateEngine.org.thymeleaf.spring5.view.ThymeleafViewResolver
+//import  org.thymeleaf.spring5.SpringTemplateEngine.org.thymeleaf.spring5.view.ThymeleafViewResolver
 import  org.thymeleaf.templateresolver.ClassLoaderTemplateResolver
 
-import com.darkness.db.itemsDB
-import com.darkness.db.itemsRepo
-import com.darkness.db.mapDB
-import com.darkness.db.mapRepo
-import com.darkness.db.npcDB
-import com.darkness.db.npcRepo
-import com.darkness.db.userRepo
-import com.darkness.utils.methods
-import com.darkness.utils.darknessConstants
+import com.darkness.db.ItemsDB
+import com.darkness.db.ItemsRepo
+import com.darkness.db.MapDB
+import com.darkness.db.MapRepo
+import com.darkness.db.NpcDB
+import com.darkness.db.NpcRepo
+import com.darkness.db.UserRepo
+import com.darkness.utils.Methods
+import com.darkness.utils.DarknessConstants
 
 
 @Configuration
 class Initialize<config> {
 
-    @Autowired userRepo repository;
+    @Autowired
+    UserRepo repository
 
-    @Autowired mapRepo maprepo;
+    @Autowired
+    MapRepo maprepo
 
-    @Autowired methods Methods;
+    @Autowired
+    Methods Methods
 
-    @Autowired itemsRepo itemsRepos;
+    @Autowired
+    ItemsRepo itemsRepos
 
-    @Autowired npcRepo npcRepos; //
+    @Autowired
+    NpcRepo npcRepos
+
     //#############################################################################
     //##################### // method //
     //#############################################################################
     //#####################
 
-    @Bean void initializeMapValues() {
-        System.out.println("does this fire"); Methods.initializeItemValues(); }
+    @Bean void initializeMapValues() { System.out.println("does this fire") + Methods.initializeItemValues() }
 
-    @Bean void initializeItemValues() { Methods.initializeItemValues(); }
+    @Bean void initializeItemValues() { Methods.initializeItemValues() }
 
-    @Bean void initializeNpcValues() { Methods.initializeNpcValues(); } }
+    @Bean void initializeNpcValues() { Methods.initializeNpcValues() } }

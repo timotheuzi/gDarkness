@@ -7,13 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 class Application {
 
     static void main(String[] args) {
-        SpringApplication app = new SpringApplication(Application.class)
-        System.out.print("Muahahahahahaha - Starting darkness with Args: [")
-        for (String s : args) {
-            System.out.print(s + " ")
-        }
-        System.out.println("]")
-        app.run(args)
+        SpringApplication.run(Application, args)
     }
 }
 

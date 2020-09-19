@@ -1,11 +1,11 @@
-package com.darkness.db;
+package com.darkness.db
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository
 
-//import com.darkness.db.npcDB;
+//import com.darkness.db.npcDB
 
-public interface NpcRepo extends CrudRepository<NpcDB, Integer> {
-	NpcDB findByName(String name);
+interface NpcRepo extends CrudRepository<NpcDB, Integer> {
+	NpcDB findByName(String name)
 
-	NpcDB findByLocation(Integer location);
+	NpcDB findByLocation(Integer location)
 }

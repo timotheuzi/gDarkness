@@ -15,80 +15,80 @@ menu, nav, output, ruby, section, summary
 
 html, div
  {
-	max-width: 500px;
-    margin: auto;
-	margin-top: 5%;
-	border: 0;
-	font: ARIAL;
-	text-align:left;
-	width:auto;
-	background-color:black;	
-	color: white;
+	max-width: 500px
+    margin: auto
+	margin-top: 5%
+	border: 0
+	font: ARIAL
+	text-align:left
+	width:auto
+	background-color:black	
+	color: white
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section
  {
-	display: block;
+	display: block
 }
 body 
 {
-	max-width: 500px;
-	margin: auto;
-	line-height: 1;
-	background-color:black;
+	max-width: 500px
+	margin: auto
+	line-height: 1
+	background-color:black
 }
 ol, ul 
 {
-	list-style: none;
+	list-style: none
 }
 blockquote, q 
 {
-	quotes: none;
+	quotes: none
 }
 blockquote:before, blockquote:after,
 q:before, q:after
  {
-	content: '';
-	content: none;
+	content: ''
+	content: none
 }
 #table
 # {
-#	border-collapse: collapse;
-#	border-spacing: 0;
-#	text-shadow: 3px 2px red;
+#	border-collapse: collapse
+#	border-spacing: 0
+#	text-shadow: 3px 2px red
 # }
 mainContainer
 {
-	text-align:left;
+	text-align:left
 	font-size:100px
 	
 }
 span,td
 {
 	color: white
-	;
+	
 }
 .name
 {
-	color: green !important;
+	color: green !important
 }
 #desc
 {
-	font-size:47px;
-	font-weight: 5%;
-	color:gray;
+	font-size:47px
+	font-weight: 5%
+	color:gray
 }
 #output
 {
-	background-color:black;
-	color:white;
-	max-width: auto;
-	max-height: 200px;
-	overflow-y: auto;	
+	background-color:black
+	color:white
+	max-width: auto
+	max-height: 200px
+	overflow-y: auto	
 }
 h1 
 {
-  text-align: center;
-  font-size: 40px;
+  text-align: center
+  font-size: 40px
 }

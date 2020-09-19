@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>${description}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
 </head>
 <body>
 	<div class="mainContainer">
@@ -23,12 +23,12 @@
 		
 <<<<<<< HEAD
 		<input class="textBox" id="textBox" type="text" width="50px"/><br />
-		<input id="template2" type="button" onclick="variousInput();" width="15px" value="Various input" />
-		<input id="template" type="button" onclick="updateStatus();" width="15px" value="update test" />
+		<input id="template2" type="button" onclick="variousInput()" width="15px" value="Various input" />
+		<input id="template" type="button" onclick="updateStatus()" width="15px" value="update test" />
 =======
 		<input class="textBox" id="textBox" type="text" width="50px" value="" />
-		<input id="template" type="button" onclick="updateStatus();" width="15px" value="update manual" />
-		<input id="template2" type="button" onclick="variousInput();" width="15px" value="go" />
+		<input id="template" type="button" onclick="updateStatus()" width="15px" value="update manual" />
+		<input id="template2" type="button" onclick="variousInput()" width="15px" value="go" />
 >>>>>>> 00a4df44c44c7201fd87caef79555a59f2006dc3
 	</div>
 	<div class="output" id="output"></div><br />
@@ -37,9 +37,9 @@
 	<link rel="stylesheet" th:href="@{css/styles.css}"/>
 	<script th:inline="javascript">
 		/*<![CDATA[*/
-		 var mapName = /*[[${mapName}]]*/ 'User name';
-		 var current_location = /*[[${location}]]*/ 'location';
-		 var name = /*[[${name}]]*/ 'name';
+		 var mapName = /*[[${mapName}]]*/ 'User name'
+		 var current_location = /*[[${location}]]*/ 'location'
+		 var name = /*[[${name}]]*/ 'name'
 		 
 		/*]]>*/
 	</script>

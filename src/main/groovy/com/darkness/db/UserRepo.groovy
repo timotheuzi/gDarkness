@@ -1,9 +1,9 @@
-package com.darkness.db;
+package com.darkness.db
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository
 
-public interface UserRepo extends CrudRepository<UserDB, Integer> {
-	UserDB findByName(String name);
+interface UserRepo extends CrudRepository<UserDB, Integer> {
+	UserDB findByName(String name)
 
-	UserDB findByLocation(Integer location);
+	UserDB findByLocation(Integer location)
 }

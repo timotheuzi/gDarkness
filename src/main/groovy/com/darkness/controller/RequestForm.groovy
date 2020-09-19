@@ -1,15 +1,15 @@
-package com.darkness.controller;
+package com.darkness.controller
 
-import java.io.Serializable;
-import java.util.Map;
+import java.io.Serializable
+import java.util.Map
 
-public class requestForm implements Serializable {
+ class RequestForm implements Serializable {
 
-    private static final long serialVersionUID = -8848626608893337340L;
+    private static final long serialVersionUID = -8848626608893337340L
 
-    private String templateId;
-    private Map<String, String> values;
-    private String filename;
-    private String folderId;
+    private String templateId
+    private Map<String, String> values
+    private String filename
+    private String folderId
 
 }
