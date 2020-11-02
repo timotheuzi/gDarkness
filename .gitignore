@@ -14,7 +14,7 @@
 .mvn
 .gradle/
 *.gradle*
-*vcs*
+.gradle/vcs-1
 ### IntelliJ IDEA ###
 .idea
 *.iws
