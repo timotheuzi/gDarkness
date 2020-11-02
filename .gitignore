@@ -13,6 +13,7 @@
 .sts4-cache
 .mvn
 .gradle/
+/.gradle/
 ### IntelliJ IDEA ###
 .idea
 *.iws
