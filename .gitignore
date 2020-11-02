@@ -12,15 +12,20 @@
 .springBeans
 .sts4-cache
 .mvn
-.gradle/
-*.gradle*
-.gradle/vcs-1
+*.gradle/
+*.gradle
+*.gradle/vcs-1
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
-
+java_pid*
+*.log
+*iml
+*.idea
+*.txt
+.txt
 ### NetBeans ###
 /nbproject/private/
 /build/
