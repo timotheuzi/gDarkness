@@ -6,6 +6,5 @@ import org.springframework.data.repository.CrudRepository
 
 interface NpcRepo extends CrudRepository<NpcDB, Integer> {
 	NpcDB findByName(String name)
-
 	NpcDB findByLocation(Integer location)
 }

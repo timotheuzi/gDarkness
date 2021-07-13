@@ -1,9 +1,14 @@
 package com.darkness.db
 
+import lombok.Getter
+import lombok.Setter
+
 import javax.persistence.*
 
 //item table
 
+@Getter
+@Setter
 @Entity
 @Table(name = "msg_cache")
 class CacheDB {

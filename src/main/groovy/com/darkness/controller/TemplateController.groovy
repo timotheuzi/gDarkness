@@ -1,7 +1,6 @@
 package com.darkness.controller
 
-import com.darkness.db.MapRepo
-import com.darkness.db.UserRepo
+
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.ui.ModelMap
@@ -14,10 +13,11 @@ import com.darkness.db.MapRepo
 import com.darkness.db.UserDB
 import com.darkness.db.UserRepo
 import com.darkness.db.NpcRepo
-import com.darkness.utils.Methods
+import com.darkness.utils.DarknessUtils
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+
 @Controller
  class TemplateController {
 	//@Autowiredtest
@@ -34,7 +34,7 @@ import org.springframework.beans.factory.annotation.Value
 	NpcRepo nRepo
 	
 	@Autowired
-	Methods methods
+	DarknessUtils methods
 	
 	@RequestMapping("/")
     String index()

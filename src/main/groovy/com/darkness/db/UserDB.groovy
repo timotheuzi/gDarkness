@@ -1,16 +1,20 @@
 package com.darkness.db
 
+import lombok.Getter
+import lombok.Setter
+
 import javax.persistence.*
 
 //user objects
 
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 class UserDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id// test
-
     private String name
     private Integer lvl
     private Integer money

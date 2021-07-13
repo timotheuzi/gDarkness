@@ -32,6 +32,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator:2.1.1.RELEASE'
     implementation 'org.webjars:jquery:3.3.1-1'
     implementation 'org.json:json:20090211'
+    implementation 'org.projectlombok:lombok:1.18.18'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.1.1.RELEASE'
     testImplementation 'io.projectreactor:reactor-test:3.2.3.RELEASE'
     // using spock

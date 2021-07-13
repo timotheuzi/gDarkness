@@ -6,7 +6,6 @@ import org.springframework.data.repository.CrudRepository
 
 interface MapRepo extends CrudRepository<MapDB, String> {
 	MapDB findByName(String name)
-
 	MapDB findByID(String id)
 	// Optional<mapDB> findById(Integer intValue)
 }

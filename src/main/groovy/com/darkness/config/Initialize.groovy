@@ -18,7 +18,7 @@ import com.darkness.db.MapRepo
 import com.darkness.db.NpcDB
 import com.darkness.db.NpcRepo
 import com.darkness.db.UserRepo
-import com.darkness.utils.Methods
+import com.darkness.utils.DarknessUtils
 import com.darkness.utils.DarknessConstants
 
 
@@ -32,7 +32,7 @@ class Initialize<config> {
     MapRepo maprepo
 
     @Autowired
-    Methods Methods
+    DarknessUtils Methods
 
     @Autowired
     ItemsRepo itemsRepos

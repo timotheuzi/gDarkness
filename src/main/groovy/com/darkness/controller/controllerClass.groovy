@@ -18,7 +18,7 @@ import com.darkness.db.MapDB
 import com.darkness.db.MapRepo
 import com.darkness.db.UserDB
 import com.darkness.db.UserRepo
-import com.darkness.utils.Methods
+import com.darkness.utils.DarknessUtils
 
 /**
  * In game controller endpoints Author: Timotheuzi
@@ -32,7 +32,7 @@ class ControllerClass<TemplateController> {
 	@Autowired
 	MapRepo maprepo
 	@Autowired
-	Methods Methods
+	DarknessUtils Methods
 	@Autowired
 	CacheRepo cacheRepos
 	@Autowired

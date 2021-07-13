@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.ui.Model
 
- class Methods {
+ class DarknessUtils {
 
 	@Autowired
 	UserRepo userRepos
@@ -56,7 +56,7 @@ import org.springframework.ui.Model
 	private String npc_0 = "Burly Bartender"
 	private String npc_1 = "Vagrant"
 
-	private String item_1 = "sterling"
+	private String item_1 = "sterling silver"
 
 	 void initializeMapValues() {
 		Integer mapCount = CountMaps()

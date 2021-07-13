@@ -18,5 +18,5 @@ package com.darkness.utils
 	 static final String map_3 = "A dark alley..."
 
 	 static final String npc_1 = "Vagrant"
-	 static final String item_1 = "sterling"
+	 static final String item_1 = "sterling silver"
 }
