@@ -209,8 +209,8 @@ import org.springframework.ui.Model
 		StringWriter npcs = new StringWriter()
 		Integer count = 0
 		for (NpcDB npcDB : npcRepos.findAll()) {
-			if (npcDB.getLocation() == location) {
-				npcs.write(npcDB.getName() + ",")
+			if (npcDB.npcLocation == location) {
+				npcs.write(npcDB.npcLocation + ",")
 				count++
 			}
 		}
@@ -221,8 +221,8 @@ import org.springframework.ui.Model
 		StringWriter users = new StringWriter()
 		Integer count = 0
 		for (UserDB userDB : userRepos.findAll()) {
-			if (userDB.getLocation() == location) {
-				users.write(userDB.getName() + ",")
+			if (userDB.userLocation == location) {
+				users.write(userDB.userName + ",")
 				count++
 			}
 		}
@@ -232,8 +232,8 @@ import org.springframework.ui.Model
 	 HashMap<Integer, String> ShowUsersInLocation(Integer index) {
 		HashMap<Integer, String> users = new HashMap<Integer, String>()
 		for (UserDB userDB : userRepos.findAll()) {
-			if (userDB.getLocation() == index) {
-				users.put(userDB.getId(), userDB.getName())
+			if (userDB.userLocation == index) {
+				users.put(userDB.id, userDB.userName)
 			}
 		}
 		return users // + "response" + response
@@ -242,8 +242,8 @@ import org.springframework.ui.Model
 	 HashMap<Integer, String> ShowNpcsInLocation(Integer index) {
 		HashMap<Integer, String> npcs = new HashMap<Integer, String>()
 		for (NpcDB npcDB : npcRepos.findAll()) {
-			if (npcDB.getLocation() == index) {
-				npcs.put(npcDB.getId(), npcDB.getName())
+			if (npcDB.npcLocation == index) {
+				npcs.put(npcDB.id, npcDB.npcName)
 			}
 		}
 		return npcs // + "response" + response
@@ -258,7 +258,7 @@ import org.springframework.ui.Model
 		// random NPC generation and movement
 		Double npcToMove = Math.random() * ((CountNpcs()))
 		int temp = npcToMove.intValue()
-		npcRepos.findById(temp).get().setLocation(location.intValue())
+		npcRepos.findById(temp)       //.get().setLocation(location.intValue())
 		userRepos.findByName(name).setLocation(location.intValue())
 		// Model model = null
 		// templateController.template_1(name, model)
