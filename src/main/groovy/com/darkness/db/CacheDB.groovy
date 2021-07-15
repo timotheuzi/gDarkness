@@ -7,15 +7,15 @@ import javax.persistence.*
 
 //item table
 
-@Getter
-@Setter
 @Entity
 @Table(name = "msg_cache")
+@Getter
+@Setter
 class CacheDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id
-    private String mapName
-    private String currentRoomStatus
+    public int id
+    public String cacheMapName
+    public String cacheCurrentRoomStatus
 
 }

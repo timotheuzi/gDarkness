@@ -7,18 +7,17 @@ import lombok.Getter
 import javax.persistence.*
 
 //map tables
-
-@Getter
-@Setter
 @Entity
 @Table(name = "map")
+@Getter
+@Setter
 class MapDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id
-    private String name
-    private String description
-    private Integer items
-    private Integer npcs
-    private Integer users
+    public int id
+    public String mapName
+    public String mapDescription
+    public Integer mapItems
+    public Integer mapNpcs
+    public Integer mapUsers
 }

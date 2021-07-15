@@ -12,11 +12,5 @@ class ConfigApplication<config> {
     // method Bean
     // ##################################################################################################
 
-    @Bean
-    static DarknessUtils methods() {
-        DarknessUtils methods = new DarknessUtils()
-
-        return methods // rtest
-    }
 
 }

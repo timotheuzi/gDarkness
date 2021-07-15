@@ -61,17 +61,17 @@ import org.springframework.ui.Model
 	 void initializeMapValues() {
 		Integer mapCount = CountMaps()
 		MapDB mapDB = new MapDB()
-		mapDB.setMapName("map_" + (CountMaps() + 1))
-		if (CountMaps() == 0) {
-			mapDB.setDescription(map_0)
+		mapDB("map_" + (CountMaps() + 1))
+	if (CountMaps() == 0) {
+			mapDB.mapDescription(map_0)
 		} else if ((CountMaps() & 1) == 0) {
-			mapDB.setDescription(map_1)
+			mapDB.mapDescription(map_1)
 		} else {
-			mapDB.setDescription(map_2)
+			mapDB.mapDescription(map_2)
 		}
-		mapDB.setItems(0)
-		mapDB.setNpcs(0)
-		mapDB.setUsers(0)
+		mapDB.mapItems(0)
+		mapDB.mapNpcs(0)
+		mapDB.mapUsers(0)
 		mapRepos.save(mapDB)
 		// mapCount++
 	}
@@ -81,10 +81,10 @@ import org.springframework.ui.Model
 		Double attack = Math.random() * ((10 - 1) + 1)
 		Double defense = Math.random() * ((5 - 1) + 1)
 		ItemsDB itemsDB = new ItemsDB()
-		itemsDB.setName("gun	_" + itemCount.toString())
-		itemsDB.setDescription(item_1)
-		itemsDB.setAttack(attack.intValue())
-		itemsDB.setDefense(defense.intValue())
+		itemsDB.itemName("gun	_" + itemCount.toString())
+		itemsDB.itemDescription(item_1)
+		itemsDB.itemAttack(attack.intValue())
+		itemsDB.itemDefense(defense.intValue())
 		// itemsDB.location(0)
 		itemsRepos.save(itemsDB)
 		itemCount++
@@ -96,19 +96,19 @@ import org.springframework.ui.Model
 		Double hp = Math.random() * ((1000 - 1) + 1)
 		NpcDB npcDB = new NpcDB()
 		if (CountNpcs() == 0) {
-			npcDB.setName("Frank")
-			npcDB.setDescription(npc_0)
-			npcDB.setLocation(1)
-			npcDB.setAttack(75)
-			npcDB.setDefense(75)
-			npcDB.setHp(3000)
+			npcDB.npcName("Frank")
+			npcDB.npcDescription(npc_0)
+			npcDB.npcLocation(1)
+			npcDB.npcAttack(75)
+			npcDB.npcDefense(75)
+			npcDB.npcHp(3000)
 		} else {
-			npcDB.setName(getMeAgoodName())
-			npcDB.setDescription(npc_1)
-			npcDB.setLocation(2)
-			npcDB.setAttack(attack.intValue())
-			npcDB.setDefense(defense.intValue())
-			npcDB.setHp(hp.intValue())
+			npcDB.npcName(getMeAgoodName())
+			npcDB.npcDescription(npc_1)
+			npcDB.npcLocation(2)
+			npcDB.npcAttack(attack.intValue())
+			npcDB.npcDefense(defense.intValue())
+			npcDB.npcHp(hp.intValue())
 		}
 
 		npcRepos.save(npcDB)
@@ -117,16 +117,16 @@ import org.springframework.ui.Model
 
 	 Boolean createNewUser(String name) {
 		try {
-			UserDB result = userRepos.findByName(name)
-			result.getName()
-			result.getLvl()
-			result.getMoney()
-			result.getExp()
-			result.getAttack()
-			result.getDefense()
-			result.getDescription()
-			result.getLocation()
-			result.getHp()
+			UserDB result = userRepos.findByUserName(name)
+			result.userName()
+			result.userLvl()
+			result.userMoney()
+			result.userExp()
+			result.userAttack()
+			result.userDefense()
+			result.userDescription()
+			result.userLocation()
+			result.userHp()
 			String test = result.toString()
 			System.out.println("record does exist:" + test)
 			return false
@@ -135,15 +135,15 @@ import org.springframework.ui.Model
 		}
 		UserDB newEntry = new UserDB()
 		// newEntry.setId(id)
-		newEntry.setName(name)
-		newEntry.setLvl(1)
-		newEntry.setMoney(1)
-		newEntry.setExp(1)
-		newEntry.setAttack(1)
-		newEntry.setDefense(1)
-		newEntry.setDescription("A weak vagrant with no weapon")
-		newEntry.setLocation(1)
-		newEntry.setHp(1000)
+		newEntry.userName(name)
+		newEntry.userLvl(1)
+		newEntry.userMoney(1)
+		newEntry.userExp(1)
+		newEntry.userAttack(1)
+		newEntry.userDefense(1)
+		newEntry.userDescription("A weak vagrant with no weapon")
+		newEntry.userLocation(1)
+		newEntry.userHp(1000)
 		userRepos.save(newEntry)
 		return true
 	}
@@ -151,19 +151,19 @@ import org.springframework.ui.Model
 	 HashMap<String, Integer> getStats(String name, Boolean user) {
 		HashMap<String, Integer> stats = new HashMap<String, Integer>()
 		if (user) {
-			stats.put("ID", userRepos.findByName(name).getId())
-			stats.put("attack", userRepos.findByName(name).getAttack())
-			stats.put("defense", userRepos.findByName(name).getDefense())
-			stats.put("exp", userRepos.findByName(name).getExp())
-			stats.put("location", userRepos.findByName(name).getLocation())
-			stats.put("lvl", userRepos.findByName(name).getLvl())
-			stats.put("money", userRepos.findByName(name).getMoney())
+			stats.put("ID", userRepos.findByUserName(name).id)
+			stats.put("attack", userRepos.findByUserName(name).userAttack)
+			stats.put("defense", userRepos.findByUserName(name).userDefense)
+			stats.put("exp", userRepos.findByUserName(name).userExp)
+			stats.put("location", userRepos.findByUserName(name).userLocation)
+			stats.put("lvl", userRepos.findByUserName(name).userLvl)
+			stats.put("money", userRepos.findByUserName(name).userMoney)
 		} else {
-			stats.put("ID", npcRepos.findByName(name).getId())
-			stats.put("attack", npcRepos.findByName(name).getAttack())
-			stats.put("defense", npcRepos.findByName(name).getDefense())
-			stats.put("hp", npcRepos.findByName(name).getHp())
-			stats.put("location", npcRepos.findByName(name).getLocation())
+			stats.put("ID", npcRepos.findByNpcName(name).id)
+			stats.put("attack", npcRepos.findByNpcName(name).npcAttack)
+			stats.put("defense", npcRepos.findByNpcName(name).npcDefense)
+			stats.put("hp", npcRepos.findByNpcName(name).npcHp)
+			stats.put("location", npcRepos.findByNpcName(name).npcLocation)
 			// stats.put("name", npcRepos.findByName(name).)
 		}
 		return stats
