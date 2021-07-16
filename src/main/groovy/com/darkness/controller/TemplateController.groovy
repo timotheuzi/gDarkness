@@ -79,8 +79,8 @@ import org.springframework.beans.factory.annotation.Value
 		model.addAttribute("location", currentMap)   
 		return "home" 			
     }
-    @GetMapping("/template_1")
-     String template_1(@RequestParam(name="name", required=true) String name, Model model) 
+    @GetMapping("/alley_1")
+     String alley_1(@RequestParam(name="name", required=true) String name, Model model)
 	{
     	methods.randomNpcMove()
     	//methods.initializeMapValues()
