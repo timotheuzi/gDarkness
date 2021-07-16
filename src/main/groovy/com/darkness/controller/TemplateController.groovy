@@ -30,15 +30,15 @@ import org.springframework.beans.factory.annotation.Value
 	NpcRepo nRepo
 	
 	@Autowired
-	DarknessUtils methods
+	DarknessUtils darknessUtils
 	
 	@RequestMapping("/")
     String index()
 	{
 		//todo random moves
-		methods.initializeMapValues()
-		methods.initializeItemValues()
-		methods.initializeNpcValues()
+		darknessUtils.initializeMapValues()
+		darknessUtils.initializeItemValues()
+		darknessUtils.initializeNpcValues()
 	    return "index re-init for you"
 	}
     /*@GetMapping("/greeting")
@@ -67,17 +67,17 @@ import org.springframework.beans.factory.annotation.Value
      String home(@RequestParam(name="name", required=false) String name, Model model) 
 	{
 		//todo random moves
-    	//methods.randomNpcMove()
+    	//darknessUtils.randomNpcMove()
 		Integer currentMap = null
-			//methods.initializeMapValues()
+		//darknessUtils.initializeMapValues()
 		//String userName = uRepo.findByName(name).getName()
 		currentMap = mRepo.findById(1).get()
 		//uRepo.findByName(name).setLocation()
 		model.addAttribute("name", name)
 		model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
 		model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
-		model.addAttribute("npcs", methods.ShowNpcsInLocation(currentMap))
-		model.addAttribute("users", methods.ShowUsersInLocation(currentMap))   
+		model.addAttribute("npcs", darknessUtils.ShowNpcsInLocation(currentMap))
+		model.addAttribute("users", darknessUtils.ShowUsersInLocation(currentMap))   
 		model.addAttribute("location", currentMap)   
 		return "home" 			
     }
@@ -85,18 +85,20 @@ import org.springframework.beans.factory.annotation.Value
      String alley_1(@RequestParam(name="name", required=true) String name, Model model)
 	{
 		//todo random moves
-    	//methods.randomNpcMove()
-    	//methods.initializeMapValues()
-		Integer currentMap = methods.move(name)
-		uRepo.findByName(name).setLocation(currentMap.intValue())
-		//methods.initializeNpcValues()
-		model.addAttribute("name", uRepo.findByName(name).getName())
-		model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().getMapName())
-		model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().getDescription())
-		///model.addAttribute("nps", mRepo.findById(currentMap.intValue()).getNpcs())
-		//model.addAttribute("users", mRepo.findById(currentMap.intValue()).getUsers())   
-		model.addAttribute("npcs", methods.ShowNpcsInLocation(currentMap.intValue()))
-		model.addAttribute("users", methods.ShowUsersInLocation(currentMap.intValue()))
+    	//darknessUtils.randomNpcMove()
+    	//darknessUtils.initializeMapValues()
+		Integer currentMap = darknessUtils.move(name)
+		uRepo.findByUserName(name).userLocation(currentMap.intValue())
+		//darknessUtils.initializeNpcValues()
+		model.addAttribute("name", name)
+		model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
+		model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
+		///model.addAttribute("nps", mRepo.findById(currentMap.intValue()).)
+		//model.addAttribute("users", mRepo.findById(currentMap.intValue()).getUsers())
+		//todo show npcs
+		model.addAttribute("npcs", darknessUtils.ShowNpcsInLocation(currentMap.intValue()))
+		//todo show npcs
+		model.addAttribute("users", darknessUtils.ShowUsersInLocation(currentMap.intValue()))
 		model.addAttribute("location", currentMap)  
 		return "template_1"
     }
