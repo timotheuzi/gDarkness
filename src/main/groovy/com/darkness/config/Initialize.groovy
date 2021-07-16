@@ -1,4 +1,4 @@
-package com.darkness.config
+/*package com.darkness.config
 
 
 import  org.springframework.beans.factory.annotation.Autowired
@@ -18,11 +18,11 @@ import com.darkness.db.MapRepo
 import com.darkness.db.NpcDB
 import com.darkness.db.NpcRepo
 import com.darkness.db.UserRepo
-import com.darkness.utils.Methods
+import com.darkness.utils.DarknessUtils
 import com.darkness.utils.DarknessConstants
 
 
-@Configuration
+/*@Configuration
 class Initialize<config> {
 
     @Autowired
@@ -32,7 +32,7 @@ class Initialize<config> {
     MapRepo maprepo
 
     @Autowired
-    Methods Methods
+    DarknessUtils Methods
 
     @Autowired
     ItemsRepo itemsRepos
@@ -45,8 +45,9 @@ class Initialize<config> {
     //#############################################################################
     //#####################
 
-    @Bean void initializeMapValues() { System.out.println("does this fire") + Methods.initializeItemValues() }
+    //@Bean void initializeMapValues() { System.out.println("does this fire") + Methods.initializeItemValues() }
 
-    @Bean void initializeItemValues() { Methods.initializeItemValues() }
+    //@Bean void initializeItemValues() { Methods.initializeItemValues() }
 
-    @Bean void initializeNpcValues() { Methods.initializeNpcValues() } }
+    //@Bean void initializeNpcValues() { Methods.initializeNpcValues() }
+}*/

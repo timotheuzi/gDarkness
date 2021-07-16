@@ -20,16 +20,13 @@
 				<td class="name" id=${instance.key} th:value="${instance.key}" th:text="${instance.value}"></td>
 			</tr></span> 
 			<br /><br />
-		
-<<<<<<< HEAD
-		<input class="textBox" id="textBox" type="text" width="50px"/><br />
-		<input id="template2" type="button" onclick="variousInput()" width="15px" value="Various input" />
-		<input id="template" type="button" onclick="updateStatus()" width="15px" value="update test" />
-=======
-		<input class="textBox" id="textBox" type="text" width="50px" value="" />
-		<input id="template" type="button" onclick="updateStatus()" width="15px" value="update manual" />
-		<input id="template2" type="button" onclick="variousInput()" width="15px" value="go" />
->>>>>>> 00a4df44c44c7201fd87caef79555a59f2006dc3
+		<input class="textBox" id="textBox_1" type="text" width="50px"/><br />
+		<input id="template_1" type="button" onclick="variousInput()" width="15px" value="Various input" />
+		<input id="template_2" type="button" onclick="updateStatus()" width="15px" value="update test" />
+
+		<input class="textBox" id="textBox_2" type="text" width="50px" value="" />
+		<input id="template_3" type="button" onclick="updateStatus()" width="15px" value="update manual" />
+		<input id="template_4" type="button" onclick="variousInput()" width="15px" value="go" />
 	</div>
 	<div class="output" id="output"></div><br />
 	<script type="text/javascript" th:src="@{js/jquery-3.3.1.js}" /></script>
