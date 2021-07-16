@@ -39,7 +39,7 @@ class ControllerClass<TemplateController> {
 	TemplateController tempController
 
 	@RequestMapping(method = RequestMethod.GET, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
-	 String createNewUser(@RequestParam(name = "name", required = true) String name) {
+	 createNewUser(@RequestParam(name = "name", required = true) String name) {
 
 		if (Methods.createNewUser(name)) {
 			return "New User Created name " + name + " created...."
@@ -49,7 +49,7 @@ class ControllerClass<TemplateController> {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/setUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	 String setUser(@RequestParam(name = "name", required = true) String name,
+	 setUser(@RequestParam(name = "name", required = true) String name,
 						  @RequestParam(name = "lvl", required = false) Integer lvl,
 						  @RequestParam(name = "money", required = false) Integer money,
 						  @RequestParam(name = "exp", required = false) Integer exp,
@@ -58,61 +58,51 @@ class ControllerClass<TemplateController> {
 						  @RequestParam(name = "description", required = false) String description,
 						  @RequestParam(name = "location", required = false) Integer location,
 						  @RequestParam(name = "hp", required = false) Integer hp) {
-
-		repository.findByName(name)
-		int id = repository.findByName(name).getId()
-
+		repository.findByUserName(name)
+		int id = repository.findByUserName(name).id
 		UserDB newEntry = new UserDB()
-		newEntry.setId(id)
-		newEntry.setName(name)
+		newEntry.id = id
+		newEntry.userName(name)
 		if (lvl != null) {
-			newEntry.setLvl(lvl)
+			newEntry.userLvl(lvl)
 		} else {
-			newEntry.setLvl(repository.findByName(name).getLvl())
+			newEntry.userLvl(repository.findByUserName(name))
 		}
-
 		if (money != null) {
-			newEntry.setMoney(money)
+			newEntry.userMoney(money)
 		} else {
-			newEntry.setMoney(repository.findByName(name).getMoney())
+			newEntry.userMoney(repository.findByUserName(name).userMoney)
 		}
-
 		if (exp != null) {
-			newEntry.setExp(exp)
+			newEntry.userExp(exp)
 		} else {
-			newEntry.setExp(repository.findByName(name).getExp())
+			newEntry.userExp(repository.findByUserName(name).userExp)
 		}
-
 		if (attack != null) {
-			newEntry.setAttack(attack)
+			newEntry.userAttack(attack)
 		} else {
-			newEntry.setAttack(repository.findByName(name).getAttack())
+			newEntry.userAttack(repository.findByUserName(name).userAttack)
 		}
-
 		if (defense != null) {
-			newEntry.setDefense(defense)
+			newEntry.userDefense(defense)
 		} else {
-			newEntry.setDefense(repository.findByName(name).getDefense())
+			newEntry.userDefense(repository.findByUserName(name).userDefense)
 		}
-
 		if (description != null) {
-			newEntry.setDescription(description)
+			newEntry.userDescription(description)
 		} else {
-			newEntry.setDescription(repository.findByName(name).getDescription())
+			newEntry.userDescription(repository.findByUserName(name).userDescription)
 		}
-
 		if (location != null) {
-			newEntry.setLocation(location)
+			newEntry.userLocation(location)
 		} else {
-			newEntry.setDescription(repository.findByName(name).getDescription())
+			newEntry.userLocation(repository.findByUserName(name).userLocation)
 		}
-
 		if (hp != null) {
-			newEntry.setLocation(hp)
+			newEntry.userHp(hp)
 		} else {
-			newEntry.setHp(repository.findByName(name).getHp())
+			newEntry.userHp(repository.findByUserName(name).userHp)
 		}
-
 		repository.save(newEntry)
 		return newEntry.toString()
 	}
@@ -128,7 +118,6 @@ class ControllerClass<TemplateController> {
 		info = Methods.getStats(name, userNpc)
 		return info
 	}
-
 	/*
 	 * @GetMapping("/CountUsers")  Integer findAll(){
 	 *

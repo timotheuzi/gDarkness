@@ -1,13 +1,6 @@
 package com.darkness.utils
 
 import com.darkness.controller.TemplateController
-import java.io.StringWriter
-import java.util.HashMap
-import java.util.HashSet
-import java.util.Iterator
-import java.util.Map
-import java.util.Random
-import java.util.Set
 import com.darkness.db.UserRepo
 import com.darkness.db.ItemsDB
 import com.darkness.db.ItemsRepo
@@ -20,35 +13,25 @@ import com.darkness.db.CacheRepo
 import com.darkness.db.CacheDB
 import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.ui.Model
 
  class DarknessUtils {
-
 	@Autowired
 	UserRepo userRepos
-
 	@Autowired
 	MapRepo mapRepos
-
 	@Autowired
 	ItemsRepo itemsRepos
-
 	@Autowired
 	NpcRepo npcRepos
-
 	@Autowired
 	CacheRepo cacheRepos
-
 	@Autowired
 	TemplateController templateController
-
 	//  Integer mapCount = 0
 	// private Integer npcCount = 0
 	// private Integer itemCount = 0
 	// private Integer items, npcs, users, attack, defense
 	// private String name, description
-
 	private String map_0 = "An empty bar"
 	private String map_1 = "A dark street corner"
 	private String map_2 = "A dark alley"
@@ -259,7 +242,7 @@ import org.springframework.ui.Model
 		Double npcToMove = Math.random() * ((CountNpcs()))
 		int temp = npcToMove.intValue()
 		npcRepos.findById(temp)       //.get().setLocation(location.intValue())
-		userRepos.findByName(name).setLocation(location.intValue())
+		userRepos.findByUserName(name).userLocation(location.intValue())
 		// Model model = null
 		// templateController.template_1(name, model)
 		return location.intValue()
@@ -283,7 +266,7 @@ import org.springframework.ui.Model
 			count++
 		}
 		for (CacheDB cacheDB : cacheRepos.findAll()) {
-			mapObj.put(count, cacheDB.getCurrentStatis())
+			mapObj.put(count, cacheDB.cacheCurrentRoomStatus())
 			count++
 		}
 
@@ -292,19 +275,19 @@ import org.springframework.ui.Model
 
 	//// get individual user or npc
 	 String getUserByName(String name) {
-		return userRepos.findByName(name).getName()
+		return userRepos.findByUserName(name)
 	}
 
 	 String getNpcByName(String name) {
-		return npcRepos.findByName(name).getName()
+		return npcRepos.findByNpcName(name)
 	}
 
 	 String getUserByIndex(Integer index) {
-		return userRepos.findById(index).get().getName()
+		return userRepos.findById(index)
 	}
 
 	 String getNpcByIndex(Integer index) {
-		return npcRepos.findById(index).get().getName()
+		return npcRepos.findById(index)
 	}
 
 	 String getStatus(String where) {
@@ -313,19 +296,19 @@ import org.springframework.ui.Model
 
 	 Map findUserStatsByName(String name) throws JSONException {
 		HashMap userObj = new HashMap()
-
 		try {
-			userObj.put("name", userRepos.findByName(name).getName())
-			userObj.put("attack", userRepos.findByName(name).getAttack())
-			userObj.put("defense", userRepos.findByName(name).getDefense())
-			userObj.put("description", userRepos.findByName(name).getDescription())
-			userObj.put("exp", userRepos.findByName(name).getExp())
-			userObj.put("hp", userRepos.findByName(name).getHp())
-			userObj.put("location", userRepos.findByName(name).getLocation())
-			userObj.put("lvl", userRepos.findByName(name).getLvl())
-			userObj.put("money", userRepos.findByName(name).getMoney())
-			userObj.put("name", userRepos.findByName(name).getName())
-		} catch (Exception e) {
+			userObj.put("name", name)
+			userObj.put("attack", userRepos.findByUserName(name).userAttack)
+			userObj.put("defense", userRepos.findByUserName(name).userDefense)
+			userObj.put("description", userRepos.findByUserName(name).userDescription)
+			userObj.put("exp", userRepos.findByUserName(name).userExp)
+			userObj.put("hp", userRepos.findByUserName(name).userHp)
+			userObj.put("location", userRepos.findByUserName(name).userLocation)
+			userObj.put("lvl", userRepos.findByUserName(name).userLvl)
+			userObj.put("money", userRepos.findByUserName(name).userMoney)
+			userObj.put("name", userRepos.findByUserName(name).userName)
+		}
+		catch (Exception e) {
 			e.printStackTrace()
 			return (HashMap) userObj.put("error", e.toString())
 		}
@@ -336,7 +319,7 @@ import org.springframework.ui.Model
 		Random rand = new Random()
 		String vocals = "aeiou" + "ioaeu" + "ouaei"
 		String cons = "bcdfghjklznpqrst" + "bcdfgjklmnprstvw" + "bcdfgjklmnprst"
-		// String allchars = vocals + cons
+		//String allchars = vocals + cons
 		int length = rand.nextInt(8)
 		if (length < 3)
 			length = 3
@@ -372,8 +355,8 @@ import org.springframework.ui.Model
 
 	void updateCache(Integer location, String msg) {
 		CacheDB newCacheEntry = new CacheDB()
-		newCacheEntry.setCurrentStatus(msg)
-		newCacheEntry.setMapName("map_" + location)
+		newCacheEntry.cacheCurrentRoomStatus(msg)
+		newCacheEntry.cacheMapName("map_" + location)
 		cacheRepos.save(newCacheEntry)
 		// return Methods.getNpcByIndex(index)
 	}

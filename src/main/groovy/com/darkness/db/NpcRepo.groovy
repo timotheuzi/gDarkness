@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository
 //import com.darkness.db.npcDB
 
 interface NpcRepo extends CrudRepository<NpcDB, Integer> {
-	NpcDB findByNpcName(String name)
+	NpcDB findByNpcName(String npcName)
 	//NpcDB findByNpcLocation(Integer location)
-	NpcDB setNpcLocation(String npcName, Integer npcLocation)
+	NpcDB findByNpcLocation(Integer npcLocation)
 }
