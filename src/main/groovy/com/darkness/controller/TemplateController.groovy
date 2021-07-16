@@ -35,6 +35,7 @@ import org.springframework.beans.factory.annotation.Value
 	@RequestMapping("/")
     String index()
 	{
+		//todo random moves
 		methods.initializeMapValues()
 		methods.initializeItemValues()
 		methods.initializeNpcValues()
@@ -65,15 +66,16 @@ import org.springframework.beans.factory.annotation.Value
     @GetMapping("/home")
      String home(@RequestParam(name="name", required=false) String name, Model model) 
 	{
-    	methods.randomNpcMove()
+		//todo random moves
+    	//methods.randomNpcMove()
 		Integer currentMap = null
 			//methods.initializeMapValues()
 		//String userName = uRepo.findByName(name).getName()
-		currentMap = mRepo.findById(1).get().getId()//Math.random() * ((methods.CountMaps() - 1) + 1)
+		currentMap = mRepo.findById(1).get()
 		//uRepo.findByName(name).setLocation()
-		model.addAttribute("name", uRepo.findByName(name).getName())
-		model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().getMapName())
-		model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().getDescription())
+		model.addAttribute("name", name)
+		model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
+		model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
 		model.addAttribute("npcs", methods.ShowNpcsInLocation(currentMap))
 		model.addAttribute("users", methods.ShowUsersInLocation(currentMap))   
 		model.addAttribute("location", currentMap)   
@@ -82,7 +84,8 @@ import org.springframework.beans.factory.annotation.Value
     @GetMapping("/alley_1")
      String alley_1(@RequestParam(name="name", required=true) String name, Model model)
 	{
-    	methods.randomNpcMove()
+		//todo random moves
+    	//methods.randomNpcMove()
     	//methods.initializeMapValues()
 		Integer currentMap = methods.move(name)
 		uRepo.findByName(name).setLocation(currentMap.intValue())
