@@ -51,3 +51,47 @@ obj/
 .gradle/
 build/
 ####end something borrowed
+
+
+/target
+/build
+.gradle#
+.idea*
+gradle*
+# testing
+.gradle/vcs-1/gc.properties
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+#.clover
+.clover#
+### STS ###
+.apt_generated
+#.classpath
+#.factorypath
+#.project
+#.project
+#.settings
+.springBeans
+.sts4-cache
+.mvn
+*.gradle/
+*.gradle
+*.gradle/vcs-1
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+java_pid*
+*.log
+*iml
+*.idea
+*.txt
+.txt
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
