@@ -59,21 +59,11 @@ build/
 .idea*
 gradle*
 # testing
-.gradle/vcs-1/*.properties
-gradle/wrapper/*-wrapper.jar
-gradle/wrapper/*-wrapper.properties
+/.gradle/*
+/gradle/*
 #.clover
 .clover#
-### STS ###
-.apt_generated
-#.classpath
-#.factorypath
-#.project
-#.project
-#.settings
-.springBeans
-.sts4-cache
-.mvn
+
 *.gradle/
 *.gradle
 *.gradle/vcs-1
@@ -88,6 +78,7 @@ java_pid*
 *.idea
 *.txt
 .txt
+.jar
 ### NetBeans ###
 /nbproject/private/
 /build/
