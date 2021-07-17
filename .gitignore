@@ -1,8 +1,8 @@
 /target
 /build
 .gradle#
-.idea
-gradle
+.idea*
+gradle*
 # testing
 .gradle/vcs-1
 gradle/wrapper
