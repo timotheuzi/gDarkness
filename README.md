@@ -1,1 +1,1 @@
-# groovy microservice outline
+# groovy microservice outline (learning tool)
