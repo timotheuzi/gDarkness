@@ -36,47 +36,18 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
-####end something borrowed
 
-
-/target
-/build
-.gradle#
-.idea*
-gradle*
-# testing
-.gradle/vcs-1
-gradle/wrapper
-#.clover
-.clover#
-### STS ###
-.apt_generated
-#.classpath
-#.factorypath
-#.project
-#.project
-#.settings
-.springBeans
-.sts4-cache
-.mvn
-*.gradle/
-*.gradle
-*.gradle/vcs-1
-### IntelliJ IDEA ###
-.idea
-*.iws
 *.iml
-*.ipr
-java_pid*
-*.log
-*iml
-*.idea
-*.txt
-.txt
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# Ignore gradle files
+.gradle/
+build/
+####end something borrowed
