@@ -59,9 +59,8 @@ build/
 .idea*
 gradle*
 # testing
-.gradle/vcs-1/*.properties
-gradle/wrapper/*-wrapper.jar
-gradle/wrapper/*-wrapper.properties
+/.gradle/*
+/gradle/*
 #.clover
 .clover#
 ### STS ###
