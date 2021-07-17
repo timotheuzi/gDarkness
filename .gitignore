@@ -1,11 +1,10 @@
-/target/
-/build/
-.gradle*
-.idea/
-gradle/
+/target
+/build
+.gradle#
+.idea
+gradle
 # testing
 .gradle/vcs-1
-.idea/
 gradle/wrapper
 #.clover
 .clover#
