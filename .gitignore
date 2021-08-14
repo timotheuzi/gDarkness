@@ -26,7 +26,6 @@ Thumbs.db
 # Android Studio
 *.iml
 .idea
-#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
 .navigation
@@ -36,41 +35,31 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
-
-*.iml
-.gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
-.DS_Store
 /build
 /captures
-.externalNativeBuild
 
 # Ignore gradle files
 .gradle/
-build/
 ####end something borrowed
 
 
 /target
-/build
 .gradle#
 .idea*
 gradle*
 # testing
 /.gradle/*
 /gradle/*
-#.clover
 .clover#
 
 *.gradle/
 *.gradle
 *.gradle/vcs-1
 ### IntelliJ IDEA ###
-.idea
 *.iws
-*.iml
 *.ipr
 java_pid*
 *.log
@@ -79,10 +68,3 @@ java_pid*
 *.txt
 .txt
 .jar
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
