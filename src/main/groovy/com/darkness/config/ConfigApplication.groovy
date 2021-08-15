@@ -1,4 +1,4 @@
-package com.darkness.config
+/*package com.darkness.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -13,4 +13,4 @@ class ConfigApplication<config> {
     // ##################################################################################################
 
 
-}
+}*/

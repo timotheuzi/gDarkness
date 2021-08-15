@@ -1,6 +1,6 @@
 package com.darkness.db
 
-import jdk.nashorn.internal.objects.annotations.Getter
+//import jdk.nashorn.internal.objects.annotations.Getter
 import lombok.Setter
 import lombok.Getter
 
