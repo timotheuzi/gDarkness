@@ -1,47 +1,55 @@
-package com.darkness.run
-
-import java.util.HashMap
-import java.util.Iterator
-import java.util.Map
+package com.darkness.controller
 
 import org.json.JSONException
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-
 import com.darkness.db.CacheRepo
-import com.darkness.db.MapDB
 import com.darkness.db.MapRepo
 import com.darkness.db.UserDB
 import com.darkness.db.UserRepo
+import com.darkness.db.NpcRepo
 import com.darkness.utils.DarknessUtils
-
-/**
- * In game controller endpoints Author: Timotheuzi
- */
+import org.springframework.beans.factory.annotation.Autowired
 
 @RestController
-class ControllerClass<TemplateController> {
+ class EngineAPIs {
 
+	/*@Value("${hello}")
+	String temp = this.toString()*/
+	@Autowired
+	UserRepo uRepo
+	@Autowired
+	MapRepo mRepo
+	@Autowired
+	NpcRepo nRepo
+	@Autowired
+	DarknessUtils darknessUtils
 	@Autowired
 	UserRepo repository
 	@Autowired
-	MapRepo maprepo
-	@Autowired
-	DarknessUtils Methods
-	@Autowired
 	CacheRepo cacheRepos
-	@Autowired
-	TemplateController tempController
+	//@Autowired
+	//DarknessUtils darknessUtils
+	//@Autowired
+	//TemplateController tempController
 
+	@GetMapping("/")
+    String index()
+	{
+		//todo random moves
+		darknessUtils.initializeMapValues()
+		darknessUtils.initializeItemValues()
+		darknessUtils.initializeNpcValues()
+	    return "index re-init for you"
+	}
 	@RequestMapping(method = RequestMethod.GET, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
-	 createNewUser(@RequestParam(name = "name", required = true) String name) {
+	createNewUser(@RequestParam(name = "name", required = true) String name) {
 
-		if (Methods.createNewUser(name)) {
+		if (darknessUtils.createNewUser(name)) {
 			return "New User Created name " + name + " created...."
 		} else {
 			return "User already exists, logging in using " + name + " and redirect to home"
@@ -49,15 +57,15 @@ class ControllerClass<TemplateController> {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/setUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	 setUser(@RequestParam(name = "name", required = true) String name,
-						  @RequestParam(name = "lvl", required = false) Integer lvl,
-						  @RequestParam(name = "money", required = false) Integer money,
-						  @RequestParam(name = "exp", required = false) Integer exp,
-						  @RequestParam(name = "attack", required = false) Integer attack,
-						  @RequestParam(name = "defense", required = false) Integer defense,
-						  @RequestParam(name = "description", required = false) String description,
-						  @RequestParam(name = "location", required = false) Integer location,
-						  @RequestParam(name = "hp", required = false) Integer hp) {
+	setUser(@RequestParam(name = "name", required = true) String name,
+			@RequestParam(name = "lvl", required = false) Integer lvl,
+			@RequestParam(name = "money", required = false) Integer money,
+			@RequestParam(name = "exp", required = false) Integer exp,
+			@RequestParam(name = "attack", required = false) Integer attack,
+			@RequestParam(name = "defense", required = false) Integer defense,
+			@RequestParam(name = "description", required = false) String description,
+			@RequestParam(name = "location", required = false) Integer location,
+			@RequestParam(name = "hp", required = false) Integer hp) {
 		repository.findByUserName(name)
 		int id = repository.findByUserName(name).id
 		UserDB newEntry = new UserDB()
@@ -108,14 +116,14 @@ class ControllerClass<TemplateController> {
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/getFullInformation", produces = MediaType.APPLICATION_JSON_VALUE)
-	 Map getFullInformation(@RequestParam(name = "name", required = true) String name,
-								  @RequestParam(name = "user", required = false, defaultValue = "user") String user) {
+	Map getFullInformation(@RequestParam(name = "name", required = true) String name,
+						   @RequestParam(name = "user", required = false, defaultValue = "user") String user) {
 		Map<String, Integer> info = new HashMap<String, Integer>()
 		Boolean userNpc = true
 		if (user.contains("npc")) {
 			userNpc = false
 		}
-		info = Methods.getStats(name, userNpc)
+		info = darknessUtils.getStats(name, userNpc)
 		return info
 	}
 	/*
@@ -125,39 +133,39 @@ class ControllerClass<TemplateController> {
 	 * repository.findAll()) { count++ result += userDB.getId() + "</br>" }
 	 * //Response response = new Response("Done", 1) return count // + "response"
 	 * + response }
-	 */
+
 	@GetMapping("/CountMaps")
-	 Integer CountMaps() {
+	Integer CountMaps() {
 		String result = ""
-		// MapRepo = new MapRepo
-		// List<maprepo> = maprepo
+		// mapRepo = new mapRepo
+		// List<mapRepo> = mapRepo
 		Integer count = 0
-		for (MapDB mapDB : maprepo.findAll()) {
+		for (MapDB mapDB : mapRepo.findAll()) {
 			count++
 		}
 		return count
-	}
+	}*/
 
 	@SuppressWarnings("static-access")
 	// @GetMapping("/initializeMap")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeMap", produces = MediaType.TEXT_HTML_VALUE)
-	 String initializeMap() {
+	String initializeMap() {
 		// Response response =
-		Methods.initializeMapValues()
+		darknessUtils.initializeMapValues()
 		return "Success"
 	}
 
 	// @GetMapping("/initializeNpc")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeNpc", produces = MediaType.TEXT_HTML_VALUE)
-	 String initializeNpc() {
-		Methods.initializeNpcValues()
+	String initializeNpc() {
+		darknessUtils.initializeNpcValues()
 		return "Success"
 	}
 
 	// @GetMapping("/initializeItem")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeItem", produces = MediaType.TEXT_HTML_VALUE)
-	 String initializeItem() {
-		Methods.initializeItemValues()
+	String initializeItem() {
+		darknessUtils.initializeItemValues()
 		return "Success"
 	}
 
@@ -168,7 +176,7 @@ class ControllerClass<TemplateController> {
 	// consumes
 	// =
 	// MediaType.APPLICATION_JSON_VALUE,
-	 Map various(Integer location, String value, String name) throws JSONException {
+	Map various(Integer location, String value, String name) throws JSONException {
 		// Map<String, String> map = requestForm.get(arg0)
 		// String loca = requestForms.get("location").toString()
 		// String value = requestForms.get("value").toString()
@@ -176,43 +184,43 @@ class ControllerClass<TemplateController> {
 		// Integer location = Integer.parseInt(loca)
 		if (!value.isEmpty()) {
 			value = value.replaceAll(",", "")
-			Methods.updateCache(location, value)
+			darknessUtils.updateCache(location, value)
 		}
 		Map<String, String> output = new HashMap<String, String>()
 		// output.put("msg", value)
 		// output.put("location", location.toString())
 		// cacheRepos.save(output)
 		if (value.toLowerCase().contains("move")) {
-			Methods.move(name)
-			// output.put("users", Methods.ShowUsersInLocation(location).toString())
-			// output.put("npcs", Methods.ShowNpcsInLocation(location).toString())
-			// output.put("description", maprepo.findById(location).get().getDescription())
+			darknessUtils.move(name)
+			// output.put("users", darknessUtils.ShowUsersInLocation(location).toString())
+			// output.put("npcs", darknessUtils.ShowNpcsInLocation(location).toString())
+			// output.put("description", mapRepo.findById(location).get().getDescription())
 
 			// Model model = null
 			// tempController.template_1(name, model)
 			return output
 		} else if (value.toLowerCase().contains("inv")
-				&& value.toLowerCase().contains(Methods.ShowNpcsInLocation(location).toString())) {
-			Iterator it = Methods.ShowNpcsInLocation(location).entrySet().iterator()
+				&& value.toLowerCase().contains(darknessUtils.ShowNpcsInLocation(location).toString())) {
+			Iterator it = darknessUtils.ShowNpcsInLocation(location).entrySet().iterator()
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next()
 				if (value.contains(pair.getValue().toString())) {
-					return Methods.getStats(pair.getValue().toString(), false)
+					return darknessUtils.getStats(pair.getValue().toString(), false)
 				}
 				it.remove() // avoids a ConcurrentModificationException
 			}
 		} else if (value.toLowerCase().contains("inv")
-				&& value.toLowerCase().contains(Methods.ShowUsersInLocation(location).toString())) {
-			Iterator it = Methods.ShowUsersInLocation(location).entrySet().iterator()
+				&& value.toLowerCase().contains(darknessUtils.ShowUsersInLocation(location).toString())) {
+			Iterator it = darknessUtils.ShowUsersInLocation(location).entrySet().iterator()
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next()
 				if (value.contains(pair.getValue().toString())) {
-					return Methods.getStats(pair.getValue().toString(), true)
+					return darknessUtils.getStats(pair.getValue().toString(), true)
 				}
 				it.remove() // avoids a ConcurrentModificationException
 			}
 		} else if (value.toLowerCase().contains("inv")) {
-			return Methods.getStats(name, true)
+			return darknessUtils.getStats(name, true)
 		} else {
 			output.put("msg", "No implementation for that string yet")
 			return output
@@ -223,31 +231,29 @@ class ControllerClass<TemplateController> {
 
 	// @GetMapping("/updateRoom")
 	@RequestMapping(method = RequestMethod.GET, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
-	 Map updateRoom(@RequestParam(name = "mapIndex", required = false) Integer mapIndex) {
+	Map updateRoom(@RequestParam(name = "mapIndex", required = false) Integer mapIndex) {
 		if (mapIndex != null) {
-			return Methods.mapStatus(mapIndex)
+			return darknessUtils.mapStatus(mapIndex)
 		} else {
 
-			return Methods.mapStatus(mapIndex)
+			return darknessUtils.mapStatus(mapIndex)
 		}
 	}
 
 	// @GetMapping("/findUserName")
 	@RequestMapping(method = RequestMethod.GET, path = "/findUserByIndex", produces = MediaType.APPLICATION_JSON_VALUE)
-	 String findUserByIndex(@RequestParam(name = "index", required = true) Integer index) {
-		// int[] updateRoom = Methods.mapStatus(location)
-		return Methods.getUserByIndex(index)
+	String findUserByIndex(@RequestParam(name = "index", required = true) Integer index) {
+		// int[] updateRoom = darknessUtils.mapStatus(location)
+		return darknessUtils.getUserByIndex(index)
 	}
 
 	// @GetMapping("/findNpcName")
 	@RequestMapping(method = RequestMethod.GET, path = "/findNpcByIndex", produces = MediaType.APPLICATION_JSON_VALUE)
-	 String findNpcByIndex(@RequestParam(name = "index", required = true) Integer index) {
-		// int[] updateRoom = Methods.mapStatus(location)
-		return Methods.getNpcByIndex(index)
+	String findNpcByIndex(@RequestParam(name = "index", required = true) Integer index) {
+		// int[] updateRoom = darknessUtils.mapStatus(location)
+		return darknessUtils.getNpcByIndex(index)
 	}
-
 	// @GetMapping("/findNpcName")
-
 	/*
 	 * @RequestMapping(method = RequestMethod.GET, path = "/saveCookie", produces =
 	 * MediaType.APPLICATION_JSON_VALUE)  String
