@@ -1,6 +1,5 @@
 package com.darkness.utils
 
-import com.darkness.controller.TemplateController
 import com.darkness.db.UserRepo
 import com.darkness.db.ItemsDB
 import com.darkness.db.ItemsRepo
@@ -25,8 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired
 	NpcRepo npcRepos
 	@Autowired
 	CacheRepo cacheRepos
-	@Autowired
-	TemplateController templateController
+	//@Autowired
+	//TemplateController templateController
 	//  Integer mapCount = 0
 	// private Integer npcCount = 0
 	// private Integer itemCount = 0
@@ -36,7 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired
 	private String map_1 = "A dark street corner"
 	private String map_2 = "A dark alley"
 
-	private String npc_0 = "Burly Bartender"
+	private String npc_0 = "Surly Bartender"
 	private String npc_1 = "Vagrant"
 
 	private String item_1 = "sterling silver"
@@ -45,7 +44,7 @@ import org.springframework.beans.factory.annotation.Autowired
 		Integer mapCount = CountMaps()
 		MapDB mapDB = new MapDB()
 		mapDB("map_" + (CountMaps() + 1))
-	if (CountMaps() == 0) {
+		if (CountMaps() == 0) {
 			mapDB.mapDescription(map_0)
 		} else if ((CountMaps() & 1) == 0) {
 			mapDB.mapDescription(map_1)
