@@ -20,5 +20,4 @@ class NpcDB {
     public Integer npcDefense
     public Integer npcLocation
     public Integer npcHp
-
 }
