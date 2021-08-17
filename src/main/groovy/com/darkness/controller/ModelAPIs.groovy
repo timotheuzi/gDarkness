@@ -17,8 +17,6 @@ class ModelAPIs {
 
     @Autowired
     UserRepo uRepo
-    @Autowired
-    UserDB userDB
 
     @Autowired
     MapRepo mRepo
@@ -32,20 +30,19 @@ class ModelAPIs {
     @GetMapping("/greeting")
     String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model)
     {
-
         model.addAttribute("name", name)
-        UserDB newEntry = new UserDB()
-		newEntry.id
+
+        UserDB tempEntry = new UserDB()
         if (!uRepo.findByUserName(name))
         {
-        	newEntry.userName(name)
-        	newEntry.userLvl(1)
-        	newEntry.userMoney(1)
-        	newEntry.userExp(1)
-        	newEntry.userAttack(1)
-        	newEntry.userDefense(1)
-        	newEntry.userDescription("A weak noob with no weapon")
-        	newEntry.userLocation(1)
+            tempEntry.userName(name)
+            tempEntry.userLvl(1)
+            tempEntry.userMoney(1)
+            tempEntry.userExp(1)
+            tempEntry.userAttack(1)
+            tempEntry.userDefense(1)
+            tempEntry.userDescription("A weak noob with no weapon")
+            tempEntry.userLocation(1)
         	uRepo.save(newEntry)
         }
         return "greeting"
@@ -64,8 +61,8 @@ class ModelAPIs {
         model.addAttribute("name", name)
         model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
         model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
-        model.addAttribute("npcs", darknessUtils.ShowNpcsInLocation(currentMap))
-        model.addAttribute("users", darknessUtils.ShowUsersInLocation(currentMap))
+        model.addAttribute("npcs", utils.ShowNpcsInLocation(currentMap))
+        model.addAttribute("users", utils.ShowUsersInLocation(currentMap))
         model.addAttribute("location", currentMap)
         return "home"
     }
@@ -75,7 +72,7 @@ class ModelAPIs {
         //todo random moves
         //darknessUtils.randomNpcMove()
         //darknessUtils.initializeMapValues()
-        Integer currentMap = darknessUtils.move(name)
+        Integer currentMap = utils.move(name)
         uRepo.findByUserName(name).userLocation(currentMap.intValue())
         //darknessUtils.initializeNpcValues()
         model.addAttribute("name", name)
@@ -84,9 +81,9 @@ class ModelAPIs {
         ///model.addAttribute("nps", mRepo.findById(currentMap.intValue()).)
         //model.addAttribute("users", mRepo.findById(currentMap.intValue()).getUsers())
         //todo show npcs
-        model.addAttribute("npcs", darknessUtils.ShowNpcsInLocation(currentMap.intValue()))
+        model.addAttribute("npcs", utils.ShowNpcsInLocation(currentMap.intValue()))
         //todo show npcs
-        model.addAttribute("users", darknessUtils.ShowUsersInLocation(currentMap.intValue()))
+        model.addAttribute("users", utils.ShowUsersInLocation(currentMap.intValue()))
         model.addAttribute("location", currentMap)
         return "alley_1"
     }
