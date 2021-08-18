@@ -32,9 +32,9 @@ class ModelAPIs {
     String index()
     {
         //todo random moves
-        //darknessUtils.initializeMapValues()
-        //utils.initializeItemValues()
-        //sutils.initializeNpcValues()
+        utils.initializeMapValues()
+        utils.initializeItemValues()
+        utils.initializeNpcValues()
         return "index"
     }
     // home map
@@ -43,11 +43,11 @@ class ModelAPIs {
     {
         //todo random moves
         //darknessUtils.randomNpcMove()
-        Integer currentMap = null
+        //currentMap = null
         //darknessUtils.initializeMapValues()
         //String userName = uRepo.findByName(name).getName()
-        currentMap = mRepo.findById(1).get()
-        //uRepo.findByName(name).setLocation()
+
+        Integer currentMap = mRepo.findById(1).get()
         model.addAttribute("name", name)
         model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
         model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
@@ -78,8 +78,8 @@ class ModelAPIs {
         return "alley_1"
     }
 
-    //todo create landing page
-    @GetMapping("/greeting")
+    //todo create greeting page
+    /*@GetMapping("/greeting")
     String greeting(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model)
     {
         model.addAttribute("name", name)
@@ -98,5 +98,5 @@ class ModelAPIs {
             uRepo.save(newEntry)
         }
         return "greeting"
-    }
+    }*/
 }

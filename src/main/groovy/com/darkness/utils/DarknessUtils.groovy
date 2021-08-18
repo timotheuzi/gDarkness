@@ -41,7 +41,6 @@ import org.springframework.beans.factory.annotation.Autowired
 	private String item_1 = "sterling silver"
 
 	 void initializeMapValues() {
-		Integer mapCount = CountMaps()
 		MapDB mapDB = new MapDB()
 		mapDB("map_" + (CountMaps() + 1))
 		if (CountMaps() == 0) {
@@ -55,21 +54,18 @@ import org.springframework.beans.factory.annotation.Autowired
 		mapDB.mapNpcs(0)
 		mapDB.mapUsers(0)
 		mapRepos.save(mapDB)
-		// mapCount++
 	}
 
 	 void initializeItemValues() {
-		Integer itemCount = 0
 		Double attack = Math.random() * ((10 - 1) + 1)
 		Double defense = Math.random() * ((5 - 1) + 1)
 		ItemsDB itemsDB = new ItemsDB()
-		itemsDB.itemName("gun	_" + itemCount.toString())
+		itemsDB.itemName("luger_" + CountItems().toString())
 		itemsDB.itemDescription(item_1)
 		itemsDB.itemAttack(attack.intValue())
 		itemsDB.itemDefense(defense.intValue())
-		// itemsDB.location(0)
+        itemsDB.itemLocation(0)
 		itemsRepos.save(itemsDB)
-		itemCount++
 	}
 
 	 void initializeNpcValues() {
@@ -79,8 +75,8 @@ import org.springframework.beans.factory.annotation.Autowired
 		NpcDB npcDB = new NpcDB()
 		if (CountNpcs() == 0) {
 			npcDB.npcName("Frank")
-			npcDB.npcDescription(npc_0)
-			npcDB.npcLocation(1)
+			npcDB.npcDescription("Stinky ")
+			npcDB.npcLocation(0)
 			npcDB.npcAttack(75)
 			npcDB.npcDefense(75)
 			npcDB.npcHp(3000)
@@ -92,17 +88,14 @@ import org.springframework.beans.factory.annotation.Autowired
 			npcDB.npcDefense(defense.intValue())
 			npcDB.npcHp(hp.intValue())
 		}
-
 		npcRepos.save(npcDB)
-		// npcCount++
-	}
+	 }
 
 	 Boolean createNewUser(String name) {
 		 if(userRepos.findByUserName(name) != null)
 		 {
 			 try {
 				 UserDB newEntry = new UserDB()
-				 // newEntry.setId(id)
 				 newEntry.userName(name)
 				 newEntry.userLvl(1)
 				 newEntry.userMoney(1)
@@ -115,14 +108,14 @@ import org.springframework.beans.factory.annotation.Autowired
 				 userRepos.save(newEntry)
 				 return true
 			 } catch (Exception e) {
-				 System.out.println("errrr")
+				 System.out.println("errrror")
 			 }
 		 }
 		 else {
 			 return false
 		 }
 
-	}
+	 }
 
 	 HashMap<String, Integer> getStats(String name, Boolean user) {
 		HashMap<String, Integer> stats = new HashMap<String, Integer>()
@@ -140,14 +133,11 @@ import org.springframework.beans.factory.annotation.Autowired
 			stats.put("defense", npcRepos.findByNpcName(name).npcDefense)
 			stats.put("hp", npcRepos.findByNpcName(name).npcHp)
 			stats.put("location", npcRepos.findByNpcName(name).npcLocation)
-			// stats.put("name", npcRepos.findByName(name).)
 		}
 		return stats
 	}
 
-	// counters
 	 Integer CountMaps() {
-		// String result = ""
 		Integer count = 0
 		for (MapDB mapDB : mapRepos.findAll()) {
 			count++
@@ -155,13 +145,13 @@ import org.springframework.beans.factory.annotation.Autowired
 		return count
 	}
 
-	 Integer CountUsers() {
+	 /*Integer CountUsers() {
 		Integer count = 0
 		for (UserDB userdb : userRepos.findAll()) {
 			count++
 		}
 		return count // + "response" + response
-	}
+	}*/
 
 	 Integer CountItems() {
 		Integer count = 0
@@ -306,9 +296,9 @@ import org.springframework.beans.factory.annotation.Autowired
 			return (HashMap) userObj.put("error", e.toString())
 		}
 		return userObj
-	}
+	 }
 
-	static String getMeAgoodName() {
+	 String getMeAgoodName() {
 		Random rand = new Random()
 		String vocals = "aeiou" + "ioaeu" + "ouaei"
 		String cons = "bcdfghjklznpqrst" + "bcdfgjklmnprstvw" + "bcdfgjklmnprst"
