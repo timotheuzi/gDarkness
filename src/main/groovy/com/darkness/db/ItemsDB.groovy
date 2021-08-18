@@ -20,5 +20,5 @@ class ItemsDB {
     public String itemDescription
     public Integer itemAttack
     public Integer itemDefense
-
+    public Integer itemLocation
 }

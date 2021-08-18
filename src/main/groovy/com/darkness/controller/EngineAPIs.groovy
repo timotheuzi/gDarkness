@@ -2,6 +2,7 @@ package com.darkness.controller
 
 import org.json.JSONException
 import org.springframework.http.MediaType
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
@@ -15,7 +16,7 @@ import com.darkness.db.NpcRepo
 import com.darkness.utils.DarknessUtils
 import org.springframework.beans.factory.annotation.Autowired
 
-@RestController
+@Controller
  class EngineAPIs {
 
 	/*@Value("${hello}")
@@ -37,15 +38,6 @@ import org.springframework.beans.factory.annotation.Autowired
 	//@Autowired
 	//TemplateController tempController
 
-	@GetMapping("/")
-    String index()
-	{
-		//todo random moves
-		darknessUtils.initializeMapValues()
-		darknessUtils.initializeItemValues()
-		darknessUtils.initializeNpcValues()
-	    return "index re-init for you"
-	}
 	@RequestMapping(method = RequestMethod.GET, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
 	createNewUser(@RequestParam(name = "name", required = true) String name) {
 

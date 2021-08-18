@@ -1,10 +1,10 @@
  	//updates on a scheduled to update statuses
-	//window.setInternal(function()
-	//{
-	  //  updateStatus()
+	window.setInternal(function()
+	{
+	  updateStatus()
 	    
-	//}, 50000)
-	//setInterval(function(){ updateStatus }, 3000)
+	}, 50000)
+	setInterval(function(){ updateStatus }, 3000)
 	
 	function ajaxTest()
 	{
@@ -18,7 +18,7 @@
 		
 		$.ajax({
         type: 'GET',
-        url: "/darkness/various",
+        url: "/the_alley/various",
         data: JSON.stringify(tempParams),
         async: false,
         beforeSend: function (xhr) 
@@ -61,12 +61,12 @@
 			
 			if (textBox.toUpperCase().indexOf("MOVE") >= 0)
 			{
-				Redirect(encodeURI("/darkness/template_1?name=" + name))
+				Redirect(encodeURI("/the_alley/template_1?name=" + name))
 				updateStatus()
 			}
 			else
 			{
-				var url = "/darkness/various"
+				var url = "/the_alley/various"
 				$.ajax({
 					//url: encodeURI(url + "?location=" + current_location + "&name=" + name + "&value=" + textBox),
 					url: encodeURI(url),
@@ -103,7 +103,7 @@
 					if(resp == 'move')
 					{
 						alert('FRED')
-						//Redirect(encodeURI("/darkness/template_1?name=" + name))
+						//Redirect(encodeURI("/the_alley/template_1?name=" + name))
 					}
 				})
 	}
@@ -116,7 +116,7 @@
 			var name = $('#name').val()
 			var current_location = $('#location').val()
 			var textBox = $('#textBox').val()
-			var url = "/darkness/updateRoom"
+			var url = "/the_alley/updateRoom"
 			$.ajax({
 				url: encodeURI(url + "&mapIndex=" + current_location),
 				}).then(function(data)
@@ -213,7 +213,7 @@
 			}).then(function(data)
 			{
 				//$('#output').val().(data))
-				Redirect(encodeURI("/darkness/home?name=" + name))
+				Redirect(encodeURI("/the_alley/home?name=" + name))
 			})
 	}
 	function init(url)
