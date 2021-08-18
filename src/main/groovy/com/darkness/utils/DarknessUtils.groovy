@@ -98,36 +98,30 @@ import org.springframework.beans.factory.annotation.Autowired
 	}
 
 	 Boolean createNewUser(String name) {
-		try {
-			UserDB result = userRepos.findByUserName(name)
-			result.userName()
-			result.userLvl()
-			result.userMoney()
-			result.userExp()
-			result.userAttack()
-			result.userDefense()
-			result.userDescription()
-			result.userLocation()
-			result.userHp()
-			String test = result.toString()
-			System.out.println("record does exist:" + test)
-			return false
-		} catch (Exception e) {
-			System.out.println("record doesnt exist, creating it")
-		}
-		UserDB newEntry = new UserDB()
-		// newEntry.setId(id)
-		newEntry.userName(name)
-		newEntry.userLvl(1)
-		newEntry.userMoney(1)
-		newEntry.userExp(1)
-		newEntry.userAttack(1)
-		newEntry.userDefense(1)
-		newEntry.userDescription("A weak vagrant with no weapon")
-		newEntry.userLocation(1)
-		newEntry.userHp(1000)
-		userRepos.save(newEntry)
-		return true
+		 if(userRepos.findByUserName(name) != null)
+		 {
+			 try {
+				 UserDB newEntry = new UserDB()
+				 // newEntry.setId(id)
+				 newEntry.userName(name)
+				 newEntry.userLvl(1)
+				 newEntry.userMoney(1)
+				 newEntry.userExp(1)
+				 newEntry.userAttack(1)
+				 newEntry.userDefense(1)
+				 newEntry.userDescription("A new user named " + name)
+				 newEntry.userLocation(1)
+				 newEntry.userHp(1000)
+				 userRepos.save(newEntry)
+				 return true
+			 } catch (Exception e) {
+				 System.out.println("errrr")
+			 }
+		 }
+		 else {
+			 return false
+		 }
+
 	}
 
 	 HashMap<String, Integer> getStats(String name, Boolean user) {

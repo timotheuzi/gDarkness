@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
-@RestController
+@Controller
 class ModelAPIs {
 
     @Autowired
@@ -27,29 +27,19 @@ class ModelAPIs {
     @Autowired
     DarknessUtils utils
 
-    @GetMapping("/greeting")
-    String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model)
+    // index page
+    @GetMapping("/")
+    String index()
     {
-        model.addAttribute("name", name)
-
-        UserDB tempEntry = new UserDB()
-        if (!uRepo.findByUserName(name))
-        {
-            tempEntry.userName(name)
-            tempEntry.userLvl(1)
-            tempEntry.userMoney(1)
-            tempEntry.userExp(1)
-            tempEntry.userAttack(1)
-            tempEntry.userDefense(1)
-            tempEntry.userDescription("A weak noob with no weapon")
-            tempEntry.userLocation(1)
-        	uRepo.save(newEntry)
-        }
-        return "greeting"
+        //todo random moves
+        //darknessUtils.initializeMapValues()
+        //utils.initializeItemValues()
+        //sutils.initializeNpcValues()
+        return "index"
     }
     // home map
     @GetMapping("/home")
-    String home(@RequestParam(name="name", required=false) String name, Model model)
+    String home(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model)
     {
         //todo random moves
         //darknessUtils.randomNpcMove()
@@ -68,7 +58,7 @@ class ModelAPIs {
     }
     // alley templates
     @GetMapping("/alley_1")
-    String alley_1(@RequestParam(name="name", required=true) String name, Model model) {
+    String alley_1(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model) {
         //todo random moves
         //darknessUtils.randomNpcMove()
         //darknessUtils.initializeMapValues()
@@ -86,5 +76,27 @@ class ModelAPIs {
         model.addAttribute("users", utils.ShowUsersInLocation(currentMap.intValue()))
         model.addAttribute("location", currentMap)
         return "alley_1"
+    }
+
+    //todo create landing page
+    @GetMapping("/greeting")
+    String greeting(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model)
+    {
+        model.addAttribute("name", name)
+
+        UserDB tempEntry = new UserDB()
+        if (!uRepo.findByUserName(name))
+        {
+            tempEntry.userName(name)
+            tempEntry.userLvl(1)
+            tempEntry.userMoney(1)
+            tempEntry.userExp(1)
+            tempEntry.userAttack(1)
+            tempEntry.userDefense(1)
+            tempEntry.userDescription("A testing object named " + name)
+            tempEntry.userLocation(1)
+            uRepo.save(newEntry)
+        }
+        return "greeting"
     }
 }
