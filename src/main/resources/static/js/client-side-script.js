@@ -1,10 +1,10 @@
  	//updates on a scheduled to update statuses
-	window.setInternal(function()
+	/*window.setInternal(function()
 	{
 	  updateStatus()
 	    
 	}, 50000)
-	setInterval(function(){ updateStatus }, 3000)
+	setInterval(function(){ updateStatus }, 3000)*/
 	
 	function ajaxTest()
 	{
