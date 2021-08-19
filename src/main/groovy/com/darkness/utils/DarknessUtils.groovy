@@ -44,28 +44,25 @@ import org.springframework.beans.factory.annotation.Autowired
 		Integer count = CountMaps()
 		MapDB mapDB = new MapDB()
 		if (count == 0) {
-			mapDB.mapName("map_" + (CountMaps() + 1))
-			mapDB.mapDescription(map_0)
+			mapDB.mapName == ("map_" + (CountMaps() + 1).toString())
+			mapDB.mapDescription == (map_0)
 		} else if ((CountMaps() & 1) == 0) {
-			mapDB.mapDescription(map_1)
+			mapDB.mapDescription == (map_1)
 		} else {
-			mapDB.mapDescription(map_2)
+			mapDB.mapDescription == (map_2)
 		}
-		mapDB.mapItems(0)
-		mapDB.mapNpcs(0)
-		mapDB.mapUsers(0)
 		mapRepos.save(mapDB)
-	}
+	 }
 
 	 void initializeItemValues() {
 		Double attack = Math.random() * ((10 - 1) + 1)
 		Double defense = Math.random() * ((5 - 1) + 1)
 		ItemsDB itemsDB = new ItemsDB()
-		itemsDB.itemName("luger_" + CountItems().toString())
-		itemsDB.itemDescription(item_1)
-		itemsDB.itemAttack(attack.intValue())
-		itemsDB.itemDefense(defense.intValue())
-        itemsDB.itemLocation(0)
+		itemsDB.itemName == ("luger_" + CountItems().toString())
+		itemsDB.itemDescription == (item_1)
+		itemsDB.itemAttack == (attack.intValue())
+		itemsDB.itemDefense == (defense.intValue())
+        itemsDB.itemLocation == (0)
 		itemsRepos.save(itemsDB)
 	}
 
@@ -75,19 +72,19 @@ import org.springframework.beans.factory.annotation.Autowired
 		Double hp = Math.random() * ((1000 - 1) + 1)
 		NpcDB npcDB = new NpcDB()
 		if (CountNpcs() == 0) {
-			npcDB.npcName("Frank")
-			npcDB.npcDescription("Stinky ")
-			npcDB.npcLocation(0)
-			npcDB.npcAttack(75)
-			npcDB.npcDefense(75)
-			npcDB.npcHp(3000)
+			npcDB.npcName == ("Frank")
+			npcDB.npcDescription == ("Stinky ")
+			npcDB.npcLocation == (0)
+			npcDB.npcAttack == (75)
+			npcDB.npcDefense == (75)
+			npcDB.npcHp == (3000)
 		} else {
-			npcDB.npcName(getMeAgoodName())
-			npcDB.npcDescription(npc_1)
-			npcDB.npcLocation(2)
-			npcDB.npcAttack(attack.intValue())
-			npcDB.npcDefense(defense.intValue())
-			npcDB.npcHp(hp.intValue())
+			npcDB.npcName == (getMeAgoodName())
+			npcDB.npcDescription == (npc_1)
+			npcDB.npcLocation == (2)
+			npcDB.npcAttack == (attack.intValue())
+			npcDB.npcDefense == (defense.intValue())
+			npcDB.npcHp == (hp.intValue())
 		}
 		npcRepos.save(npcDB)
 	 }
@@ -97,15 +94,15 @@ import org.springframework.beans.factory.annotation.Autowired
 		 {
 			 try {
 				 UserDB newEntry = new UserDB()
-				 newEntry.userName(name)
-				 newEntry.userLvl(1)
-				 newEntry.userMoney(1)
-				 newEntry.userExp(1)
-				 newEntry.userAttack(1)
-				 newEntry.userDefense(1)
-				 newEntry.userDescription("A new user named " + name)
-				 newEntry.userLocation(1)
-				 newEntry.userHp(1000)
+				 newEntry.userName == (name)
+				 newEntry.userLvl == (1)
+				 newEntry.userMoney == (1)
+				 newEntry.userExp == (1)
+				 newEntry.userAttack == (1)
+				 newEntry.userDefense == (1)
+				 newEntry.userDescription == ("A new user named " + name)
+				 newEntry.userLocation == (1)
+				 newEntry.userHp == (1000)
 				 userRepos.save(newEntry)
 				 return true
 			 } catch (Exception e) {
@@ -160,17 +157,17 @@ import org.springframework.beans.factory.annotation.Autowired
 			count++
 		}
 		return count
-	}
+		}
 
 	 Integer CountNpcs()
-	{
+	 {
 		Integer count = 0
 		for(NpcDB itemdb : npcRepos.findAll())
 		{
 				count++
 		}
 		return count
-	}
+	 }
 
 	 String CountNpcsByLocation(Integer location) {
 		StringWriter npcs = new StringWriter()

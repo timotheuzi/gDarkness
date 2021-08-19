@@ -46,35 +46,26 @@ class ModelAPIs {
         //currentMap = null
         //darknessUtils.initializeMapValues()
         //String userName = uRepo.findByName(name).getName()
-
-        Integer currentMap = mRepo.findById(1).get()
+        //String currentMap = "home"
         model.addAttribute("name", name)
-        model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
-        model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
-        model.addAttribute("npcs", utils.ShowNpcsInLocation(currentMap))
-        model.addAttribute("users", utils.ShowUsersInLocation(currentMap))
-        model.addAttribute("location", currentMap)
+        model.addAttribute("mapName", "Home Surly bar")
+        model.addAttribute("description", "dingy bar")
+        //model.addAttribute("npcs", utils.ShowNpcsInLocation(currentMap))
+        //model.addAttribute("users", utils.ShowUsersInLocation(currentMap))
+        model.addAttribute("location", "home")
         return "home"
     }
     // alley templates
     @GetMapping("/alley_1")
     String alley_1(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model) {
         //todo random moves
-        //darknessUtils.randomNpcMove()
-        //darknessUtils.initializeMapValues()
+
         Integer currentMap = utils.move(name)
         uRepo.findByUserName(name).userLocation(currentMap.intValue())
-        //darknessUtils.initializeNpcValues()
         model.addAttribute("name", name)
-        model.addAttribute("mapName", mRepo.findById(currentMap.intValue()).get().mapName)
-        model.addAttribute("description", mRepo.findById(currentMap.intValue()).get().mapDescription)
-        ///model.addAttribute("nps", mRepo.findById(currentMap.intValue()).)
-        //model.addAttribute("users", mRepo.findById(currentMap.intValue()).getUsers())
-        //todo show npcs
-        model.addAttribute("npcs", utils.ShowNpcsInLocation(currentMap.intValue()))
-        //todo show npcs
-        model.addAttribute("users", utils.ShowUsersInLocation(currentMap.intValue()))
-        model.addAttribute("location", currentMap)
+        model.addAttribute("mapName", "alley")
+        model.addAttribute("description", "dimlit alleyway")
+        model.addAttribute("location", "alley")
         return "alley_1"
     }
 

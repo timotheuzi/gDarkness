@@ -17,7 +17,4 @@ class MapDB {
     public int id
     public String mapName
     public String mapDescription
-    public Integer mapItems
-    public Integer mapNpcs
-    public Integer mapUsers
 }
