@@ -1,8 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+	<meta charset="UTF-8">
 	<title>${description}</title>
-    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+	<script type="text/javascript" th:src="@{js/jquery-3.6.0.js}" /></script>
+	<script type="text/javascript" th:src="@{js/client-side-script.js}" /></script>
+	<link rel="stylesheet" th:href="@{css/styles.css}"/>
+	<meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
 </head>
 <body>
 	<div class="mainContainer">
@@ -35,7 +39,6 @@
 	 	var mapName = /*[[${mapName}]]*/ 'User name'
 		var current_location = /*[[${location}]]*/ 'location'
 		var name = /*[[${mapName}]]*/ 'name'
-	 
 	/*]]>*/
 	</script>	
 

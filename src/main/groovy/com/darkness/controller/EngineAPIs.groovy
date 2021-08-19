@@ -16,7 +16,7 @@ import com.darkness.db.NpcRepo
 import com.darkness.utils.DarknessUtils
 import org.springframework.beans.factory.annotation.Autowired
 
-@Controller
+@RestController
  class EngineAPIs {
 
 	/*@Value("${hello}")
@@ -31,8 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired
 	DarknessUtils darknessUtils
 	@Autowired
 	UserRepo repository
-	@Autowired
-	CacheRepo cacheRepos
+	//@Autowired
+	//CacheRepo cacheRepos
 	//@Autowired
 	//DarknessUtils darknessUtils
 	//@Autowired
