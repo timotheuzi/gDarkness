@@ -32,7 +32,7 @@ class ModelAPIs {
     String index()
     {
         //todo random moves
-        //utils.initializeMapValues()
+        utils.initializeMapValues()
         //utils.initializeItemValues()
         //utils.initializeNpcValues()
         return "index"

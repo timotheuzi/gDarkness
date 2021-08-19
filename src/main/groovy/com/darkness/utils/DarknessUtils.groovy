@@ -41,9 +41,10 @@ import org.springframework.beans.factory.annotation.Autowired
 	private String item_1 = "sterling silver"
 
 	 void initializeMapValues() {
+		Integer count = CountMaps()
 		MapDB mapDB = new MapDB()
-		mapDB("map_" + (CountMaps() + 1))
-		if (CountMaps() == 0) {
+		if (count == 0) {
+			mapDB.mapName("map_" + (CountMaps() + 1))
 			mapDB.mapDescription(map_0)
 		} else if ((CountMaps() & 1) == 0) {
 			mapDB.mapDescription(map_1)
