@@ -9,11 +9,8 @@ import com.darkness.utils.DarknessUtils
 @Configuration
 class ConfigApplication {
 
-    @Autowired
-    DarknessUtils darknessUtils = new DarknessUtils()
-
     // ##################################################################################################
-    // method Bean
+    // utils Bean
     // ##################################################################################################
     @Bean
     DarknessUtils darkBean()
