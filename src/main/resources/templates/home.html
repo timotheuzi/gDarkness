@@ -10,29 +10,10 @@
 </head>
 <body>
 	<div class="mainContainer">
-			<h1 id="desc" th:text='${description}' th:value='${description}'/><br />
-			<p>Greetings! <span class="name" id="name" th:text='${name}' th:value='${name}'></span></p><br />
-			<span class="location" id="location"/>
-			<p>The bartender stands behind the bar, selling booze and items. His name is 
-			<span class="name"><tr th:each="instance : ${npcs}">
-    			<td class="name" id=${instance.key}  th:text="${instance.value}" th:value="${instance.key}"></td>
-			</tr></span>
-			<!-- <span class="name" id="name" th:text='${npcs}' th:value='${npcs}'></span> -->
-			</p>
-			<p>Players in room:</p>
-			<span class="name"><tr th:each="instance : ${users}">
-				<td class="name" id=${instance.key} th:value="${instance.key}" th:text="${instance.value}"></td>
-			</tr></span> 
-			<br /><br />
-		<input class="textBox" id="textBox_1" type="text" width="50px"/><br />
-		<input id="template_1" type="button" onclick="variousInput()" width="15px" value="Various input" />
-		<input id="template_2" type="button" onclick="updateStatus()" width="15px" value="update test" />
-
-		<input class="textBox" id="textBox_2" type="text" width="50px" value="" />
-		<input id="template_3" type="button" onclick="updateStatus()" width="15px" value="update manual" />
-		<input id="template_4" type="button" onclick="variousInput()" width="15px" value="go" />
+		<!-- new design is all dynamically created with JS -->
+		<div class="output" id="output"></div><br />
 	</div>
-	<div class="output" id="output"></div><br />
+
 	<script type="text/javascript" th:src="@{js/jquery-3.3.1.js}" /></script>
     <script type="text/javascript" th:src="@{js/client-side-script.js}" /></script>
 	<link rel="stylesheet" th:href="@{css/styles.css}"/>
@@ -45,3 +26,28 @@
 	</script>
 </body>
 </html>
+
+
+<!-- old stuff
+			<h1 id="desc" th:text='${description}' th:value='${description}'/><br />
+			<p>Greetings! <span class="name" id="name" th:text='${name}' th:value='${name}'></span></p><br />
+			<span class="location" id="location"/>
+			<p>
+			<span class="name"><tr th:each="instance : ${npcs}">
+    			<td class="name" id=${instance.key}  th:text="${instance.value}" th:value="${instance.key}"></td>
+			</tr></span>
+	<span class="name" id="name" th:text='${npcs}' th:value='${npcs}'></span>
+</p>
+<p>Players in room:</p>
+<span class="name"><tr th:each="instance : ${users}">
+				<td class="name" id=${instance.key} th:value="${instance.key}" th:text="${instance.value}"></td>
+			</tr></span>
+<br /><br />
+<input class="textBox" id="textBox_1" type="text" width="50px"/><br />
+<input id="template_1" type="button" onclick="variousInput()" width="15px" value="Various input" />
+<input id="template_2" type="button" onclick="updateStatus()" width="15px" value="update test" />
+
+<input class="textBox" id="textBox_2" type="text" width="50px" value="" />
+<input id="template_3" type="button" onclick="updateStatus()" width="15px" value="update manual" />
+<input id="template_4" type="button" onclick="variousInput()" width="15px" value="go" />
+-->
