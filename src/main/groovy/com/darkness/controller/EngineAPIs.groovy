@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 	/*@Value("${hello}")
 	String temp = this.toString()*/
+
 	@Autowired
 	UserRepo uRepo
 	@Autowired
@@ -31,12 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired
 	DarknessUtils darknessUtils
 	@Autowired
 	UserRepo repository
-	//@Autowired
-	//CacheRepo cacheRepos
-	//@Autowired
-	//DarknessUtils darknessUtils
-	//@Autowired
-	//TemplateController tempController
 
 	@RequestMapping(method = RequestMethod.GET, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
 	createNewUser(@RequestParam(name = "name", required = true) String name) {
@@ -118,15 +113,14 @@ import org.springframework.beans.factory.annotation.Autowired
 		info = darknessUtils.getStats(name, userNpc)
 		return info
 	}
-	/*
-	 * @GetMapping("/CountUsers")  Integer findAll(){
-	 *
-	 * String result = "" Integer count = 0 for(userDB userDB :
-	 * repository.findAll()) { count++ result += userDB.getId() + "</br>" }
-	 * //Response response = new Response("Done", 1) return count // + "response"
-	 * + response }
 
-	@GetMapping("/CountMaps")
+	 /*@GetMapping("/CountUsers")  Integer findAll(){
+	 String result = "" Integer count = 0 for(userDB userDB :
+	 repository.findAll()) { count++ result += userDB.getId() + "</br>" }
+	 //Response response = new Response("Done", 1) return count // + "response"
+	  + response }
+
+	/*@GetMapping("/CountMaps")
 	Integer CountMaps() {
 		String result = ""
 		// mapRepo = new mapRepo
@@ -139,7 +133,6 @@ import org.springframework.beans.factory.annotation.Autowired
 	}*/
 
 	@SuppressWarnings("static-access")
-	// @GetMapping("/initializeMap")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeMap", produces = MediaType.TEXT_HTML_VALUE)
 	String initializeMap() {
 		// Response response =
@@ -147,28 +140,20 @@ import org.springframework.beans.factory.annotation.Autowired
 		return "Success"
 	}
 
-	// @GetMapping("/initializeNpc")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeNpc", produces = MediaType.TEXT_HTML_VALUE)
 	String initializeNpc() {
 		darknessUtils.initializeNpcValues()
 		return "Success"
 	}
 
-	// @GetMapping("/initializeItem")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeItem", produces = MediaType.TEXT_HTML_VALUE)
 	String initializeItem() {
 		darknessUtils.initializeItemValues()
 		return "Success"
 	}
 
-	// @GetMapping("/various")
 	@RequestMapping(method = RequestMethod.GET, path = "/various", produces = MediaType.APPLICATION_JSON_VALUE) // consumes
-	// =
-	// MediaType.APPLICATION_JSON_VALUE,
-	// consumes
-	// =
-	// MediaType.APPLICATION_JSON_VALUE,
-	Map various(Integer location, String value, String name) throws JSONException {
+	Map various(String value, String name) throws JSONException {
 		// Map<String, String> map = requestForm.get(arg0)
 		// String loca = requestForms.get("location").toString()
 		// String value = requestForms.get("value").toString()
@@ -177,6 +162,7 @@ import org.springframework.beans.factory.annotation.Autowired
 		if (!value.isEmpty()) {
 			value = value.replaceAll(",", "")
 			darknessUtils.updateCache(location, value)
+			return value
 		}
 		Map<String, String> output = new HashMap<String, String>()
 		// output.put("msg", value)

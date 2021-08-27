@@ -1,10 +1,11 @@
- 	//updates on a scheduled to update statuses
-	/*window.setInternal(function()
-	{
-	  updateStatus()
-	    
-	}, 50000)
-	setInterval(function(){ updateStatus }, 3000)*/
+
+
+    // enter logic
+    $(document).keyup(function(event) {
+    if ($(".input").is(":focus") && event.key == "Enter") {
+        // Do work
+         }
+    });
 	
 	function ajaxTest()
 	{
@@ -33,45 +34,26 @@
 			output = data
     	   	alert(output['value'])
     	   	alert(output['msg'])
-    	   	alert(output['location'])   	
-    	   	//Do stuff with the JSON data
+    	   	alert(output['location'])
     	   
        }
 	})}
-	
-	
-	
+
 	function variousInput()
 	{
-			var tempParams = 
-			{
-				"value": $("#textBox").val(),
-				"name": $("#name").val(),
-				"location": $("#name").val()
-			}
-
-			//alert('in various') ahh
-
-			alert('in various')
+			alert('in various' + name)
 			var output = []
-			//var name = $('#name').val()
-			var textBox = $('#textBox').val()
-			//var currentLocation = $('#location').val()
-			
-			
+			var textBox = $('#input').val()
 			if (textBox.toUpperCase().indexOf("MOVE") >= 0)
 			{
-				Redirect(encodeURI("/the_alley/template_1?name=" + name))
+				//Redirect(encodeURI("/the_alley/template_1?name=" + name))
 				updateStatus()
 			}
 			else
 			{
-				var url = "/the_alley/various"
 				$.ajax({
-					//url: encodeURI(url + "?location=" + current_location + "&name=" + name + "&value=" + textBox),
-					url: encodeURI(url),
 					contentType : 'application/json',
-					data:JSON.stringify(tempParams)})
+					data:JSON.stringify(textBox)})
 					.then(function(data) 
 						{			
 						output = data
@@ -86,40 +68,15 @@
 			}
 	}
 
-	function templateSubmit(url)
-	{
-			//initMap()
-			var output = []
-			var name = $('#name').val()
-			var textBox = $('#textBox').val()
-			$.ajax({
-				url: encodeURI(url),
-				}).then(function(data)
-				{
-					output = data
-					var resp = output["output"]	
-					$("#output").append(resp + " ")
-					$( "#output" ).fadeIn( 4000, function() {})
-					if(resp == 'move')
-					{
-						alert('FRED')
-						//Redirect(encodeURI("/the_alley/template_1?name=" + name))
-					}
-				})
-	}
-
 	function updateStatus()
 	{
-			//initMap()
-			//updateRoom
 			var output = {}
-			var name = $('#name').val()
-			var current_location = $('#location').val()
-			var textBox = $('#textBox').val()
-			var url = "/the_alley/updateRoom"
-			$.ajax({
-				url: encodeURI(url + "&mapIndex=" + current_location),
-				}).then(function(data)
+			//var name = $('#name').val()
+			//var current_location = $('#location').val()
+			//var textBox = $('#textBox').val()
+    		$.ajax({
+				data:JSON.stringify(textBox)})
+				.then(function(data)
 				{
 					output = data
 					var msg = output["msg"]
@@ -133,80 +90,10 @@
 					$( "#output" ).fadeIn( 300, function() {})
 				})
 	}
-	/*function updateUsers(url)
-	{
 
-			initMap()
-			var textBox = $('#textBox').val()
-			var Alley = $('#Alley').val()
-			$.ajax({
-				url: encodeURI(url),
-				}).then(function(data)
-				{
-					$('#output').val().(data))
-				})
-	}
-
-	/*function update()
-	{
-		$.get("template__1", function(data) {
-		$("#some_div").html(data)
-		window.setTimeout(update, 10000)
-	})
-	}
-		/*$(function() 
-	{
-		var input = document.getElementById("textBox")
-		input.addEventListener("keyup", function(event) {
- 		 event.preventDefault()
-  		if (event.keyCode === 13) {
-    		document.getElementById("template").click()
- 		 }
-		})	
- 
-		var vTimeOut
-		vTimeOut= setTimeout(updateStatus, 600)
-
-	})*/
-
-	/*function createNewUser(url)
-    {
-		$(document).ready(function()
-		{
-			var name = $('#createUser').val()
-			var jsonParams =
-			{
-					//indicator: , variable
-					"name": name,
-			}
-				$.ajax({
-					type : "POST",
-					url : url,
-					processData : true,
-					data: JSON.stringify(jsonParams),
-					contentType : 'application/json',
-					success : function(response)
-					{
-						alert(response)
-						_Redirect(encodeURI("/home?name=" + name))
-					}
-					error : function(xhr, status, error)
-					{
-						alert(xhr.responseText)
-						$("#alert-message-container").html("An unknown error occured when trying to create a new user!  Please try again later.")
-						$("#alert-message-display").dialog("open")
-					}
-				})
-		})
-	}*/
 	function createNewUser(url)
     {
 			var name = $('#createUser').val()
-			/*var jsonParams =
-			{
-					//indicator: , variable
-					"name": name,
-			}*/
 			$.ajax({
 			//data: JSON.stringify(jsonParams),
 			url: encodeURI(url + "?name=" + name),
@@ -230,7 +117,8 @@
 				
 			})
 	}
-	/*function initItem(url)
+
+	function initMap(url)
     {
 			var output = []
 			$.ajax({
@@ -243,26 +131,8 @@
 				$( "#output" ).fadeIn( 4000, function() {})
 			})
 	}
-	function initMap(url)
-    {
-			var output = []
-			$.ajax({
-			url: encodeURI(url),
-			}).then(function(data)
-			{
-				output = data
-				alert(output)					
-				$("#output").append(output + " ")
-				$( "#output" ).fadeIn( 4000, function() {})  test
-			})
-	}*/
 	function Redirect(url)
 	{
-
-		//url = "https://" + window.location.hostname + "/" + url
-
-		//alert("Redirecting to :"+url)
-
 		var ua = navigator.userAgent.toLowerCase(), verOffset = ua.indexOf('msie') !== -1, version = parseInt(ua.substr(4, 2), 10)
 		// IE8 and lower fix
 		if (navigator.userAgent.match(/MSIE\s(?!9.0)/))
@@ -280,3 +150,113 @@
 			window.location.href = url
 		}
 	}
+
+
+ 	//updates on a scheduled to update statuses
+	/*window.setInternal(function()
+	{
+	  updateStatus()
+
+	}, 50000)
+	setInterval(function(){ updateStatus }, 3000)*/
+
+	/*function initItem(url)
+    {
+			var output = []
+			$.ajax({
+			url: encodeURI(url),
+			}).then(function(data)
+			{
+				output = data
+				alert(output)
+				$("#output").append(output + " ")
+				$( "#output" ).fadeIn( 4000, function() {})
+			})
+	}
+		/*function updateUsers(url)
+    	{
+
+    			initMap()
+    			var textBox = $('#textBox').val()
+    			var Alley = $('#Alley').val()
+    			$.ajax({
+    				url: encodeURI(url),
+    				}).then(function(data)
+    				{
+    					$('#output').val().(data))
+    				})
+    	}
+
+    	/*function update()
+    	{
+    		$.get("template__1", function(data) {
+    		$("#some_div").html(data)
+    		window.setTimeout(update, 10000)
+    	})
+    	}
+    		/*$(function()
+    	{
+    		var input = document.getElementById("textBox")
+    		input.addEventListener("keyup", function(event) {
+     		 event.preventDefault()
+      		if (event.keyCode === 13) {
+        		document.getElementById("template").click()
+     		 }
+    		})
+
+    		var vTimeOut
+    		vTimeOut= setTimeout(updateStatus, 600)
+
+    	})*/
+
+    	/*function templateSubmit(url)
+    	{
+    			//initMap()
+    			var output = []
+    			var name = $('#name').val()
+    			var textBox = $('#textBox').val()
+    			$.ajax({
+    				url: encodeURI(url),
+    				}).then(function(data)
+    				{
+    					output = data
+    					var resp = output["output"]
+    					$("#output").append(resp + " ")
+    					$( "#output" ).fadeIn( 4000, function() {})
+    					if(resp == 'move')
+    					{
+    						alert('FRED')
+    						//Redirect(encodeURI("/the_alley/template_1?name=" + name))
+    					}
+    				})
+    	}*/
+    	/*function createNewUser(url)
+        {
+    		$(document).ready(function()
+    		{
+    			var name = $('#createUser').val()
+    			var jsonParams =
+    			{
+    					//indicator: , variable
+    					"name": name,
+    			}
+    				$.ajax({
+    					type : "POST",
+    					url : url,
+    					processData : true,
+    					data: JSON.stringify(jsonParams),
+    					contentType : 'application/json',
+    					success : function(response)
+    					{
+    						alert(response)
+    						_Redirect(encodeURI("/home?name=" + name))
+    					}
+    					error : function(xhr, status, error)
+    					{
+    						alert(xhr.responseText)
+    						$("#alert-message-container").html("An unknown error occured when trying to create a new user!  Please try again later.")
+    						$("#alert-message-display").dialog("open")
+    					}
+    				})
+    		})
+    	}*/

@@ -11,18 +11,21 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary
 */
+:root {
+  background: black;
+  color: white;
+}
 
-
-html, div
+:root, html, div
  {
 	max-width: 500px
     margin: auto
 	margin-top: 5%
 	border: 0
-	font: ARIAL
+	font: times
 	text-align:left
 	width:auto
-	background-color:black	
+	background-color:black !important
 	color: white
 }
 /* HTML5 display-role reset for older browsers */
@@ -62,7 +65,7 @@ mainContainer
 {
 	text-align:left
 	font-size:100px
-	
+	background-color:black
 }
 span,td
 {
@@ -90,5 +93,5 @@ span,td
 h1 
 {
   text-align: center
-  font-size: 40px
+  font-size: 60px
 }
