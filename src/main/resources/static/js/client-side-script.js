@@ -99,7 +99,7 @@
 			url: encodeURI(url + "?name=" + name),
 			}).then(function(data)
 			{
-				//$('#output').val().(data))
+				$('#output').append(data)
 				Redirect(encodeURI("/the_alley/home?name=" + name))
 			})
 	}
