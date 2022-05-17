@@ -1,5 +1,6 @@
 package com.darkness.controller
 
+import com.darkness.db.MapDB
 import org.json.JSONException
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
@@ -23,17 +24,15 @@ import org.springframework.beans.factory.annotation.Autowired
 	String temp = this.toString()*/
 
 	@Autowired
-	UserRepo uRepo
-	@Autowired
 	MapRepo mRepo
 	@Autowired
 	NpcRepo nRepo
 	@Autowired
 	DarknessUtils darknessUtils
 	@Autowired
-	UserRepo repository
+	UserRepo uRepo
 
-	@RequestMapping(method = RequestMethod.GET, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
 	createNewUser(@RequestParam(name = "name", required = true) String name) {
 
 		if (darknessUtils.createNewUser(name)) {
@@ -43,7 +42,7 @@ import org.springframework.beans.factory.annotation.Autowired
 		}
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/setUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/setUser", produces = MediaType.APPLICATION_JSON_VALUE)
 	setUser(@RequestParam(name = "name", required = true) String name,
 			@RequestParam(name = "lvl", required = false) Integer lvl,
 			@RequestParam(name = "money", required = false) Integer money,
@@ -53,8 +52,8 @@ import org.springframework.beans.factory.annotation.Autowired
 			@RequestParam(name = "description", required = false) String description,
 			@RequestParam(name = "location", required = false) Integer location,
 			@RequestParam(name = "hp", required = false) Integer hp) {
-		repository.findByUserName(name)
-		int id = repository.findByUserName(name).id
+		uRepo.findByUserName(name)
+		int id = uRepo.findByUserName(name).id
 		UserDB newEntry = new UserDB()
 		newEntry.id = id
 		newEntry.userName(name)
@@ -98,11 +97,11 @@ import org.springframework.beans.factory.annotation.Autowired
 		} else {
 			newEntry.userHp(repository.findByUserName(name).userHp)
 		}
-		repository.save(newEntry)
+		uRepo.save(newEntry)
 		return newEntry.toString()
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/getFullInformation", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/getFullInformation", produces = MediaType.APPLICATION_JSON_VALUE)
 	Map getFullInformation(@RequestParam(name = "name", required = true) String name,
 						   @RequestParam(name = "user", required = false, defaultValue = "user") String user) {
 		Map<String, Integer> info = new HashMap<String, Integer>()
@@ -114,51 +113,41 @@ import org.springframework.beans.factory.annotation.Autowired
 		return info
 	}
 
-	 /*@GetMapping("/CountUsers")  Integer findAll(){
-	 String result = "" Integer count = 0 for(userDB userDB :
-	 repository.findAll()) { count++ result += userDB.getId() + "</br>" }
-	 //Response response = new Response("Done", 1) return count // + "response"
-	  + response }
-
-	/*@GetMapping("/CountMaps")
+	@GetMapping("/CountMaps")
 	Integer CountMaps() {
 		String result = ""
+		//MapDB mapDB
 		// mapRepo = new mapRepo
 		// List<mapRepo> = mapRepo
-		Integer count = 0
-		for (MapDB mapDB : mapRepo.findAll()) {
+		Integer count = uRepo.findAll().count().toInteger()
+		/*for (MapDB mapDB : uRepo.findAll()) {
 			count++
-		}
+		}*/
 		return count
-	}*/
+	}
 
 	@SuppressWarnings("static-access")
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeMap", produces = MediaType.TEXT_HTML_VALUE)
 	String initializeMap() {
 		// Response response =
 		darknessUtils.initializeMapValues()
-		return "Success"
+		return "initialized maps"
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeNpc", produces = MediaType.TEXT_HTML_VALUE)
 	String initializeNpc() {
 		darknessUtils.initializeNpcValues()
-		return "Success"
+		return "initialized npc"
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/initializeItem", produces = MediaType.TEXT_HTML_VALUE)
 	String initializeItem() {
 		darknessUtils.initializeItemValues()
-		return "Success"
+		return "initialized items"
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/various", produces = MediaType.APPLICATION_JSON_VALUE) // consumes
-	Map various(String value, String name) throws JSONException {
-		// Map<String, String> map = requestForm.get(arg0)
-		// String loca = requestForms.get("location").toString()
-		// String value = requestForms.get("value").toString()
-		// String name = requestForms.get("name").toString()
-		// Integer location = Integer.parseInt(loca)
+	@RequestMapping(method = RequestMethod.POST, path = "/various", produces = MediaType.APPLICATION_JSON_VALUE) // consumes
+	Map various(Optional<String> value, String name) throws JSONException {
 		if (!value.isEmpty()) {
 			value = value.replaceAll(",", "")
 			darknessUtils.updateCache(location, value)
@@ -208,7 +197,7 @@ import org.springframework.beans.factory.annotation.Autowired
 	}
 
 	// @GetMapping("/updateRoom")
-	@RequestMapping(method = RequestMethod.GET, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
 	Map updateRoom(@RequestParam(name = "mapIndex", required = false) Integer mapIndex) {
 		if (mapIndex != null) {
 			return darknessUtils.mapStatus(mapIndex)

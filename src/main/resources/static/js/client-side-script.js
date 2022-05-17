@@ -4,10 +4,11 @@
     $(document).keyup(function(event) {
     if ($(".input").is(":focus") && event.key == "Enter") {
         // Do work
+           variousInput()
          }
     });
 	
-	function ajaxTest()
+	/*function ajaxTest()
 	{
 		output=[]
 		var tempParams = 
@@ -37,13 +38,14 @@
     	   	alert(output['location'])
     	   
        }
-	})}
+	})}*/
 
 	function variousInput()
 	{
-			alert('in various' + name)
+
 			var output = []
 			var textBox = $('#input').val()
+			alert('in various ' + name + " textbox = " + textBox)
 			if (textBox.toUpperCase().indexOf("MOVE") >= 0)
 			{
 				//Redirect(encodeURI("/the_alley/template_1?name=" + name))
@@ -52,6 +54,10 @@
 			else
 			{
 				$.ajax({
+				    type: 'POST',
+                    url: "/the_alley/various",
+                    async: true,
+                    beforeSend: function (xhr),
 					contentType : 'application/json',
 					data:JSON.stringify(textBox)})
 					.then(function(data) 
@@ -60,8 +66,8 @@
 						//alert(output)
 						//var attack = output["attack"]
 						//var defense = output["defense"]
-						alert(output)
-						$("#output").append(name + " status:" + JSON.stringify(output))
+						//alert(output)
+						$("#output").replaceWith(name + " status:" + JSON.stringify(output))
 						$( "#output" ).fadeIn( 4000, function() {})
 					//location.reload()							
 						})
@@ -75,6 +81,11 @@
 			//var current_location = $('#location').val()
 			//var textBox = $('#textBox').val()
     		$.ajax({
+                type: 'POST',
+                url: "/the_alley/updateRoom",
+                async: true,
+                beforeSend: function (xhr),
+                contentType : 'application/json',
 				data:JSON.stringify(textBox)})
 				.then(function(data)
 				{
@@ -112,7 +123,7 @@
 			{
 				output = data
 				//alert(output)					
-				$("#output").append(output + " <br />")
+				$("#output").replaceWith(output + " <br />")
 				$( "#output" ).fadeIn( 5000, function() {})
 				
 			})

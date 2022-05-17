@@ -7,18 +7,19 @@ import javax.persistence.*
 
 //item table
 
-
 @Entity
 @Table(name = "items")
 @Getter
 @Setter
 class ItemsDB {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int id
     public String itemName
     public String itemDescription
     public Integer itemAttack
     public Integer itemDefense
     public Integer itemLocation
+    public Integer itemOwner
+    public Integer itemValue
 }
