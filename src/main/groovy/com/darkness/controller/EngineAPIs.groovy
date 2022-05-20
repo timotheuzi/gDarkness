@@ -161,7 +161,7 @@ import org.springframework.beans.factory.annotation.Autowired
 		// Integer location = Integer.parseInt(loca)
 		if (!value.isEmpty()) {
 			value = value.replaceAll(",", "")
-			darknessUtils.updateCache(location, value)
+			darknessUtils.updateCache(value)
 			return value
 		}
 		Map<String, String> output = new HashMap<String, String>()
