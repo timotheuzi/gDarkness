@@ -33,8 +33,8 @@ class ModelAPIs {
     {
         //todo random moves
         utils.initializeMapValues()
-        //utils.initializeItemValues()
-        //utils.initializeNpcValues()
+        utils.initializeItemValues()
+        utils.initializeNpcValues()
         return "index"
     }
     // home map

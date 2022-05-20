@@ -10,10 +10,14 @@ import com.darkness.db.NpcRepo
 import com.darkness.db.UserDB
 import com.darkness.db.CacheRepo
 import com.darkness.db.CacheDB
+import com.fasterxml.jackson.annotation.JsonFormat
+import lombok.Value
 import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 
- class DarknessUtils {
+@Service
+class DarknessUtils {
 	@Autowired
 	UserRepo userRepos
 	@Autowired
@@ -63,6 +67,7 @@ import org.springframework.beans.factory.annotation.Autowired
 		itemsDB.itemAttack == (attack.intValue())
 		itemsDB.itemDefense == (defense.intValue())
         itemsDB.itemLocation == (0)
+		 //itemsDB.itemValue ==  Math.random() * (50 - 1) + 1)
 		itemsRepos.save(itemsDB)
 	}
 
@@ -134,30 +139,27 @@ import org.springframework.beans.factory.annotation.Autowired
 		}
 		return stats
 	}
-
 	 Integer CountMaps() {
-		Integer count = 0
+		/*Integer count = 0
 		for (MapDB mapDB : mapRepos.findAll()) {
 			count++
-		}
-		return count
+		}*/
+		return mapRepos.findAll().count().intValue()
+	}
+	 Integer CountUsers() {
+		return userRepos.findAll().count().intValue()
 	}
 
-	 /*Integer CountUsers() {
-		Integer count = 0
-		for (UserDB userdb : userRepos.findAll()) {
-			count++
-		}
-		return count // + "response" + response
-	}*/
-
-	 Integer CountItems() {
-		Integer count = 0
+	 Map GetUserItems(Integer userId) {
+		/*Integer count = 0
 		for (ItemsDB itemdb : itemsRepos.findAll()) {
 			count++
-		}
-		return count
-		}
+		}*/
+		 ItemsDB itemdb = itemsRepos.getItemsByItemOwner(userId)
+		 Map<JsonFormat.Value, KeyValueHolder> resp = itemdb.eachWithIndex
+				 { ItemsDB entry, int i -> entry.itemOwner entry.itemName }
+		 return resp
+	 }
 
 	 Integer CountNpcs()
 	 {
@@ -169,19 +171,21 @@ import org.springframework.beans.factory.annotation.Autowired
 		return count
 	 }
 
-	 String CountNpcsByLocation(Integer location) {
-		StringWriter npcs = new StringWriter()
-		Integer count = 0
-		for (NpcDB npcDB : npcRepos.findAll()) {
-			if (npcDB.npcLocation == location) {
-				npcs.write(npcDB.npcLocation + ",")
-				count++
-			}
-		}
-		return npcs.toString()
+	 Map NpcsByLocation(Integer location) {
+		 NpcDB npcDB = npcRepos.findByNpcLocation(location)
+		 Map resp = npcDB.each {NpcDB entry, int i -> entry.id entry}
+		 /*NpcDB npc = npcRepos.findByLocation(location)
+			Integer count = 0
+			for (NpcDB npcDB : npcRepos.findAll()) {
+				if (npcDB.npcLocation == location) {
+					npcs.write(npcDB.npcLocation + ",")
+					count++
+				}
+			}*/
+		return resp
 	}
 
-	 String CountUsersByLocation(Integer location) {
+	 String getUsersByLocation(Integer location) {
 		StringWriter users = new StringWriter()
 		Integer count = 0
 		for (UserDB userDB : userRepos.findAll()) {
@@ -298,7 +302,7 @@ import org.springframework.beans.factory.annotation.Autowired
 
 	 String getMeAgoodName() {
 		Random rand = new Random()
-		String vocals = "aeiou" + "ioaeu" + "ouaei"
+		String vocals = "aaaeeiiiiieeeou" + "iiiooooooaaeeeeeu" + "ouaei"
 		String cons = "bcdfghjklznpqrst" + "bcdfgjklmnprstvw" + "bcdfgjklmnprst"
 		//String allchars = vocals + cons
 		int length = rand.nextInt(8)

@@ -8,14 +8,16 @@ import javax.persistence.*
 //item table
 
 @Entity
-@Table(name = "msg_cache")
+@Table(name = "cache")
 @Getter
 @Setter
 class CacheDB {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int id
-    public String cacheMapName
-    public String cacheCurrentRoomStatus
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer id
+    public Integer mapId
+    public List<Integer> usersInRoom
+    public List<Integer> npcsInRoom
+    public List<Integer> itemsInRoom
 
 }

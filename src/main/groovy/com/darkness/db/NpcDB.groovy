@@ -12,7 +12,7 @@ import javax.persistence.*
 @Setter
 class NpcDB {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int id
     public String npcName
     public String npcDescription

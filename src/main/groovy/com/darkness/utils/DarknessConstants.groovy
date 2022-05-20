@@ -7,9 +7,9 @@ package com.darkness.utils
 
 	 static final double PI = 3.14159
 	 static final double PLANCK_CONSTANT = 6.62606896e-34
-	 static final Integer mapCount = 0
-	 static final Integer npcCount = 0
-	 static final Integer itemCount = 0
+	 static Integer mapCount = 0
+	 static Integer npcCount = 0
+	 static Integer itemCount = 0
 	//  static final Integer items, npcs, users, attack, defense
 	//  static final String name, description
 

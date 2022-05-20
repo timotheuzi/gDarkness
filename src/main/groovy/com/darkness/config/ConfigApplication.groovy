@@ -1,4 +1,4 @@
-package com.darkness.config
+/*package com.darkness.config
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -19,4 +19,4 @@ class ConfigApplication {
         return darknessUtils
     }
 
-}
+}*/

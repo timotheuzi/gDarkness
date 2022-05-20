@@ -22,4 +22,5 @@ class UserDB {
     public String userDescription
     public Integer userLocation
     public Integer userHp
+    public String userItems
 }
