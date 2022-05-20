@@ -1,18 +1,18 @@
 package com.darkness.db
 
+import lombok.Data
 import lombok.Setter
 import lombok.Getter
 
 import javax.persistence.*
 
 @Entity
+@Data
 @Table(name = "map")
-@Getter
-@Setter
 class MapDB {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public int id
-    public String mapName
-    public String mapDescription
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Integer id
+    public String name
+    public String description
 }

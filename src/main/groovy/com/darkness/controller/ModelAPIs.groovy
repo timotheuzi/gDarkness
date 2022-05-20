@@ -68,26 +68,4 @@ class ModelAPIs {
         model.addAttribute("location", "alley")
         return "alley_1"
     }
-
-    //todo create greeting page
-    /*@GetMapping("/greeting")
-    String greeting(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model)
-    {
-        model.addAttribute("name", name)
-
-        UserDB tempEntry = new UserDB()
-        if (!uRepo.findByUserName(name))
-        {
-            tempEntry.userName(name)
-            tempEntry.userLvl(1)
-            tempEntry.userMoney(1)
-            tempEntry.userExp(1)
-            tempEntry.userAttack(1)
-            tempEntry.userDefense(1)
-            tempEntry.userDescription("A testing object named " + name)
-            tempEntry.userLocation(1)
-            uRepo.save(newEntry)
-        }
-        return "greeting"
-    }*/
 }

@@ -1,5 +1,6 @@
 package com.darkness.controller
 
+import com.darkness.db.CacheDB
 import com.darkness.db.MapDB
 import org.json.JSONException
 import org.springframework.http.MediaType
@@ -31,9 +32,42 @@ import org.springframework.beans.factory.annotation.Autowired
 	DarknessUtils darknessUtils
 	@Autowired
 	UserRepo uRepo
+	@Autowired
+	CacheRepo cRepo
 
-	@RequestMapping(method = RequestMethod.POST, path = "/createNewUser", produces = MediaType.TEXT_HTML_VALUE)
-	createNewUser(@RequestParam(name = "name", required = true) String name) {
+	@SuppressWarnings("static-access")
+	@RequestMapping(method = RequestMethod.GET, path = "/initializeMap", produces = MediaType.APPLICATION_JSON_VALUE)
+	String initializeMap() {
+		// Response response =
+		darknessUtils.initializeMapValues()
+		return "initialized maps"
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/initializeNpc", produces = MediaType.APPLICATION_JSON_VALUE)
+	String initializeNpc() {
+		darknessUtils.initializeNpcValues()
+		return "initialized npc"
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/initializeItem", produces = MediaType.APPLICATION_JSON_VALUE)
+	String initializeItem() {
+		darknessUtils.initializeItemValues()
+		return "initialized items"
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/getFullInformation", produces = MediaType.APPLICATION_JSON_VALUE)
+	Map getFullInformation(@RequestParam(name = "name", required = true) String name,
+						   @RequestParam(name = "user", required = false, defaultValue = "user") String user) {
+		Boolean isNpc = false
+		if (user.contains("npc")) {
+			isNpc = true
+		}
+		Map<String, Integer> info = darknessUtils.getStats(name, isNpc)
+		return info
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "/createNewUser", produces = MediaType.APPLICATION_JSON_VALUE)
+	String createNewUser(@RequestParam(name = "name", required = true) String name) {
 
 		if (darknessUtils.createNewUser(name)) {
 			return "New User Created name " + name + " created...."
@@ -43,7 +77,7 @@ import org.springframework.beans.factory.annotation.Autowired
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/setUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	setUser(@RequestParam(name = "name", required = true) String name,
+	String setUser(@RequestParam(name = "name", required = true) String name,
 			@RequestParam(name = "lvl", required = false) Integer lvl,
 			@RequestParam(name = "money", required = false) Integer money,
 			@RequestParam(name = "exp", required = false) Integer exp,
@@ -52,143 +86,109 @@ import org.springframework.beans.factory.annotation.Autowired
 			@RequestParam(name = "description", required = false) String description,
 			@RequestParam(name = "location", required = false) Integer location,
 			@RequestParam(name = "hp", required = false) Integer hp) {
-		uRepo.findByUserName(name)
-		int id = uRepo.findByUserName(name).id
+		Integer id = uRepo.findByName(name).id
+		if(id == null){
+			darknessUtils.createNewUser(name)
+			return "New User Created name " + name + " created...."
+		}
 		UserDB newEntry = new UserDB()
 		newEntry.id = id
-		newEntry.userName(name)
+		newEntry.name(name)
 		if (lvl != null) {
-			newEntry.userLvl(lvl)
+			newEntry.lvl(lvl)
 		} else {
-			newEntry.userLvl(repository.findByUserName(name))
+			newEntry.lvl(uRepo.findByName(name).lvl)
 		}
 		if (money != null) {
-			newEntry.userMoney(money)
+			newEntry.money(money)
 		} else {
-			newEntry.userMoney(repository.findByUserName(name).userMoney)
+			newEntry.money(uRepo.findByName(name).money)
 		}
 		if (exp != null) {
-			newEntry.userExp(exp)
+			newEntry.exp(exp)
 		} else {
-			newEntry.userExp(repository.findByUserName(name).userExp)
+			newEntry.exp(uRepo.findByName(name).exp)
 		}
 		if (attack != null) {
-			newEntry.userAttack(attack)
+			newEntry.attack(attack)
 		} else {
-			newEntry.userAttack(repository.findByUserName(name).userAttack)
+			newEntry.attack(uRepo.findByName(name).attack)
 		}
 		if (defense != null) {
-			newEntry.userDefense(defense)
+			newEntry.defense(defense)
 		} else {
-			newEntry.userDefense(repository.findByUserName(name).userDefense)
+			newEntry.defense(uRepo.findByName(name).defense)
 		}
 		if (description != null) {
-			newEntry.userDescription(description)
+			newEntry.description(description)
 		} else {
-			newEntry.userDescription(repository.findByUserName(name).userDescription)
+			newEntry.description(uRepo.findByName(name).description)
 		}
 		if (location != null) {
-			newEntry.userLocation(location)
+			newEntry.location(location)
 		} else {
-			newEntry.userLocation(repository.findByUserName(name).userLocation)
+			newEntry.location(uRepo.findByName(name).location)
 		}
 		if (hp != null) {
-			newEntry.userHp(hp)
+			newEntry.hp(hp)
 		} else {
-			newEntry.userHp(repository.findByUserName(name).userHp)
+			newEntry.hp(uRepo.findByName(name).hp)
 		}
 		uRepo.save(newEntry)
 		return newEntry.toString()
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/getFullInformation", produces = MediaType.APPLICATION_JSON_VALUE)
-	Map getFullInformation(@RequestParam(name = "name", required = true) String name,
-						   @RequestParam(name = "user", required = false, defaultValue = "user") String user) {
-		Map<String, Integer> info = new HashMap<String, Integer>()
-		Boolean userNpc = true
-		if (user.contains("npc")) {
-			userNpc = false
-		}
-		info = darknessUtils.getStats(name, userNpc)
-		return info
-	}
-
-	@GetMapping("/CountMaps")
-	Integer CountMaps() {
-		String result = ""
-		//MapDB mapDB
-		// mapRepo = new mapRepo
-		// List<mapRepo> = mapRepo
-		Integer count = uRepo.findAll().count().toInteger()
-		/*for (MapDB mapDB : uRepo.findAll()) {
-			count++
-		}*/
-		return count
-	}
-
-	@SuppressWarnings("static-access")
-	@RequestMapping(method = RequestMethod.GET, path = "/initializeMap", produces = MediaType.TEXT_HTML_VALUE)
-	String initializeMap() {
-		// Response response =
-		darknessUtils.initializeMapValues()
-		return "initialized maps"
-	}
-
-	@RequestMapping(method = RequestMethod.GET, path = "/initializeNpc", produces = MediaType.TEXT_HTML_VALUE)
-	String initializeNpc() {
-		darknessUtils.initializeNpcValues()
-		return "initialized npc"
-	}
-
-	@RequestMapping(method = RequestMethod.GET, path = "/initializeItem", produces = MediaType.TEXT_HTML_VALUE)
-	String initializeItem() {
-		darknessUtils.initializeItemValues()
-		return "initialized items"
-	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/various", produces = MediaType.APPLICATION_JSON_VALUE) // consumes
-	Map various(Optional<String> value, String name) throws JSONException {
-		if (!value.isEmpty()) {
-			value = value.replaceAll(",", "")
-			darknessUtils.updateCache(value)
-			return value
-		}
+	Map various(String value, String name) throws JSONException {
+		//set up
+		Integer location = uRepo.findByName(name).id
+		Integer userId = uRepo.findByName(name).id
+		value = value.replace(",", "").toLowerCase()
 		Map<String, String> output = new HashMap<String, String>()
-		// output.put("msg", value)
-		// output.put("location", location.toString())
-		// cacheRepos.save(output)
-		if (value.toLowerCase().contains("move")) {
-			darknessUtils.move(name)
-			// output.put("users", darknessUtils.ShowUsersInLocation(location).toString())
-			// output.put("npcs", darknessUtils.ShowNpcsInLocation(location).toString())
-			// output.put("description", mapRepo.findById(location).get().getDescription())
-
-			// Model model = null
-			// tempController.template_1(name, model)
+		//update rolling cache
+		if (!value.isEmpty()) {
+			darknessUtils.updateCache(value, location, name)
+		}
+		//movement
+		if (value.contains("move") || value.contains("go")) {
+			Integer newLocation = darknessUtils.move(name, location)
+			output.put("users", darknessUtils.ShowUsersInLocation(newLocation).toString())
+			output.put("npcs", darknessUtils.ShowNpcsInLocation(newLocation).toString())
+			output.put("description", mRepo.findById(newLocation).toString())
+			CacheDB cache = new CacheDB()
+			cache.usersInRoom.add(userId)
+			cache.msg(value)
+			cache.mapId(newLocation)
+			cRepo.save(cache)
 			return output
-		} else if (value.toLowerCase().contains("inv")
-				&& value.toLowerCase().contains(darknessUtils.ShowNpcsInLocation(location).toString())) {
-			Iterator it = darknessUtils.ShowNpcsInLocation(location).entrySet().iterator()
+		}
+		//look or inventory
+		if ((value.contains("inv") || value.contains("look"))  && value.contains(darknessUtils.ShowNpcsInLocation(location).toString())) {
+			Iterator it = darknessUtils.ShowNpcsInLocation(location).iterator()
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next()
-				if (value.contains(pair.getValue().toString())) {
+				if (value(pair.getValue().toString())) {
 					return darknessUtils.getStats(pair.getValue().toString(), false)
 				}
 				it.remove() // avoids a ConcurrentModificationException
 			}
-		} else if (value.toLowerCase().contains("inv")
-				&& value.toLowerCase().contains(darknessUtils.ShowUsersInLocation(location).toString())) {
+		}
+		if ((value("inv") || value.contains("look") && value.contains(darknessUtils.ShowUsersInLocation(location)))
+				&& value(darknessUtils.ShowUsersInLocation(location).toString())) {
 			Iterator it = darknessUtils.ShowUsersInLocation(location).entrySet().iterator()
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next()
-				if (value.contains(pair.getValue().toString())) {
+				if (value(pair.getValue().toString())) {
 					return darknessUtils.getStats(pair.getValue().toString(), true)
 				}
 				it.remove() // avoids a ConcurrentModificationException
 			}
-		} else if (value.toLowerCase().contains("inv")) {
+		}
+		if (value("inv")) {
 			return darknessUtils.getStats(name, true)
-		} else {
+		}
+		{
 			output.put("msg", "No implementation for that string yet")
 			return output
 		}
@@ -197,13 +197,12 @@ import org.springframework.beans.factory.annotation.Autowired
 	}
 
 	// @GetMapping("/updateRoom")
-	@RequestMapping(method = RequestMethod.POST, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(method = RequestMethod.POST, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
 	Map updateRoom(@RequestParam(name = "mapIndex", required = false) Integer mapIndex) {
 		if (mapIndex != null) {
 			return darknessUtils.mapStatus(mapIndex)
 		} else {
-
-			return darknessUtils.mapStatus(mapIndex)
+			return darknessUtils.mapStatus(0)
 		}
 	}
 
@@ -219,16 +218,6 @@ import org.springframework.beans.factory.annotation.Autowired
 	String findNpcByIndex(@RequestParam(name = "index", required = true) Integer index) {
 		// int[] updateRoom = darknessUtils.mapStatus(location)
 		return darknessUtils.getNpcByIndex(index)
-	}
-	// @GetMapping("/findNpcName")
-	/*
-	 * @RequestMapping(method = RequestMethod.GET, path = "/saveCookie", produces =
-	 * MediaType.APPLICATION_JSON_VALUE)  String
-	 * saveCookie(@RequestParam(name="user", required=true) String cookie)
-	 *
-	 * {
-	 *
-	 * //java.util.Map<String, String> values = (java.util.Map<String, String>)
-	 * form return cookie }
-	 */
+	}*/
+
 }

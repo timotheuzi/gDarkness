@@ -28,13 +28,7 @@ class DarknessUtils {
 	NpcRepo npcRepos
 	@Autowired
 	CacheRepo cacheRepos
-	//@Autowired
-	//TemplateController templateController
-	//  Integer mapCount = 0
-	// private Integer npcCount = 0
-	// private Integer itemCount = 0
-	// private Integer items, npcs, users, attack, defense
-	// private String name, description
+
 	private String map_0 = "An empty bar"
 	private String map_1 = "A dark street corner"
 	private String map_2 = "A dark alley"
@@ -48,12 +42,14 @@ class DarknessUtils {
 		Integer count = CountMaps()
 		MapDB mapDB = new MapDB()
 		if (count == 0) {
-			mapDB.mapName == ("map_" + (CountMaps() + 1).toString())
-			mapDB.mapDescription == (map_0)
-		} else if ((CountMaps() & 1) == 0) {
-			mapDB.mapDescription == (map_1)
+			mapDB.name == ("map_" + (CountMaps() + 1).toString())
+			mapDB.description == (map_0)
+		} else if ((count + 1) == 0) {
+			mapDB.name == ("map_" + (CountMaps() + 2).toString())
+			mapDB.description == (map_1)
 		} else {
-			mapDB.mapDescription == (map_2)
+			mapDB.name == ("map_" + (CountMaps() + 3).toString())
+			mapDB.description == (map_2)
 		}
 		mapRepos.save(mapDB)
 	 }
@@ -62,12 +58,12 @@ class DarknessUtils {
 		Double attack = Math.random() * ((10 - 1) + 1)
 		Double defense = Math.random() * ((5 - 1) + 1)
 		ItemsDB itemsDB = new ItemsDB()
-		itemsDB.itemName == ("luger_" + CountItems().toString())
-		itemsDB.itemDescription == (item_1)
-		itemsDB.itemAttack == (attack.intValue())
-		itemsDB.itemDefense == (defense.intValue())
-        itemsDB.itemLocation == (0)
-		 //itemsDB.itemValue ==  Math.random() * (50 - 1) + 1)
+		itemsDB.name == ("luger_" + CountItems().toString())
+		itemsDB.description == (item_1)
+		itemsDB.attack == (attack.intValue())
+		itemsDB.defense == (defense.intValue())
+        itemsDB.location == (0)
+		itemsDB.value ==  Math.random() * ((50 - 1) + 1)
 		itemsRepos.save(itemsDB)
 	}
 
@@ -77,41 +73,41 @@ class DarknessUtils {
 		Double hp = Math.random() * ((1000 - 1) + 1)
 		NpcDB npcDB = new NpcDB()
 		if (CountNpcs() == 0) {
-			npcDB.npcName == ("Frank")
-			npcDB.npcDescription == ("Stinky ")
-			npcDB.npcLocation == (0)
-			npcDB.npcAttack == (75)
-			npcDB.npcDefense == (75)
-			npcDB.npcHp == (3000)
+			npcDB.name == ("Frank")
+			npcDB.description == ("Stinky ")
+			npcDB.location == (0)
+			npcDB.attack == (75)
+			npcDB.defense == (75)
+			npcDB.hp == (3000)
 		} else {
-			npcDB.npcName == (getMeAgoodName())
-			npcDB.npcDescription == (npc_1)
-			npcDB.npcLocation == (2)
-			npcDB.npcAttack == (attack.intValue())
-			npcDB.npcDefense == (defense.intValue())
-			npcDB.npcHp == (hp.intValue())
+			npcDB.name == (getMeAgoodName())
+			npcDB.description == (npc_1)
+			npcDB.location == (2)
+			npcDB.attack == (attack.intValue())
+			npcDB.defense == (defense.intValue())
+			npcDB.hp == (hp.intValue())
 		}
 		npcRepos.save(npcDB)
 	 }
 
 	 Boolean createNewUser(String name) {
-		 if(userRepos.findByUserName(name) != null)
+		 if(userRepos.findByName(name) != null)
 		 {
 			 try {
 				 UserDB newEntry = new UserDB()
-				 newEntry.userName == (name)
-				 newEntry.userLvl == (1)
-				 newEntry.userMoney == (1)
-				 newEntry.userExp == (1)
-				 newEntry.userAttack == (1)
-				 newEntry.userDefense == (1)
-				 newEntry.userDescription == ("A new user named " + name)
-				 newEntry.userLocation == (1)
-				 newEntry.userHp == (1000)
+				 newEntry.name == (name)
+				 newEntry.lvl == (1)
+				 newEntry.money == (1)
+				 newEntry.exp == (1)
+				 newEntry.attack == (1)
+				 newEntry.defense == (1)
+				 newEntry.description == ("A new user named " + name)
+				 newEntry.location == (1)
+				 newEntry.hp == (1000)
 				 userRepos.save(newEntry)
 				 return true
 			 } catch (Exception e) {
-				 System.out.println("errrror")
+				 System.out.println("error")
 			 }
 		 }
 		 else {
@@ -120,44 +116,41 @@ class DarknessUtils {
 
 	 }
 
-	 HashMap<String, Integer> getStats(String name, Boolean user) {
+	 HashMap<String, Integer> getStats(String name, Boolean isNpc) {
 		HashMap<String, Integer> stats = new HashMap<String, Integer>()
-		if (user) {
-			stats.put("ID", userRepos.findByUserName(name).id)
-			stats.put("attack", userRepos.findByUserName(name).userAttack)
-			stats.put("defense", userRepos.findByUserName(name).userDefense)
-			stats.put("exp", userRepos.findByUserName(name).userExp)
-			stats.put("location", userRepos.findByUserName(name).userLocation)
-			stats.put("lvl", userRepos.findByUserName(name).userLvl)
-			stats.put("money", userRepos.findByUserName(name).userMoney)
+		if (!isNpc) {
+			UserDB userObj = userRepos.findByName(name)
+			stats.put("ID", userObj.id)
+			stats.put("attack", userObj.attack)
+			stats.put("defense", userObj.defense)
+			stats.put("exp", userObj.exp)
+			stats.put("location", userObj.location)
+			stats.put("lvl", userObj.lvl)
+			stats.put("money", userObj.money)
 		} else {
-			stats.put("ID", npcRepos.findByNpcName(name).id)
-			stats.put("attack", npcRepos.findByNpcName(name).npcAttack)
-			stats.put("defense", npcRepos.findByNpcName(name).npcDefense)
-			stats.put("hp", npcRepos.findByNpcName(name).npcHp)
-			stats.put("location", npcRepos.findByNpcName(name).npcLocation)
+			NpcDB npcObj = npcRepos.findByName(name)
+			stats.put("ID", npcObj.id)
+			stats.put("attack", npcObj.attack)
+			stats.put("defense", npcObj.defense)
+			stats.put("hp", npcObj.hp)
+			stats.put("location", npcObj.location)
 		}
 		return stats
 	}
-	 Integer CountMaps() {
-		/*Integer count = 0
-		for (MapDB mapDB : mapRepos.findAll()) {
-			count++
-		}*/
+	Integer CountMaps() {
 		return mapRepos.findAll().count().intValue()
 	}
-	 Integer CountUsers() {
+	Integer CountUsers() {
 		return userRepos.findAll().count().intValue()
+	}
+	Integer CountItems() {
+		return itemsRepos.findAll().count().intValue()
 	}
 
 	 Map GetUserItems(Integer userId) {
-		/*Integer count = 0
-		for (ItemsDB itemdb : itemsRepos.findAll()) {
-			count++
-		}*/
-		 ItemsDB itemdb = itemsRepos.getItemsByItemOwner(userId)
+		 ItemsDB itemdb = itemsRepos.getItemsByOwner(userId)
 		 Map<JsonFormat.Value, KeyValueHolder> resp = itemdb.eachWithIndex
-				 { ItemsDB entry, int i -> entry.itemOwner entry.itemName }
+				 { ItemsDB entry, int i -> entry.owner entry.name }
 		 return resp
 	 }
 
@@ -172,7 +165,7 @@ class DarknessUtils {
 	 }
 
 	 Map NpcsByLocation(Integer location) {
-		 NpcDB npcDB = npcRepos.findByNpcLocation(location)
+		 NpcDB npcDB = npcRepos.findByLocation(location)
 		 Map resp = npcDB.each {NpcDB entry, int i -> entry.id entry}
 		 /*NpcDB npc = npcRepos.findByLocation(location)
 			Integer count = 0
@@ -189,8 +182,8 @@ class DarknessUtils {
 		StringWriter users = new StringWriter()
 		Integer count = 0
 		for (UserDB userDB : userRepos.findAll()) {
-			if (userDB.userLocation == location) {
-				users.write(userDB.userName + ",")
+			if (userDB.location == location) {
+				users.write(userDB.name + ",")
 				count++
 			}
 		}
@@ -200,37 +193,38 @@ class DarknessUtils {
 	 HashMap<Integer, String> ShowUsersInLocation(Integer index) {
 		HashMap<Integer, String> users = new HashMap<Integer, String>()
 		for (UserDB userDB : userRepos.findAll()) {
-			if (userDB.userLocation == index) {
-				users.put(userDB.id, userDB.userName)
+			if (userDB.location == index) {
+				users.put(userDB.id, userDB.name)
 			}
 		}
-		return users // + "response" + response
+		return users
 	}
 
 	 HashMap<Integer, String> ShowNpcsInLocation(Integer index) {
 		HashMap<Integer, String> npcs = new HashMap<Integer, String>()
 		for (NpcDB npcDB : npcRepos.findAll()) {
-			if (npcDB.npcLocation == index) {
-				npcs.put(npcDB.id, npcDB.npcName)
+			if (npcDB.location == index) {
+				npcs.put(npcDB.id, npcDB.name)
 			}
 		}
-		return npcs // + "response" + response
-
+		return npcs
 	}
 
-	 Integer move(String name) {
+	 Integer move(String name, Integer location) {
 		if (CountMaps() < 11) {
 			initializeMapValues()
 		}
-		Double location = Math.random() * ((CountMaps()))
+		Double locationRando = Math.random() * ((CountMaps()))
 		// random NPC generation and movement
-		Double npcToMove = Math.random() * ((CountNpcs()))
-		int temp = npcToMove.intValue()
-		npcRepos.findById(temp)       //.get().setLocation(location.intValue())
-		userRepos.findByUserName(name).userLocation(location.intValue())
+		//Double npcToMoveRando = Math.random() * ((CountNpcs()))
+		//int temp = npcToMoveRando.intValue()
+		//NpcDB npcs = npcRepos.findById(temp)
+		UserDB users = userRepos.findByNameAndLocation(name, location)
+		users.location(locationRando)
+		userRepos.save(users)
 		// Model model = null
 		// templateController.template_1(name, model)
-		return location.intValue()
+		return locationRando.intValue()
 	}
 
 	 Map mapStatus(Integer mapIndex) {
@@ -258,40 +252,19 @@ class DarknessUtils {
 		return mapObj
 	}
 
-	//// get individual user or npc
-	 String getUserByName(String name) {
-		return userRepos.findByUserName(name)
-	}
-
-	 String getNpcByName(String name) {
-		return npcRepos.findByNpcName(name)
-	}
-
-	 String getUserByIndex(Integer index) {
-		return userRepos.findById(index)
-	}
-
-	 String getNpcByIndex(Integer index) {
-		return npcRepos.findById(index)
-	}
-
-	 String getStatus(String where) {
-		return where
-	}
-
 	 Map findUserStatsByName(String name) throws JSONException {
 		HashMap userObj = new HashMap()
 		try {
+			UserDB userDB = userRepos.findByName(name)
 			userObj.put("name", name)
-			userObj.put("attack", userRepos.findByUserName(name).userAttack)
-			userObj.put("defense", userRepos.findByUserName(name).userDefense)
-			userObj.put("description", userRepos.findByUserName(name).userDescription)
-			userObj.put("exp", userRepos.findByUserName(name).userExp)
-			userObj.put("hp", userRepos.findByUserName(name).userHp)
-			userObj.put("location", userRepos.findByUserName(name).userLocation)
-			userObj.put("lvl", userRepos.findByUserName(name).userLvl)
-			userObj.put("money", userRepos.findByUserName(name).userMoney)
-			userObj.put("name", userRepos.findByUserName(name).userName)
+			userObj.put("attack", userDB.attack)
+			userObj.put("defense", userDB.defense)
+			userObj.put("description", userDB.description)
+			userObj.put("exp", userDB.exp)
+			userObj.put("hp", userDB.hp)
+			userObj.put("location", userDB.location)
+			userObj.put("lvl", userDB.lvl)
+			userObj.put("money", userDB.money)
 		}
 		catch (Exception e) {
 			e.printStackTrace()
@@ -338,10 +311,11 @@ class DarknessUtils {
 
 	}
 
-	void updateCache(Integer location, String msg) {
+	void updateCache(String data, Integer location, String name) {
 		CacheDB newCacheEntry = new CacheDB()
-		newCacheEntry.cacheCurrentRoomStatus(msg)
-		newCacheEntry.cacheMapName("map_" + location)
+		newCacheEntry.mapId(location)
+		newCacheEntry.usersInRoom(name)
+		newCacheEntry.msg(data)
 		cacheRepos.save(newCacheEntry)
 		// return Methods.getNpcByIndex(index)
 	}
