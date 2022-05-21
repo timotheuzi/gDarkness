@@ -22,5 +22,5 @@ class UserDB {
     public String description
     public Integer location
     public Integer hp
-    public List<String> items
+    public String items
 }

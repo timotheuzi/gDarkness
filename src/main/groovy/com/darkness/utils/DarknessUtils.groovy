@@ -18,305 +18,332 @@ import org.springframework.stereotype.Service
 
 @Service
 class DarknessUtils {
-	@Autowired
-	UserRepo userRepos
-	@Autowired
-	MapRepo mapRepos
-	@Autowired
-	ItemsRepo itemsRepos
-	@Autowired
-	NpcRepo npcRepos
-	@Autowired
-	CacheRepo cacheRepos
+    @Autowired
+    UserRepo userRepos
+    @Autowired
+    MapRepo mapRepos
+    @Autowired
+    ItemsRepo itemsRepos
+    @Autowired
+    NpcRepo npcRepos
+    @Autowired
+    CacheRepo cacheRepos
 
-	private String map_0 = "An empty bar"
-	private String map_1 = "A dark street corner"
-	private String map_2 = "A dark alley"
+    private String map_0 = "An empty bar"
+    private String map_1 = "A dark street corner"
+    private String map_2 = "A dark alley"
 
-	private String npc_0 = "Surly Bartender"
-	private String npc_1 = "Vagrant"
+    private String npc_0 = "Surly Bartender"
+    private String npc_1 = "Vagrant"
 
-	private String item_1 = "sterling silver"
+    private String item_1 = "sterling silver"
 
-	 void initializeMapValues() {
-		Integer count = CountMaps()
-		MapDB mapDB = new MapDB()
-		if (count == 0) {
-			mapDB.name == ("map_" + (CountMaps() + 1).toString())
-			mapDB.description == (map_0)
-		} else if ((count + 1) == 0) {
-			mapDB.name == ("map_" + (CountMaps() + 2).toString())
-			mapDB.description == (map_1)
-		} else {
-			mapDB.name == ("map_" + (CountMaps() + 3).toString())
-			mapDB.description == (map_2)
-		}
-		mapRepos.save(mapDB)
-	 }
+    void initializeMapValues() {
+        Integer count = CountMaps()
+        MapDB mapDB = new MapDB()
+        if (count == 0) {
+            mapDB.name = ("map_" + (CountMaps() + 1).toString())
+            mapDB.description = (map_0)
+        } else if ((count + 1) == 0) {
+            mapDB.name = ("map_" + (CountMaps() + 2).toString())
+            mapDB.description = (map_1)
+        } else {
+            mapDB.name = ("map_" + (CountMaps() + 3).toString())
+            mapDB.description = (map_2)
+        }
+        mapRepos.save(mapDB)
+    }
 
-	 void initializeItemValues() {
-		Double attack = Math.random() * ((10 - 1) + 1)
-		Double defense = Math.random() * ((5 - 1) + 1)
-		ItemsDB itemsDB = new ItemsDB()
-		itemsDB.name == ("luger_" + CountItems().toString())
-		itemsDB.description == (item_1)
-		itemsDB.attack == (attack.intValue())
-		itemsDB.defense == (defense.intValue())
-        itemsDB.location == (0)
-		itemsDB.value ==  Math.random() * ((50 - 1) + 1)
-		itemsRepos.save(itemsDB)
-	}
+    void initializeItemValues() {
+        Double attack = Math.random() * ((10 - 1) + 1)
+        Double defense = Math.random() * ((5 - 1) + 1)
+        ItemsDB itemsDB = new ItemsDB()
+        itemsDB.name = ("luger_" + CountItems().toString())
+        itemsDB.description = (item_1)
+        itemsDB.attack = (attack.intValue())
+        itemsDB.defense = (defense.intValue())
+        itemsDB.location = (0)
+        itemsDB.value = Math.random() * ((50 - 1) + 1)
+        itemsRepos.save(itemsDB)
+    }
 
-	 void initializeNpcValues() {
-		Double attack = Math.random() * ((50 - 1) + 1)
-		Double defense = Math.random() * ((10 - 1) + 1)
-		Double hp = Math.random() * ((1000 - 1) + 1)
-		NpcDB npcDB = new NpcDB()
-		if (CountNpcs() == 0) {
-			npcDB.name == ("Frank")
-			npcDB.description == ("Stinky ")
-			npcDB.location == (0)
-			npcDB.attack == (75)
-			npcDB.defense == (75)
-			npcDB.hp == (3000)
-		} else {
-			npcDB.name == (getMeAgoodName())
-			npcDB.description == (npc_1)
-			npcDB.location == (2)
-			npcDB.attack == (attack.intValue())
-			npcDB.defense == (defense.intValue())
-			npcDB.hp == (hp.intValue())
-		}
-		npcRepos.save(npcDB)
-	 }
+    void initializeNpcValues() {
+        Double attack = Math.random() * ((50 - 1) + 1)
+        Double defense = Math.random() * ((10 - 1) + 1)
+        Double hp = Math.random() * ((1000 - 1) + 1)
+        NpcDB npcDB = new NpcDB()
+        if (CountNpcs() == 0) {
+            npcDB.name = ("Frank")
+            npcDB.description = ("Stinky ")
+            npcDB.location = (0)
+            npcDB.attack = (75)
+            npcDB.defense = (75)
+            npcDB.hp = (3000)
+        } else {
+            npcDB.name = (getMeAgoodName())
+            npcDB.description = (npc_1)
+            npcDB.location = (2)
+            npcDB.attack = (attack.intValue())
+            npcDB.defense = (defense.intValue())
+            npcDB.hp = (hp.intValue())
+        }
+        npcRepos.save(npcDB)
+    }
 
-	 Boolean createNewUser(String name) {
-		 if(userRepos.findByName(name) != null)
-		 {
-			 try {
-				 UserDB newEntry = new UserDB()
-				 newEntry.name == (name)
-				 newEntry.lvl == (1)
-				 newEntry.money == (1)
-				 newEntry.exp == (1)
-				 newEntry.attack == (1)
-				 newEntry.defense == (1)
-				 newEntry.description == ("A new user named " + name)
-				 newEntry.location == (1)
-				 newEntry.hp == (1000)
-				 userRepos.save(newEntry)
-				 return true
-			 } catch (Exception e) {
-				 System.out.println("error")
-			 }
-		 }
-		 else {
-			 return false
-		 }
+    Boolean createNewUser(String name) {
+        if (userRepos.findByName(name) != null) {
+            try {
+                UserDB newEntry = new UserDB()
+                newEntry.name = (name)
+                newEntry.lvl = (1)
+                newEntry.money = (1)
+                newEntry.exp = (1)
+                newEntry.attack = (1)
+                newEntry.defense = (1)
+                newEntry.description = ("A new user named " + name)
+                newEntry.location = (1)
+                newEntry.hp = (1000)
+                userRepos.save(newEntry)
+                return true
+            } catch (Exception e) {
+                System.out.println("error")
+            }
+        } else {
+            return false
+        }
 
-	 }
+    }
 
-	 HashMap<String, Integer> getStats(String name, Boolean isNpc) {
-		HashMap<String, Integer> stats = new HashMap<String, Integer>()
-		if (!isNpc) {
-			UserDB userObj = userRepos.findByName(name)
-			stats.put("ID", userObj.id)
-			stats.put("attack", userObj.attack)
-			stats.put("defense", userObj.defense)
-			stats.put("exp", userObj.exp)
-			stats.put("location", userObj.location)
-			stats.put("lvl", userObj.lvl)
-			stats.put("money", userObj.money)
-		} else {
-			NpcDB npcObj = npcRepos.findByName(name)
-			stats.put("ID", npcObj.id)
-			stats.put("attack", npcObj.attack)
-			stats.put("defense", npcObj.defense)
-			stats.put("hp", npcObj.hp)
-			stats.put("location", npcObj.location)
-		}
-		return stats
-	}
-	Integer CountMaps() {
-		return mapRepos.findAll().count().intValue()
-	}
-	Integer CountUsers() {
-		return userRepos.findAll().count().intValue()
-	}
-	Integer CountItems() {
-		return itemsRepos.findAll().count().intValue()
-	}
+    HashMap<String, Integer> getStats(String name, Boolean isNpc) {
+        HashMap<String, Integer> stats = new HashMap<String, Integer>()
+        if (!isNpc) {
+            UserDB userObj = userRepos.findByName(name)
+            stats.put("ID", userObj.id)
+            stats.put("attack", userObj.attack)
+            stats.put("defense", userObj.defense)
+            stats.put("exp", userObj.exp)
+            stats.put("location", userObj.location)
+            stats.put("lvl", userObj.lvl)
+            stats.put("money", userObj.money)
+        } else {
+            NpcDB npcObj = npcRepos.findByName(name)
+            stats.put("ID", npcObj.id)
+            stats.put("attack", npcObj.attack)
+            stats.put("defense", npcObj.defense)
+            stats.put("hp", npcObj.hp)
+            stats.put("location", npcObj.location)
+        }
+        return stats
+    }
 
-	 Map GetUserItems(Integer userId) {
-		 ItemsDB itemdb = itemsRepos.getItemsByOwner(userId)
-		 Map<JsonFormat.Value, KeyValueHolder> resp = itemdb.eachWithIndex
-				 { ItemsDB entry, int i -> entry.owner entry.name }
-		 return resp
-	 }
+    Integer CountMaps() {
+        /*Integer count = 0
+        for(MapDB mapDb : mapRepos.findAll())
+        {
+            count++
+        }
+        return count*/
+        return mapRepos.findAll().iterator().size()
+    }
 
-	 Integer CountNpcs()
-	 {
-		Integer count = 0
-		for(NpcDB itemdb : npcRepos.findAll())
-		{
-				count++
-		}
-		return count
-	 }
+    Integer CountUsers() {
+        /*Integer count = 0
+        for(UserDB userDB : userRepos.findAll())
+        {
+            count++
+        }*/
+        //return count
+        return userRepos.findAll().iterator().size()
+    }
 
-	 Map NpcsByLocation(Integer location) {
-		 NpcDB npcDB = npcRepos.findByLocation(location)
-		 Map resp = npcDB.each {NpcDB entry, int i -> entry.id entry}
-		 /*NpcDB npc = npcRepos.findByLocation(location)
-			Integer count = 0
-			for (NpcDB npcDB : npcRepos.findAll()) {
-				if (npcDB.npcLocation == location) {
-					npcs.write(npcDB.npcLocation + ",")
-					count++
-				}
-			}*/
-		return resp
-	}
+    Integer CountItems() {
+        /*Integer count = 0
+        for(ItemsDB itemdb : itemsRepos.findAll())
+        {
+            count++
+        }
+        return count*/
+        return itemsRepos.findAll().iterator().size()
+    }
 
-	 String getUsersByLocation(Integer location) {
-		StringWriter users = new StringWriter()
-		Integer count = 0
-		for (UserDB userDB : userRepos.findAll()) {
-			if (userDB.location == location) {
-				users.write(userDB.name + ",")
-				count++
-			}
-		}
-		return users.toString()
-	}
+    Map GetUserItems(Integer userId) {
+        ItemsDB itemdb = itemsRepos.getItemsByOwner(userId)
+        Map<JsonFormat.Value, KeyValueHolder> resp = itemdb.eachWithIndex
+                { ItemsDB entry, int i -> entry.owner entry.name }
+        return resp
+    }
 
-	 HashMap<Integer, String> ShowUsersInLocation(Integer index) {
-		HashMap<Integer, String> users = new HashMap<Integer, String>()
-		for (UserDB userDB : userRepos.findAll()) {
-			if (userDB.location == index) {
-				users.put(userDB.id, userDB.name)
-			}
-		}
-		return users
-	}
+    Integer CountNpcs() {
+        Integer count = 0
+        for (NpcDB itemdb : npcRepos.findAll()) {
+            count++
+        }
+        return count
+    }
 
-	 HashMap<Integer, String> ShowNpcsInLocation(Integer index) {
-		HashMap<Integer, String> npcs = new HashMap<Integer, String>()
-		for (NpcDB npcDB : npcRepos.findAll()) {
-			if (npcDB.location == index) {
-				npcs.put(npcDB.id, npcDB.name)
-			}
-		}
-		return npcs
-	}
+    Map NpcsByLocation(Integer location) {
+        NpcDB npcDB = npcRepos.findByLocation(location)
+        Map resp = npcDB.each { NpcDB entry, int i -> entry.id entry }
+        /*NpcDB npc = npcRepos.findByLocation(location)
+           Integer count = 0
+           for (NpcDB npcDB : npcRepos.findAll()) {
+               if (npcDB.npcLocation == location) {
+                   npcs.write(npcDB.npcLocation + ",")
+                   count++
+               }
+           }*/
+        return resp
+    }
 
-	 Integer move(String name, Integer location) {
-		if (CountMaps() < 11) {
-			initializeMapValues()
-		}
-		Double locationRando = Math.random() * ((CountMaps()))
-		// random NPC generation and movement
-		//Double npcToMoveRando = Math.random() * ((CountNpcs()))
-		//int temp = npcToMoveRando.intValue()
-		//NpcDB npcs = npcRepos.findById(temp)
-		UserDB users = userRepos.findByNameAndLocation(name, location)
-		users.location(locationRando)
-		userRepos.save(users)
-		// Model model = null
-		// templateController.template_1(name, model)
-		return locationRando.intValue()
-	}
+    String getUsersByLocation(Integer location) {
+        StringWriter users = new StringWriter()
+        Integer count = 0
+        for (UserDB userDB : userRepos.findAll()) {
+            if (userDB.location == location) {
+                users.write(userDB.name + ",")
+                count++
+            }
+        }
+        return users.toString()
+    }
 
-	 Map mapStatus(Integer mapIndex) {
-		HashMap mapObj = new HashMap()
-		int count = 0
-		Iterator itUser = (ShowUsersInLocation(mapIndex)).entrySet().iterator()
-		while (itUser.hasNext()) {
-			Map.Entry pair = (Map.Entry) itUser.next()
-			mapObj.put(count, pair.getValue())
-			itUser.remove() // avoids a ConcurrentModificationException
-			count++
-		}
-		Iterator itNpc = (ShowNpcsInLocation(mapIndex)).entrySet().iterator()
-		while (itNpc.hasNext()) {
-			Map.Entry pair = (Map.Entry) itNpc.next()
-			mapObj.put(count, pair.getValue())
-			itNpc.remove() // avoids a ConcurrentModificationException
-			count++
-		}
-		for (CacheDB cacheDB : cacheRepos.findAll()) {
-			mapObj.put(count, cacheDB.cacheCurrentRoomStatus())
-			count++
-		}
+    HashMap<Integer, String> ShowUsersInLocation(Integer index) {
+        HashMap<Integer, String> users = new HashMap<Integer, String>()
+        for (UserDB userDB : userRepos.findAll()) {
+            if (userDB.location == index) {
+                users.put(userDB.id, userDB.name)
+            }
+        }
+        return users
+    }
 
-		return mapObj
-	}
+    HashMap<Integer, String> ShowNpcsInLocation(Integer index) {
+        HashMap<Integer, String> npcs = new HashMap<Integer, String>()
+        for (NpcDB npcDB : npcRepos.findAll()) {
+            if (npcDB.location == index) {
+                npcs.put(npcDB.id, npcDB.name)
+            }
+        }
+        return npcs
+    }
 
-	 Map findUserStatsByName(String name) throws JSONException {
-		HashMap userObj = new HashMap()
-		try {
-			UserDB userDB = userRepos.findByName(name)
-			userObj.put("name", name)
-			userObj.put("attack", userDB.attack)
-			userObj.put("defense", userDB.defense)
-			userObj.put("description", userDB.description)
-			userObj.put("exp", userDB.exp)
-			userObj.put("hp", userDB.hp)
-			userObj.put("location", userDB.location)
-			userObj.put("lvl", userDB.lvl)
-			userObj.put("money", userDB.money)
-		}
-		catch (Exception e) {
-			e.printStackTrace()
-			return (HashMap) userObj.put("error", e.toString())
-		}
-		return userObj
-	 }
+    Integer move(String name, Integer location) {
+        if (CountMaps() < 11) {
+            initializeMapValues()
+        }
+        Double locationRando = Math.random() * ((CountMaps()))
+        // random NPC generation and movement
+        //Double npcToMoveRando = Math.random() * ((CountNpcs()))
+        //int temp = npcToMoveRando.intValue()
+        //NpcDB npcs = npcRepos.findById(temp)
+        UserDB users = userRepos.findByNameAndLocation(name, location)
+        users.location(locationRando)
+        userRepos.save(users)
+        // Model model = null
+        // templateController.template_1(name, model)
+        return locationRando.intValue()
+    }
 
-	 String getMeAgoodName() {
-		Random rand = new Random()
-		String vocals = "aaaeeiiiiieeeou" + "iiiooooooaaeeeeeu" + "ouaei"
-		String cons = "bcdfghjklznpqrst" + "bcdfgjklmnprstvw" + "bcdfgjklmnprst"
-		//String allchars = vocals + cons
-		int length = rand.nextInt(8)
-		if (length < 3)
-			length = 3
-		// int consnum = 1
-		int consnum = 1
-		String name = ""
-		String touse
-		char c
+    Map mapStatus(Integer mapIndex) {
+        HashMap mapObj = new HashMap()
+        int count = 0
+        Iterator itUser = (ShowUsersInLocation(mapIndex)).entrySet().iterator()
+        while (itUser.hasNext()) {
+            Map.Entry pair = (Map.Entry) itUser.next()
+            mapObj.put(count, pair.getValue())
+            itUser.remove() // avoids a ConcurrentModificationException
+            count++
+        }
+        Iterator itNpc = (ShowNpcsInLocation(mapIndex)).entrySet().iterator()
+        while (itNpc.hasNext()) {
+            Map.Entry pair = (Map.Entry) itNpc.next()
+            mapObj.put(count, pair.getValue())
+            itNpc.remove() // avoids a ConcurrentModificationException
+            count++
+        }
+        for (CacheDB cacheDB : cacheRepos.findAll()) {
+            mapObj.put(count, cacheDB.msg())
+            count++
+        }
 
-		for (int i = 0; i < length; i++) {
-			if (consnum == 2) {
-				touse = vocals
-				if (length != 2) {
-					consnum = rand.nextInt(2)
-				} else {
-					consnum = 1
-				}
-			} else
-				touse = cons
-			// pick a random character from the set we are goin to use.
-			c = touse.charAt(rand.nextInt(touse.length()))
-			name = name + c
-			if (cons.indexOf(c) != -1)
-				consnum++
-			if (vocals.indexOf(c) != -1)
-				consnum = consnum - 1
-		}
-		name = name.charAt(0) + name.substring(1, name.length())
-		System.out.println(name)
-		return name
+        return mapObj
+    }
 
-	}
+    Map findUserStatsByName(String name) throws JSONException {
+        HashMap userObj = new HashMap()
+        try {
+            UserDB userDB = userRepos.findByName(name)
+            userObj.put("name", name)
+            userObj.put("attack", userDB.attack)
+            userObj.put("defense", userDB.defense)
+            userObj.put("description", userDB.description)
+            userObj.put("exp", userDB.exp)
+            userObj.put("hp", userDB.hp)
+            userObj.put("location", userDB.location)
+            userObj.put("lvl", userDB.lvl)
+            userObj.put("money", userDB.money)
+        }
+        catch (Exception e) {
+            e.printStackTrace()
+            return (HashMap) userObj.put("error", e.toString())
+        }
+        return userObj
+    }
 
-	void updateCache(String data, Integer location, String name) {
-		CacheDB newCacheEntry = new CacheDB()
-		newCacheEntry.mapId(location)
-		newCacheEntry.usersInRoom(name)
-		newCacheEntry.msg(data)
-		cacheRepos.save(newCacheEntry)
-		// return Methods.getNpcByIndex(index)
-	}
+    String getMeAgoodName() {
+        Random rand = new Random()
+        String vocals = "aaaeeiiiiieeeou" + "iiiooooooaaeeeeeu" + "oeeeeooooaaaaaaaaaaauaei"
+        String cons = "bcdfghjklzzznpqrst"
+        //String allchars = vocals + cons
+        Integer length = rand.nextInt(8)
+        if (length < 3)
+            length = 3
+        // int consnum = 1
+        Integer consnum = 1
+        String name = ""
+        String touse
+        String c
+
+        for (Integer i = 0; i < length; i++) {
+            if (consnum == 2) {
+                touse = vocals
+                if (length != 2) {
+                    consnum = rand.nextInt(2)
+                } else {
+                    consnum = 1
+                }
+            } else
+                touse = cons
+            // pick a random character from the set we are goin to use.
+            c = touse.charAt(rand.nextInt(touse.length())) as Character
+            name = name + c.toString()
+            if (cons.indexOf(rand.nextInt(1)) != -1)
+                consnum++
+            if (vocals.indexOf(rand.nextInt(3)) != -1)
+                consnum = consnum - 1
+        }
+        name = name.charAt(0) + ((name.substring(1, name.length())))
+        System.out.println(name)
+        return name
+
+    }
+
+    String generateRandomPassword(Integer len) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
+        +"lmnopqrstuvwxyz";
+        Random rnd = new Random();
+        StringBuilder sb = new StringBuilder(len);
+        for (Integer i = 0; i < len; i++)
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        return sb.toString();
+    }
+
+    void updateCache(String data, Integer location, String name) {
+        CacheDB newCacheEntry = new CacheDB()
+        newCacheEntry.mapId(location)
+        newCacheEntry.usersInRoom(name)
+        newCacheEntry.msg(data)
+        cacheRepos.save(newCacheEntry)
+        // return Methods.getNpcByIndex(index)
+    }
 }

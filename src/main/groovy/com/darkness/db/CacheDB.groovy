@@ -15,9 +15,9 @@ class CacheDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer id
     public Integer mapId
-    public List<Integer> usersInRoom
-    public List<Integer> npcsInRoom
-    public List<Integer> itemsInRoom
+    public String usersInRoom
+    public String npcsInRoom
+    public String itemsInRoom
     public String msg
 
 }
