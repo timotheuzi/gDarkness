@@ -41,13 +41,18 @@
 	function variousInput()
 	{
 			var output = []
-			var textBox = $('#input').val()
+			var jsonParams =
+            {
+                "name": name,
+                "value": $('#input').val()
+            };
+			//var textBox = $('#input').val()
 				$.ajax({
 				    type : "POST",
                     processData : true,
-                    //data: JSON.stringify(jsonParams),
+                    data: JSON.stringify(jsonParams),
 					contentType : 'application/json',
-					url: encodeURI("/various" + "?name=" + name + "&value=" + textBox),
+					url: encodeURI("/various"),
 					success : function(response)
                     {
                         alert(response);
@@ -77,11 +82,12 @@
 	}*/
 	function createNewUser(url)
     {
-    	var name = $('#createUser').val();
-    	var jsonParams =
+    	        var name = $('#createUser').val();
+    	        var jsonParams =
     			{
     				//indicator: , variable
     				"name": name,
+    				"value": "hahaha"
     			};
     			$.ajax({
     					type : "POST",
