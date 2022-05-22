@@ -2,10 +2,13 @@ package com.darkness.controller
 
 import com.darkness.db.CacheDB
 import com.darkness.db.MapDB
+import com.darkness.model.GenericRequest
+import com.darkness.model.UserObject
 import org.json.JSONException
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
@@ -67,72 +70,64 @@ import org.springframework.beans.factory.annotation.Autowired
 	}
 
 	@RequestMapping(method = RequestMethod.POST, path = "/createNewUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	String createNewUser(@RequestParam(name = "name", required = true) String name) {
-
-		if (darknessUtils.createNewUser(name)) {
-			return "New User Created name " + name + " created...."
+	String createNewUser(@RequestBody GenericRequest obj) {
+		if (darknessUtils.createNewUser(obj.getName())) {
+			return "New User Created name " + obj.getName() + "created...."
 		} else {
-			return "User already exists, logging in using " + name + " and redirect to home"
+			return "User already exists, logging in using " + obj.getName() + " and redirect to home"
 		}
 	}
-
 	@RequestMapping(method = RequestMethod.POST, path = "/setUser", produces = MediaType.APPLICATION_JSON_VALUE)
-	String setUser(@RequestParam(name = "name", required = true) String name,
-			@RequestParam(name = "lvl", required = false) Integer lvl,
-			@RequestParam(name = "money", required = false) Integer money,
-			@RequestParam(name = "exp", required = false) Integer exp,
-			@RequestParam(name = "attack", required = false) Integer attack,
-			@RequestParam(name = "defense", required = false) Integer defense,
-			@RequestParam(name = "description", required = false) String description,
-			@RequestParam(name = "location", required = false) Integer location,
-			@RequestParam(name = "hp", required = false) Integer hp) {
-		Integer id = uRepo.findByName(name).id
+	String setUser(@RequestBody UserObject obj) {
+		//UserDB userObj = uRepo.findByName(obj.getName())
+		//userObj.name
+		Integer id = uRepo.findByName(obj.getName()).id
 		if(id == null){
-			darknessUtils.createNewUser(name)
-			return "New User Created name " + name + " created...."
+			darknessUtils.createNewUser(obj.getName())
+			return "New User Created name " + obj.getName() + " created...."
 		}
 		UserDB newEntry = new UserDB()
 		newEntry.id = id
-		newEntry.name(name)
-		if (lvl != null) {
-			newEntry.lvl(lvl)
+		newEntry.name(obj.getName())
+		if (obj.getLvl() != null) {
+			newEntry.lvl(obj.getLvl())
 		} else {
-			newEntry.lvl(uRepo.findByName(name).lvl)
+			newEntry.lvl(uRepo.findByName(obj.getName()).lvl)
 		}
-		if (money != null) {
-			newEntry.money(money)
+		if (obj.getMoney() != null) {
+			newEntry.money(obj.getMoney())
 		} else {
-			newEntry.money(uRepo.findByName(name).money)
+			newEntry.money(uRepo.findByName(obj.getName()).money)
 		}
-		if (exp != null) {
-			newEntry.exp(exp)
+		if (obj.getExp() != null) {
+			newEntry.exp(obj.getExp())
 		} else {
-			newEntry.exp(uRepo.findByName(name).exp)
+			newEntry.exp(uRepo.findByName(obj.getName()).exp)
 		}
-		if (attack != null) {
-			newEntry.attack(attack)
+		if (obj.getAttack() != null) {
+			newEntry.attack(obj.getAttack())
 		} else {
-			newEntry.attack(uRepo.findByName(name).attack)
+			newEntry.attack(uRepo.findByName(obj.getName()).attack)
 		}
-		if (defense != null) {
-			newEntry.defense(defense)
+		if (obj.getDefense() != null) {
+			newEntry.defense(obj.getDefense())
 		} else {
-			newEntry.defense(uRepo.findByName(name).defense)
+			newEntry.defense(uRepo.findByName(obj.getName()).defense)
 		}
-		if (description != null) {
-			newEntry.description(description)
+		if (obj.getDescription() != null) {
+			newEntry.description(obj.getDescription())
 		} else {
-			newEntry.description(uRepo.findByName(name).description)
+			newEntry.description(uRepo.findByName(obj.getName()).description)
 		}
-		if (location != null) {
-			newEntry.location(location)
+		if (obj.getLocation() != null) {
+			newEntry.location(obj.getLocation())
 		} else {
-			newEntry.location(uRepo.findByName(name).location)
+			newEntry.location(uRepo.findByName(obj.getName()).location)
 		}
-		if (hp != null) {
-			newEntry.hp(hp)
+		if (obj.getHp() != null) {
+			newEntry.hp(obj.getHp())
 		} else {
-			newEntry.hp(uRepo.findByName(name).hp)
+			newEntry.hp(uRepo.findByName(obj.getName()).hp)
 		}
 		uRepo.save(newEntry)
 		return newEntry.toString()
@@ -140,19 +135,19 @@ import org.springframework.beans.factory.annotation.Autowired
 
 
 	@RequestMapping(method = RequestMethod.POST, path = "/various", produces = MediaType.APPLICATION_JSON_VALUE) // consumes
-	Map various(String value, String name) throws JSONException {
+	Map various(@RequestBody GenericRequest obj) throws JSONException {
 		//set up
-		Integer location = uRepo.findByName(name).id
-		Integer userId = uRepo.findByName(name).id
-		value = value.replace(",", "").toLowerCase()
+		Integer location = uRepo.findByName(obj.getName()).id
+		Integer userId = uRepo.findByName(obj.getName()).id
+		String value = obj.getValue()
 		Map<String, String> output = new HashMap<String, String>()
 		//update rolling cache
 		if (!value.isEmpty()) {
-			darknessUtils.updateCache(value, location, name)
+			darknessUtils.updateCache(value, location, obj.getName())
 		}
 		//movement
 		if (value.contains("move") || value.contains("go")) {
-			Integer newLocation = darknessUtils.move(name, location)
+			Integer newLocation = darknessUtils.move(obj.getName(), location)
 			output.put("users", darknessUtils.ShowUsersInLocation(newLocation).toString())
 			output.put("npcs", darknessUtils.ShowNpcsInLocation(newLocation).toString())
 			output.put("description", mRepo.findById(newLocation).toString())
