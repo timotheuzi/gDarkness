@@ -98,7 +98,7 @@ class DarknessUtils {
     }
 
     Boolean createNewUser(String name) {
-        if (userRepos.findByName(name) != null) {
+        if (userRepos.findByName(name) == null) {
             try {
                 UserDB newEntry = new UserDB()
                 newEntry.name = (name)

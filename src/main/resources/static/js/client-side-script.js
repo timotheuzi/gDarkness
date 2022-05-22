@@ -52,8 +52,8 @@
                     processData : true,
                     data: JSON.stringify(jsonParams),
 					contentType : 'application/json',
-					url: encodeURI("/various"),
-					success : function(response)
+					url: encodeURI("/the_alley/various"),
+					then : function(response)
                     {
                         alert(response);
                         //Redirect(encodeURI("/home?name=" + name));
@@ -80,22 +80,22 @@
 				Redirect(encodeURI("/the_alley/home?name=" + name))
 			})
 	}*/
-	function createNewUser(url)
+	function createNewUser()
     {
     	        var name = $('#createUser').val();
     	        var jsonParams =
     			{
     				//indicator: , variable
     				"name": name,
-    				"value": "hahaha"
+    				"value": "wtf"
     			};
     			$.ajax({
     					type : "POST",
-    					url : url,
+    					url : "/the_alley/createNewUser",
     					processData : true,
-    					data: jsonParams,
+    					data: JSON.stringify(jsonParams),
     					contentType : 'application/json',
-    					success : function(response)
+    					then : function(response)
     					{
     						alert(response);
     						Redirect(encodeURI("/home?name=" + name));

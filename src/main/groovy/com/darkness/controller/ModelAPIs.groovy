@@ -61,7 +61,7 @@ class ModelAPIs {
         //todo random moves
 
         Integer currentMap = utils.move(name)
-        uRepo.findByUserName(name).userLocation(currentMap.intValue())
+        uRepo.findByName(name).location(currentMap.intValue())
         model.addAttribute("name", name)
         model.addAttribute("mapName", "alley")
         model.addAttribute("description", "dimlit alleyway")
