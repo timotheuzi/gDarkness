@@ -25,21 +25,13 @@ class DarknessApplicationTests extends Specification{
             //def testName = ""
 
         when:
-           def key = giveMeKey()
+           def key = dUtils.giveMeAname()
            def testName = dUtils.generateRandomString(8)
 
         then:
            println("give me blah:" + key)
            println("generate make:" + testName)
            assert testName != key
-    }
-    def giveMeKey(){
-        String alphabet = (('A'..'N')+('P'..'Z')+('a'..'k')+('m'..'z')).join()
-        def length = 8
-        def key = new Random().with {
-            (1..length).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
-        }
-        return key
     }
 /*
 	 * @Test public void CountMaps() { /*methods temp = mock(methods.class); Integer

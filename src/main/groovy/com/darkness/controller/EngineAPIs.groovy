@@ -196,8 +196,8 @@ import org.springframework.beans.factory.annotation.Autowired
 		return output
 	}
 
-	// @GetMapping("/updateRoom")
-	/*@RequestMapping(method = RequestMethod.POST, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
+	//@GetMapping("/updateRoom")
+	@RequestMapping(method = RequestMethod.GET, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
 	Map updateRoom(@RequestParam(name = "mapIndex", required = false) Integer mapIndex) {
 		if (mapIndex != null) {
 			return darknessUtils.mapStatus(mapIndex)
@@ -210,14 +210,14 @@ import org.springframework.beans.factory.annotation.Autowired
 	@RequestMapping(method = RequestMethod.GET, path = "/findUserByIndex", produces = MediaType.APPLICATION_JSON_VALUE)
 	String findUserByIndex(@RequestParam(name = "index", required = true) Integer index) {
 		// int[] updateRoom = darknessUtils.mapStatus(location)
-		return darknessUtils.getUserByIndex(index)
+		return darknessUtils.getUsersByLocation(index)
 	}
 
 	// @GetMapping("/findNpcName")
 	@RequestMapping(method = RequestMethod.GET, path = "/findNpcByIndex", produces = MediaType.APPLICATION_JSON_VALUE)
 	String findNpcByIndex(@RequestParam(name = "index", required = true) Integer index) {
 		// int[] updateRoom = darknessUtils.mapStatus(location)
-		return darknessUtils.getNpcByIndex(index)
-	}*/
+		return darknessUtils.NpcsByLocation(index)
+	}
 
 }

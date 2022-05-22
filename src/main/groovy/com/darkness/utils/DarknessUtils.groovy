@@ -34,6 +34,7 @@ class DarknessUtils {
     private String map_0 = "An empty bar"
     private String map_1 = "A dark street corner"
     private String map_2 = "A dark alley"
+    private String map_3 = "An empty lot"
 
     private String npc_0 = "Surly Bartender"
     private String npc_1 = "Vagrant"
@@ -46,12 +47,16 @@ class DarknessUtils {
         if (count == 0) {
             mapDB.name = ("map_" + (CountMaps() + 1).toString())
             mapDB.description = (map_0)
-        } else if ((count + 1) == 0) {
+        } else if (count == 1) {
             mapDB.name = ("map_" + (CountMaps() + 2).toString())
             mapDB.description = (map_1)
-        } else {
+        } else if (count == 2) {
             mapDB.name = ("map_" + (CountMaps() + 3).toString())
             mapDB.description = (map_2)
+        }
+        else {
+            mapDB.name = ("map_" + (CountMaps() + 3).toString())
+            mapDB.description = (map_3)
         }
         mapRepos.save(mapDB)
     }
@@ -82,7 +87,7 @@ class DarknessUtils {
             npcDB.defense = (75)
             npcDB.hp = (3000)
         } else {
-            npcDB.name = (null)
+            npcDB.name = (giveMeAname())
             npcDB.description = (npc_1)
             npcDB.location = (2)
             npcDB.attack = (attack.intValue())
@@ -91,12 +96,6 @@ class DarknessUtils {
         }
         npcRepos.save(npcDB)
     }
-    /*String getMeAGoodName(){
-        String charset = (('A'..'Z') + ('0'..'9')).join()
-        Integer length = 9
-        String randomString = RandomString(length, charset.toCharArray())
-        return randomString
-    }*/
 
     Boolean createNewUser(String name) {
         if (userRepos.findByName(name) != null) {
@@ -145,33 +144,33 @@ class DarknessUtils {
     }
 
     Integer CountMaps() {
-        /*Integer count = 0
+        Integer count = 0
         for(MapDB mapDb : mapRepos.findAll())
         {
             count++
         }
-        return count*/
-        return mapRepos.findAll().iterator().size()
+        return count
+        //return mapRepos.findAll().iterator().size()
     }
 
     Integer CountUsers() {
-        /*Integer count = 0
+        Integer count = 0
         for(UserDB userDB : userRepos.findAll())
         {
             count++
-        }*/
-        //return count
-        return userRepos.findAll().iterator().size()
+        }
+        return count
+        //return userRepos.findAll().iterator().size()
     }
 
     Integer CountItems() {
-        /*Integer count = 0
+        Integer count = 0
         for(ItemsDB itemdb : itemsRepos.findAll())
         {
             count++
         }
-        return count*/
-        return itemsRepos.findAll().iterator().size()
+        return count
+        //return itemsRepos.findAll().iterator().size()
     }
 
     Map GetUserItems(Integer userId) {
@@ -306,6 +305,15 @@ class DarknessUtils {
             sb.append(chars.charAt(rnd.nextInt(chars.length())));
         return sb.toString();
     }
+    String giveMeAname(){
+        String alphabet = (('A'..'N')+('P'..'Z')+('a'..'k')+('m'..'z')).join()
+        def length = 8
+        def key = new Random().with {
+            (1..length).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+        }
+        return key
+    }
+
 
     void updateCache(String data, Integer location, String name) {
         CacheDB newCacheEntry = new CacheDB()

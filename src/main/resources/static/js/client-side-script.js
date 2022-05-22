@@ -1,12 +1,12 @@
      // enter logic
-    $(document).keyup(function(event) {
+    /*$(document).keyup(function(event) {
     if ($(".input").is(":focus") && event.key == "Enter") {
         // Do work
         variousInput()
          }
-    });
+    });*/
 
-	function ajaxTest()
+	/*function ajaxTest()
 	{
 		output=[]
 		var tempParams =
@@ -18,7 +18,7 @@
 
 		$.ajax({
         type: 'GET',
-        url: "/the_alley/various",
+        url: "/the_alley/updateRoom",
         data: JSON.stringify(tempParams),
         async: false,
         beforeSend: function (xhr)
@@ -36,39 +36,72 @@
     	   	alert(output['location'])
 
        }
-	})}
+	})}*/
 
 	function variousInput()
 	{
 			var output = []
 			var textBox = $('#input').val()
 				$.ajax({
-				    //data:JSON.stringify(textBox)
+				    type : "POST",
+                    processData : true,
+                    //data: JSON.stringify(jsonParams),
 					contentType : 'application/json',
-					url: encodeURI("/variousInput" + "?name=" + name + "&value=" + textBox),
-					}).then(function(data)
-						{
+					url: encodeURI("/various" + "?name=" + name + "&value=" + textBox),
+					success : function(response)
+                    {
+                        alert(response);
+                        //Redirect(encodeURI("/home?name=" + name));
 						output = data
 						alert(output)
 						$("#mapInfo").append(output['mapinfo'])
 						$("#npcInfo").append(output['npcinfo'])
 						//$("#npcInfo").append(JSON.stringify(output))
 						$( "#output" ).fadeIn( 4000, function() {})
-						})
+					}
+				});
 	}
 
-	function createNewUser(url)
+	/*function createNewUser(url)
     {
 			var name = $('#createUser').val()
 			$.ajax({
+			type: 'POST',
 			//data: JSON.stringify(jsonParams),
 			url: encodeURI(url + "?name=" + name),
 			}).then(function(data)
 			{
-				$('#output').append(data)
+				//$('#output').append(data)
 				Redirect(encodeURI("/the_alley/home?name=" + name))
 			})
-	}
+	}*/
+	function createNewUser(url)
+    {
+    	var name = $('#createUser').val();
+    	var jsonParams =
+    			{
+    				//indicator: , variable
+    				"name": name,
+    			};
+    			$.ajax({
+    					type : "POST",
+    					url : url,
+    					processData : true,
+    					data: jsonParams,
+    					contentType : 'application/json',
+    					success : function(response)
+    					{
+    						alert(response);
+    						Redirect(encodeURI("/home?name=" + name));
+    					}
+    					/*error : function(xhr, status, error)
+    					{
+    						alert(xhr.responseText);
+    						$("#alert-message-container").html("An unknown error occured when trying to create a new user!  Please try again later.");
+    						$("#alert-message-display").dialog("open");
+    					}*/
+    			});
+    }
 	function init(url)
     {
 			var output = []
