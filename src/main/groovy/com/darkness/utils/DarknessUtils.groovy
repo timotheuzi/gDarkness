@@ -12,9 +12,11 @@ import com.darkness.db.CacheRepo
 import com.darkness.db.CacheDB
 import com.fasterxml.jackson.annotation.JsonFormat
 import lombok.Value
+import net.bytebuddy.utility.RandomString
 import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+
 
 @Service
 class DarknessUtils {
@@ -80,7 +82,7 @@ class DarknessUtils {
             npcDB.defense = (75)
             npcDB.hp = (3000)
         } else {
-            npcDB.name = (getMeAgoodName())
+            npcDB.name = (null)
             npcDB.description = (npc_1)
             npcDB.location = (2)
             npcDB.attack = (attack.intValue())
@@ -89,6 +91,12 @@ class DarknessUtils {
         }
         npcRepos.save(npcDB)
     }
+    /*String getMeAGoodName(){
+        String charset = (('A'..'Z') + ('0'..'9')).join()
+        Integer length = 9
+        String randomString = RandomString(length, charset.toCharArray())
+        return randomString
+    }*/
 
     Boolean createNewUser(String name) {
         if (userRepos.findByName(name) != null) {
@@ -290,47 +298,8 @@ class DarknessUtils {
         return userObj
     }
 
-    String getMeAgoodName() {
-        Random rand = new Random()
-        String vocals = "aaaeeiiiiieeeou" + "iiiooooooaaeeeeeu" + "oeeeeooooaaaaaaaaaaauaei"
-        String cons = "bcdfghjklzzznpqrst"
-        //String allchars = vocals + cons
-        Integer length = rand.nextInt(8)
-        if (length < 3)
-            length = 3
-        // int consnum = 1
-        Integer consnum = 1
-        String name = ""
-        String touse
-        String c
-
-        for (Integer i = 0; i < length; i++) {
-            if (consnum == 2) {
-                touse = vocals
-                if (length != 2) {
-                    consnum = rand.nextInt(2)
-                } else {
-                    consnum = 1
-                }
-            } else
-                touse = cons
-            // pick a random character from the set we are goin to use.
-            c = touse.charAt(rand.nextInt(touse.length())) as Character
-            name = name + c.toString()
-            if (cons.indexOf(rand.nextInt(1)) != -1)
-                consnum++
-            if (vocals.indexOf(rand.nextInt(3)) != -1)
-                consnum = consnum - 1
-        }
-        name = name.charAt(0) + ((name.substring(1, name.length())))
-        System.out.println(name)
-        return name
-
-    }
-
-    String generateRandomPassword(Integer len) {
+    String generateRandomString(Integer len) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
-        +"lmnopqrstuvwxyz";
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(len);
         for (Integer i = 0; i < len; i++)
