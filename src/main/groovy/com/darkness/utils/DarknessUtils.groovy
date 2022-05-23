@@ -10,6 +10,7 @@ import com.darkness.db.NpcRepo
 import com.darkness.db.UserDB
 import com.darkness.db.CacheRepo
 import com.darkness.db.CacheDB
+import com.darkness.model.UserObject
 import com.fasterxml.jackson.annotation.JsonFormat
 import lombok.Value
 import net.bytebuddy.utility.RandomString
@@ -42,23 +43,23 @@ class DarknessUtils {
     private String item_1 = "sterling silver"
 
     void initializeMapValues() {
-        Integer count = CountMaps()
+        Integer count = 0
         MapDB mapDB = new MapDB()
-        if (count == 0) {
-            mapDB.name = ("map_" + (CountMaps() + 1).toString())
-            mapDB.description = (map_0)
-        } else if (count == 1) {
-            mapDB.name = ("map_" + (CountMaps() + 2).toString())
-            mapDB.description = (map_1)
-        } else if (count == 2) {
-            mapDB.name = ("map_" + (CountMaps() + 3).toString())
-            mapDB.description = (map_2)
+        for(MapDB mapDb : mapRepos.findAll())
+        {
+            mapDB.name = ("map_" + (count + 1).toString())
+            if(count == 0) {
+                mapDB.description = (map_0)
+            } else if(count == 1){
+                mapDB.description = (map_1)
+            } else if(count == 2){
+                mapDB.description = (map_2)
+            } else if (count >= 3){
+                mapDB.description = (map_3)
+            }
+            mapRepos.save(mapDB)
+            count++
         }
-        else {
-            mapDB.name = ("map_" + (CountMaps() + 3).toString())
-            mapDB.description = (map_3)
-        }
-        mapRepos.save(mapDB)
     }
 
     void initializeItemValues() {
@@ -121,24 +122,24 @@ class DarknessUtils {
 
     }
 
-    HashMap<String, Integer> getStats(String name, Boolean isNpc) {
-        HashMap<String, Integer> stats = new HashMap<String, Integer>()
+    UserObject getStats(String name, Boolean isNpc) {
+        UserObject stats = new UserObject()
         if (!isNpc) {
             UserDB userObj = userRepos.findByName(name)
-            stats.put("ID", userObj.id)
-            stats.put("attack", userObj.attack)
-            stats.put("defense", userObj.defense)
-            stats.put("exp", userObj.exp)
-            stats.put("location", userObj.location)
-            stats.put("lvl", userObj.lvl)
-            stats.put("money", userObj.money)
+            //stats.set("ID", userObj.id)
+            stats.setAttack(userObj.attack)
+            stats.setDefense(userObj.defense)
+            stats.setExp(userObj.exp)
+            stats.setLocation(userObj.location)
+            stats.setLvl(userObj.lvl)
+            stats.setMoney(userObj.money)
         } else {
             NpcDB npcObj = npcRepos.findByName(name)
-            stats.put("ID", npcObj.id)
-            stats.put("attack", npcObj.attack)
-            stats.put("defense", npcObj.defense)
-            stats.put("hp", npcObj.hp)
-            stats.put("location", npcObj.location)
+            //stats.put("ID", npcObj.id)
+            stats.setAttack(npcObj.attack)
+            stats.setDefense(npcObj.defense)
+            stats.setHp(npcObj.hp)
+            stats.setLocation(npcObj.location)
         }
         return stats
     }
@@ -214,21 +215,21 @@ class DarknessUtils {
         return users.toString()
     }
 
-    HashMap<Integer, String> ShowUsersInLocation(Integer index) {
-        HashMap<Integer, String> users = new HashMap<Integer, String>()
+    List<String> ShowUsersInLocation(Integer index) {
+        List<String> users = new ArrayList<>()
         for (UserDB userDB : userRepos.findAll()) {
             if (userDB.location == index) {
-                users.put(userDB.id, userDB.name)
+                users.add(userDB.name)
             }
         }
         return users
     }
 
-    HashMap<Integer, String> ShowNpcsInLocation(Integer index) {
-        HashMap<Integer, String> npcs = new HashMap<Integer, String>()
+    List<String> ShowNpcsInLocation(Integer index) {
+        List<String> npcs = new ArrayList<>()
         for (NpcDB npcDB : npcRepos.findAll()) {
             if (npcDB.location == index) {
-                npcs.put(npcDB.id, npcDB.name)
+                npcs.add( npcDB.name)
             }
         }
         return npcs
@@ -317,9 +318,9 @@ class DarknessUtils {
 
     void updateCache(String data, Integer location, String name) {
         CacheDB newCacheEntry = new CacheDB()
-        newCacheEntry.mapId(location)
-        newCacheEntry.usersInRoom(name)
-        newCacheEntry.msg(data)
+        newCacheEntry.mapId = (location)
+        newCacheEntry.usersInRoom = (name)
+        newCacheEntry.msg = (data)
         cacheRepos.save(newCacheEntry)
         // return Methods.getNpcByIndex(index)
     }

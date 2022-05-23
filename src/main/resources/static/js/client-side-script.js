@@ -53,18 +53,16 @@
                     data: JSON.stringify(jsonParams),
 					contentType : 'application/json',
 					url: encodeURI("/the_alley/various"),
-					then : function(response)
+			        }).then(function(data)
                     {
-                        alert(response);
-                        //Redirect(encodeURI("/home?name=" + name));
-						output = data
-						alert(output)
-						$("#mapInfo").append(output['mapinfo'])
-						$("#npcInfo").append(output['npcinfo'])
-						//$("#npcInfo").append(JSON.stringify(output))
-						$( "#output" ).fadeIn( 4000, function() {})
-					}
-				});
+                      //alert(data);
+                      //output = data;
+                      $("#output").append(output);
+                      $("#output").append(data.code + " <br />");
+                      $("#output").append(data.message + " <br />");
+                      //var resp = output["output"];
+                      //alert(output);
+					});
 	}
 
 	/*function createNewUser(url)
@@ -83,6 +81,8 @@
 	function createNewUser()
     {
     	        var name = $('#createUser').val();
+    	        var json = [];
+    	        var output = []
     	        var jsonParams =
     			{
     				//indicator: , variable
@@ -92,35 +92,38 @@
     			$.ajax({
     					type : "POST",
     					url : "/the_alley/createNewUser",
-    					processData : true,
     					data: JSON.stringify(jsonParams),
     					contentType : 'application/json',
-    					then : function(response)
-    					{
-    						alert(response);
-    						Redirect(encodeURI("/home?name=" + name));
-    					}
-    					/*error : function(xhr, status, error)
-    					{
-    						alert(xhr.responseText);
-    						$("#alert-message-container").html("An unknown error occured when trying to create a new user!  Please try again later.");
-    						$("#alert-message-display").dialog("open");
-    					}*/
-    			});
+    					}).then(function(data)
+                        {
+                        	//output = data;
+                        	alert(data.message);
+                        	//$("#output").append(data.code + " <br />");
+                        	//$("#output").append(data.message + " <br />");
+                        	//$( "#output" ).fadeIn( 5000, function() {});
+                        	Redirect(encodeURI("/the_alley/home?name=" + name))
+                        });
+                        //Redirect(encodeURI("/the_alley/home?name=" + name))
     }
+    /*function handleResponse(data) {
+      alert(data);
+      $("#output").append(data + " <br />")
+    }*/
+
 	function init(url)
     {
+            //alert('fred');
 			var output = []
 			$.ajax({
-			url: encodeURI(url),
+			url: encodeURI(url)
 			}).then(function(data)
 			{
-				output = data
-				//alert(output)
-				$("#output").append(output + " <br />")
-				$( "#output" ).fadeIn( 5000, function() {})
-
-			})
+				output = data;
+				//alert(output.message)
+				$("#output").append(data.code + " <br />");
+				$("#output").append(data.message + " <br />");
+				$( "#output" ).fadeIn( 5000, function() {});
+			});
 	}
 
 	function initMap(url)
@@ -155,3 +158,28 @@
 			window.location.href = url
 		}
 	}
+	function updateStatus()
+    	{
+    			//initMap();
+    			//updateRoom
+    			var output = {};
+    			//var name = $('#name').val();
+    			//var current_location = $('#location').val();
+    			var textBox = $('#textBox').val();
+    			var url = "/darkness/updateRoom"
+    			$.ajax({
+    				url: encodeURI(url + "?mapIndex=" + current_location),
+    				}).then(function(data)
+    				{
+    					output = data;
+    					var msg = output["msg"];
+    					var users = output["users"];
+    					var npcs = output["npcs"];
+    					//$("#output").append(textBox + "<br />");
+    					//$("#output").append(msg + "<br />");
+    					$("#output").replaceWith(msg);
+    					$("#users").replaceWith(users);
+    					$("#npcs").replaceWith(npcs);
+    					$( "#output" ).fadeIn( 3000, function() {});
+    				});
+    	}
