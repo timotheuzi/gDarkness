@@ -13,11 +13,11 @@ import javax.persistence.*
 class CacheDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id
-    public Integer mapId
-    public String usersInRoom
-    public String npcsInRoom
-    public String itemsInRoom
-    public String msg
+    Integer id
+    Integer mapId
+    String usersInRoom
+    String npcsInRoom
+    String itemsInRoom
+    String msg
 
 }

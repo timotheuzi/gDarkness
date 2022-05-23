@@ -12,15 +12,15 @@ import javax.persistence.*
 class UserDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id
-    public String name
-    public Integer lvl
-    public Integer money
-    public Integer exp
-    public Integer attack
-    public Integer defense
-    public String description
-    public Integer location
-    public Integer hp
-    public String items
+    Integer id
+    String name
+    Integer lvl
+    Integer money
+    Integer exp
+    Integer attack
+    Integer defense
+    String description
+    Integer location
+    Integer hp
+    String items
 }

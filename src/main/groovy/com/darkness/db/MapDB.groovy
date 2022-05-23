@@ -12,7 +12,7 @@ import javax.persistence.*
 class MapDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id
-    public String name
-    public String description
+    Integer id
+    String name
+    String description
 }

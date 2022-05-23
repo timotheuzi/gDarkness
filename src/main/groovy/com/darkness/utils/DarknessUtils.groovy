@@ -10,6 +10,7 @@ import com.darkness.db.NpcRepo
 import com.darkness.db.UserDB
 import com.darkness.db.CacheRepo
 import com.darkness.db.CacheDB
+import com.darkness.model.GenericResponse
 import com.darkness.model.UserObject
 import com.fasterxml.jackson.annotation.JsonFormat
 import lombok.Value
@@ -252,29 +253,35 @@ class DarknessUtils {
         return locationRando.intValue()
     }
 
-    Map mapStatus(Integer mapIndex) {
-        HashMap mapObj = new HashMap()
+    GenericResponse mapStatus(Integer mapIndex) {
+        GenericResponse resp = new GenericResponse()
+        MapDB mapDb = mapRepos.findById(mapIndex)
+        resp.setMapDescription(mapDb.getDescription())
+        resp.setMapIndex(mapIndex)
         int count = 0
-        Iterator itUser = (ShowUsersInLocation(mapIndex)).entrySet().iterator()
+        List<String> users = new ArrayList<String>();
+        Iterator itUser = (ShowUsersInLocation(mapIndex)).iterator()
         while (itUser.hasNext()) {
             Map.Entry pair = (Map.Entry) itUser.next()
-            mapObj.put(count, pair.getValue())
+            users.add(pair.getValue())
             itUser.remove() // avoids a ConcurrentModificationException
             count++
         }
-        Iterator itNpc = (ShowNpcsInLocation(mapIndex)).entrySet().iterator()
+        resp.setUsers(users)
+        Iterator itNpc = (ShowNpcsInLocation(mapIndex)).iterator()
+        List<String> npcs = new ArrayList<String>();
         while (itNpc.hasNext()) {
             Map.Entry pair = (Map.Entry) itNpc.next()
-            mapObj.put(count, pair.getValue())
+            npcs.add(pair.getValue())
             itNpc.remove() // avoids a ConcurrentModificationException
             count++
         }
-        for (CacheDB cacheDB : cacheRepos.findAll()) {
+        resp.setUsers(npcs)
+        /*for (CacheDB cacheDB : cacheRepos.findAll()) {
             mapObj.put(count, cacheDB.msg())
             count++
-        }
-
-        return mapObj
+        }*/
+        return resp
     }
 
     Map findUserStatsByName(String name) throws JSONException {

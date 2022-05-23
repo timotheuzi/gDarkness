@@ -13,12 +13,12 @@ import javax.persistence.*
 class ItemsDB {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id
-    public String name
-    public String description
-    public Integer attack
-    public Integer defense
-    public Integer location
-    public Integer owner
-    public Integer value
+    Integer id
+    String name
+    String description
+    Integer attack
+    Integer defense
+    Integer location
+    Integer owner
+    Integer value
 }

@@ -1,10 +1,13 @@
      // enter logic
-    /*$(document).keyup(function(event) {
+    $(document).keyup(function(event) {
     if ($(".input").is(":focus") && event.key == "Enter") {
-        // Do work
         variousInput()
          }
-    });*/
+    });
+    //page load
+    $(document).ready(function(event) {
+         updateRoom()
+        });
 
 	/*function ajaxTest()
 	{
@@ -63,6 +66,7 @@
                       //var resp = output["output"];
                       //alert(output);
 					});
+					updateStatus();
 	}
 
 	/*function createNewUser(url)
@@ -160,15 +164,19 @@
 	}
 	function updateStatus()
     	{
-    			//initMap();
-    			//updateRoom
+    			var jsonParams =
+                 {
+                    //indicator: , variable
+                    "name": name,
+                    "value": "wtf"
+                 };
     			var output = {};
     			//var name = $('#name').val();
     			//var current_location = $('#location').val();
     			var textBox = $('#textBox').val();
     			var url = "/darkness/updateRoom"
     			$.ajax({
-    				url: encodeURI(url + "?mapIndex=" + current_location),
+    				url: encodeURI(url),
     				}).then(function(data)
     				{
     					output = data;
@@ -177,9 +185,11 @@
     					var npcs = output["npcs"];
     					//$("#output").append(textBox + "<br />");
     					//$("#output").append(msg + "<br />");
-    					$("#output").replaceWith(msg);
-    					$("#users").replaceWith(users);
-    					$("#npcs").replaceWith(npcs);
-    					$( "#output" ).fadeIn( 3000, function() {});
+    					$("#output").replace(description + "<br />");
+    					$("#output").append(mapName + "<br />");
+    					$("#updateSpace").append(users + "<br />");
+    					$("#updateSpace").append(npcs + "<br />");
+
+    					$( "#updateSpace" ).fadeIn( 3000, function() {});
     				});
     	}

@@ -182,12 +182,9 @@ import org.springframework.beans.factory.annotation.Autowired
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/updateRoom", produces = MediaType.APPLICATION_JSON_VALUE)
-	GenericResponse updateRoom(@RequestParam(name = "mapIndex", required = false) Integer mapIndex) {
-		if (mapIndex != null) {
-			return darknessUtils.mapStatus(mapIndex) as GenericResponse
-		} else {
-			return darknessUtils.mapStatus(0) as GenericResponse
-		}
+	GenericResponse updateRoom(@RequestParam(name = "name", required = false) String name) {
+		UserDB userIndo = uRepo.findByName(name)
+		return darknessUtils.mapStatus(userIndo.getLocation())
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/findUserByIndex", produces = MediaType.APPLICATION_JSON_VALUE)
