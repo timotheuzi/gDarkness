@@ -8,7 +8,8 @@ import javax.persistence.*
 
 //for NPC generation
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "npc")
 class NpcDB {
     @Id

@@ -7,7 +7,8 @@ import javax.persistence.*
 
 //user objects
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "users")
 class UserDB {
     @Id

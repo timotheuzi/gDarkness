@@ -7,7 +7,8 @@ import lombok.Getter
 import javax.persistence.*
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "map")
 class MapDB {
     @Id

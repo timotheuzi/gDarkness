@@ -8,7 +8,8 @@ import javax.persistence.*
 
 //item table
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "cache")
 class CacheDB {
     @Id

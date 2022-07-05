@@ -10,13 +10,20 @@ import org.springframework.web.bind.annotation.ResponseStatus
 @ControllerAdvice
 class CustomControllerAdvice {
 
-    /*@ExceptionHandler
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     GenericResponse handleRuntimeException(RuntimeException exception){
-        //exception.printStackTrace()
-        //return new GenericResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("There was a runtime exception:" + exception.printStackTrace())
-    }*/
+        exception.printStackTrace()
+        return new GenericResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("There was a runtime exception:" + exception.printStackTrace())
+    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    GenericResponse handleBadRequest(RuntimeException exception){
+        exception.printStackTrace()
+        return new GenericResponse().code(HttpStatus.INTERNAL_SERVER_ERROR).message("There was a runtime exception:" + exception.printStackTrace())
+    }
 
 
 }
