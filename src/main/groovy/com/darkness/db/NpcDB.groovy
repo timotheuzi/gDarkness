@@ -1,6 +1,6 @@
 package com.darkness.db
 
-import lombok.Data
+
 import lombok.Getter
 import lombok.Setter
 
@@ -20,5 +20,7 @@ class NpcDB {
     Integer attack
     Integer defense
     Integer location
+    Integer money
     Integer hp
+    Integer level
 }

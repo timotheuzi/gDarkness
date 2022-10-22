@@ -2,7 +2,6 @@ package com.darkness.controller
 
 import com.darkness.db.MapRepo
 import com.darkness.db.NpcRepo
-import com.darkness.db.UserDB
 import com.darkness.db.UserRepo
 import com.darkness.utils.DarknessUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
 
 @Controller
 class ModelAPIs {
@@ -29,8 +27,7 @@ class ModelAPIs {
 
     // index page
     @GetMapping("/")
-    String index()
-    {
+    String index() {
         //todo random moves
         utils.initializeMapValues()
         utils.initializeItemValues()
@@ -39,8 +36,7 @@ class ModelAPIs {
     }
     // home map
     @GetMapping("/home")
-    String home(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model)
-    {
+    String home(@RequestParam(name = "name", required = false, defaultValue = "test_user") String name, Model model) {
         //todo random moves
         //darknessUtils.randomNpcMove()
         //currentMap = null
@@ -57,7 +53,7 @@ class ModelAPIs {
     }
     // alley templates
     @GetMapping("/alley_1")
-    String alley_1(@RequestParam(name="name", required=false, defaultValue="test_user") String name, Model model) {
+    String alley_1(@RequestParam(name = "name", required = false, defaultValue = "test_user") String name, Model model) {
         //todo random moves
 
         Integer currentMap = utils.move(name)

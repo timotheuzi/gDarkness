@@ -1,24 +1,12 @@
 package com.darkness.utils
 
-import com.darkness.db.UserRepo
-import com.darkness.db.ItemsDB
-import com.darkness.db.ItemsRepo
-import com.darkness.db.MapDB
-import com.darkness.db.MapRepo
-import com.darkness.db.NpcDB
-import com.darkness.db.NpcRepo
-import com.darkness.db.UserDB
-import com.darkness.db.CacheRepo
-import com.darkness.db.CacheDB
+import com.darkness.db.*
 import com.darkness.model.GenericResponse
 import com.darkness.model.UserObject
 import com.fasterxml.jackson.annotation.JsonFormat
-import lombok.Value
-import net.bytebuddy.utility.RandomString
 import org.json.JSONException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-
 
 @Service
 class DarknessUtils {
@@ -46,16 +34,15 @@ class DarknessUtils {
     void initializeMapValues() {
         Integer count = 0
         MapDB mapDB = new MapDB()
-        for(MapDB mapDb : mapRepos.findAll())
-        {
+        for (MapDB mapDb : mapRepos.findAll()) {
             mapDB.name = ("map_" + (count + 1).toString())
-            if(count == 0) {
+            if (count == 0) {
                 mapDB.description = (map_0)
-            } else if(count == 1){
+            } else if (count == 1) {
                 mapDB.description = (map_1)
-            } else if(count == 2){
+            } else if (count == 2) {
                 mapDB.description = (map_2)
-            } else if (count >= 3){
+            } else if (count >= 3) {
                 mapDB.description = (map_3)
             }
             mapRepos.save(mapDB)
@@ -79,15 +66,18 @@ class DarknessUtils {
     void initializeNpcValues() {
         Double attack = Math.random() * ((50 - 1) + 1)
         Double defense = Math.random() * ((10 - 1) + 1)
+        Double money = Math.random() * ((6 - 1) + 1)
         Double hp = Math.random() * ((1000 - 1) + 1)
         NpcDB npcDB = new NpcDB()
         if (CountNpcs() == 0) {
             npcDB.name = ("Frank")
-            npcDB.description = ("Stinky ")
+            npcDB.description = ("Stinky")
             npcDB.location = (0)
             npcDB.attack = (75)
             npcDB.defense = (75)
             npcDB.hp = (3000)
+            npcDB.money = money
+            npcDB.level = 5
         } else {
             npcDB.name = (giveMeAname())
             npcDB.description = (npc_1)
@@ -95,12 +85,14 @@ class DarknessUtils {
             npcDB.attack = (attack.intValue())
             npcDB.defense = (defense.intValue())
             npcDB.hp = (hp.intValue())
+            npcDB.money = money
+            npcDB.level = 1
         }
         npcRepos.save(npcDB)
     }
 
     Boolean createNewUser(String name) {
-        if (userRepos.findByName(name) == null) {
+        if (userRepos.findByNameIgnoreCase(name) == null) {
             try {
                 UserDB newEntry = new UserDB()
                 newEntry.name = (name)
@@ -126,29 +118,41 @@ class DarknessUtils {
     UserObject getStats(String name, Boolean isNpc) {
         UserObject stats = new UserObject()
         if (!isNpc) {
-            UserDB userObj = userRepos.findByName(name)
-            //stats.set("ID", userObj.id)
-            stats.setAttack(userObj.attack)
-            stats.setDefense(userObj.defense)
-            stats.setExp(userObj.exp)
-            stats.setLocation(userObj.location)
-            stats.setLvl(userObj.lvl)
-            stats.setMoney(userObj.money)
+            UserDB userObj = userRepos.findByNameIgnoreCase(name)
+            if(userObj != null) {
+                stats.setName(name)
+                stats.setAttack(userObj.attack)
+                stats.setDefense(userObj.defense)
+                stats.setExp(userObj.exp)
+                stats.setLocation(userObj.location)
+                stats.setLvl(userObj.lvl)
+                stats.setMoney(userObj.money)
+                stats.setHp(userObj.hp)
+                stats.setDescription(userObj.description)
+            } else
+            {
+                stats.setName("user not found")
+            }
         } else {
-            NpcDB npcObj = npcRepos.findByName(name)
-            //stats.put("ID", npcObj.id)
-            stats.setAttack(npcObj.attack)
-            stats.setDefense(npcObj.defense)
-            stats.setHp(npcObj.hp)
-            stats.setLocation(npcObj.location)
+            NpcDB npcObj = npcRepos.findByNameIgnoreCase(name)
+            if(npcObj != null) {
+                stats.setName(name)
+                stats.setAttack(npcObj.attack)
+                stats.setDefense(npcObj.defense)
+                stats.setHp(npcObj.hp)
+                stats.setLocation(npcObj.location)
+                stats.setHp(npcObj.hp)
+                stats.setDescription(npcObj.description)
+            } else {
+            stats.setName("npc not found")
+            }
         }
         return stats
     }
 
     Integer CountMaps() {
         Integer count = 0
-        for(MapDB mapDb : mapRepos.findAll())
-        {
+        for (MapDB mapDb : mapRepos.findAll()) {
             count++
         }
         return count
@@ -157,8 +161,7 @@ class DarknessUtils {
 
     Integer CountUsers() {
         Integer count = 0
-        for(UserDB userDB : userRepos.findAll())
-        {
+        for (UserDB userDB : userRepos.findAll()) {
             count++
         }
         return count
@@ -167,8 +170,7 @@ class DarknessUtils {
 
     Integer CountItems() {
         Integer count = 0
-        for(ItemsDB itemdb : itemsRepos.findAll())
-        {
+        for (ItemsDB itemdb : itemsRepos.findAll()) {
             count++
         }
         return count
@@ -230,7 +232,7 @@ class DarknessUtils {
         List<String> npcs = new ArrayList<>()
         for (NpcDB npcDB : npcRepos.findAll()) {
             if (npcDB.location == index) {
-                npcs.add( npcDB.name)
+                npcs.add(npcDB.name)
             }
         }
         return npcs
@@ -259,7 +261,7 @@ class DarknessUtils {
         resp.setMapDescription(mapDb.getDescription())
         resp.setMapIndex(mapIndex)
         int count = 0
-        List<String> users = new ArrayList<String>();
+        List<String> users = new ArrayList<String>()
         Iterator itUser = (ShowUsersInLocation(mapIndex)).iterator()
         while (itUser.hasNext()) {
             Map.Entry pair = (Map.Entry) itUser.next()
@@ -269,7 +271,7 @@ class DarknessUtils {
         }
         resp.setUsers(users)
         Iterator itNpc = (ShowNpcsInLocation(mapIndex)).iterator()
-        List<String> npcs = new ArrayList<String>();
+        List<String> npcs = new ArrayList<String>()
         while (itNpc.hasNext()) {
             Map.Entry pair = (Map.Entry) itNpc.next()
             npcs.add(pair.getValue())
@@ -287,7 +289,7 @@ class DarknessUtils {
     Map findUserStatsByName(String name) throws JSONException {
         HashMap userObj = new HashMap()
         try {
-            UserDB userDB = userRepos.findByName(name)
+            UserDB userDB = userRepos.findByNameIgnoreCase(name)
             userObj.put("name", name)
             userObj.put("attack", userDB.attack)
             userObj.put("defense", userDB.defense)
@@ -307,17 +309,18 @@ class DarknessUtils {
 
     String generateRandomString(Integer len) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijk"
-        Random rnd = new Random();
-        StringBuilder sb = new StringBuilder(len);
+        Random rnd = new Random()
+        StringBuilder sb = new StringBuilder(len)
         for (Integer i = 0; i < len; i++)
-            sb.append(chars.charAt(rnd.nextInt(chars.length())));
-        return sb.toString();
+            sb.append(chars.charAt(rnd.nextInt(chars.length())))
+        return sb.toString()
     }
-    String giveMeAname(){
-        String alphabet = (('A'..'N')+('P'..'Z')+('a'..'k')+('m'..'z')).join()
+
+    String giveMeAname() {
+        String alphabet = (('A'..'N') + ('P'..'Z') + ('a'..'k') + ('m'..'z')).join()
         def length = 8
         def key = new Random().with {
-            (1..length).collect { alphabet[ nextInt( alphabet.length() ) ] }.join()
+            (1..length).collect { alphabet[nextInt(alphabet.length())] }.join()
         }
         return key
     }

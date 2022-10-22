@@ -1,8 +1,8 @@
 package com.darkness.db
 
-import lombok.Data
-import lombok.Setter
+
 import lombok.Getter
+import lombok.Setter
 
 import javax.persistence.*
 

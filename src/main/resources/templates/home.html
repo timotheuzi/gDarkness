@@ -1,26 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Darkness Homes</title>
-	<link rel="stylesheet" th:href="@{css/styles.css}"/>
-    <meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+    <title>Darkness Homes</title>
+    <link rel="stylesheet" th:href="@{css/styles.css}"/>
+    <meta content="text/html charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
-	<div><p>Greetings! <span class="name" id="name" th:text='${name}' th:value='${name}'></span></p><br /></div>
-	<div class="mainContainer">
-		<!-- new design is all dynamically created with JS -->
-		<div class="output" id="output"></div><br />
-		<div class="updateSpace" id="updateSpace"></div><br />
-		<input class="input" id="input" type="text" width="50px" style="text-color:red"/>
-		<input id="button" type="button" onclick="variousInput()" width="45px" value="GO" />
-	</div>
-	<script type="text/javascript" th:src="@{js/jquery-3.6.0.js}" /></script>
-    <script type="text/javascript" th:src="@{js/client-side-script.js}" /></script>
-	<link rel="stylesheet" th:href="@{css/styles.css}"/>
-	<script th:inline="javascript">
+<div><p>Greetings! <span class="name" id="name" th:text='${name}' th:value='${name}'></span></p><br/></div>
+<div class="mainContainer">
+    <!-- new design is all dynamically created with JS -->
+    <div class="output" id="output"></div>
+    <br/>
+    <div class="updateSpace" id="updateSpace"></div>
+    <br/>
+    <input class="input" id="input" style="text-color:red" type="text" width="50px"/>
+    <input id="button" onclick="variousInput()" type="button" value="GO" width="45px"/>
+</div>
+<script th:src="@{js/jquery-3.6.0.js}" type="text/javascript"/>
+</script>
+<script th:src="@{js/client-side-script.js}" type="text/javascript"/>
+</script>
+<link rel="stylesheet" th:href="@{css/styles.css}"/>
+<script th:inline="javascript">
 		/*<![CDATA[*/
 		 var name = /*[[${name}]]*/ 'name'
 		/*]]>*/
-	</script>
+
+</script>
 </body>
 </html>

@@ -1,37 +1,32 @@
 package com.darkness
 
-import com.darkness.db.MapDB
-import com.darkness.db.MapRepo
+
 import com.darkness.utils.DarknessUtils
-import org.junit.Test
-import org.mockito.Mock
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Bean
 import spock.lang.Specification
 
-class DarknessApplicationTests extends Specification{
+class DarknessApplicationTests extends Specification {
 
     DarknessUtils dUtils
 
     //MapDB mockMapDB
     //MapRepo mapRepo
-    def setup(){
+    def setup() {
         dUtils = new DarknessUtils()
     }
 
     def "get me a good name"() {
         given:
-            def someName = "some guy"
-            //def testName = ""
+        def someName = "some guy"
+        //def testName = ""
 
         when:
-           def key = dUtils.giveMeAname()
-           def testName = dUtils.generateRandomString(8)
+        def key = dUtils.giveMeAname()
+        def testName = dUtils.generateRandomString(8)
 
         then:
-           println("give me blah:" + key)
-           println("generate make:" + testName)
-           assert testName != key
+        println("give me blah:" + key)
+        println("generate make:" + testName)
+        assert testName != key
     }
 /*
 	 * @Test public void CountMaps() { /*methods temp = mock(methods.class); Integer

@@ -1,25 +1,27 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Landing Character creation</title>
-	<script type="text/javascript" th:src="@{js/jquery-3.6.0.js}" /></script>
-    <script type="text/javascript" th:src="@{js/client-side-script.js}" /></script>
-	<link rel="stylesheet" th:href="@{css/styles.css}"/>	
+    <script th:src="@{js/jquery-3.6.0.js}" type="text/javascript"/>
+    </script>
+    <script th:src="@{js/client-side-script.js}" type="text/javascript"/>
+    </script>
+    <link rel="stylesheet" th:href="@{css/styles.css}"/>
 </head>
 <body>
-	<div class="mainContainer">
-		<p>Please enter a username</p>
-		<input id="createUser" type="text"  width="50px" value=""></input>
-		<input id="createButton" type="button" onclick="createNewUser('/the_alley/createNewUser')" value="Create User" />
-			<br />
-		<br />
-		<input id="initMap" type="button" onclick="init('/the_alley/initializeMap')" value="initialize Maps for game"/>
-		<br />
-		<input id="initItem" type="button" onclick="init('/the_alley/initializeItem')" value="initialize Items for game"/>
-		<br />
-		<input id="initNpc" type="button" onclick="init('/the_alley/initializeNpc')" value="initialize NPCS for game"/>
-		<div id="output"></div>
-	</div>
+<div class="mainContainer">
+    <p>Please enter a username</p>
+    <input id="createUser" type="text" value="" width="50px"></input>
+    <input id="createButton" onclick="createNewUser('/the_alley/createNewUser')" type="button" value="Create User"/>
+    <br/>
+    <br/>
+    <input id="initMap" onclick="init('/the_alley/initializeMap')" type="button" value="initialize Maps for game"/>
+    <br/>
+    <input id="initItem" onclick="init('/the_alley/initializeItem')" type="button" value="initialize Items for game"/>
+    <br/>
+    <input id="initNpc" onclick="init('/the_alley/initializeNpc')" type="button" value="initialize NPCS for game"/>
+    <div id="output"></div>
+</div>
 </body>
 </html>
